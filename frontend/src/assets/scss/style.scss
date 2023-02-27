@@ -1,4 +1,5 @@
-@import 'bootstrap/scss/bootstrap';
+// @import 'bootstrap/scss/bootstrap';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import 'config';
 @import 'layout';
 @import 'variables';
@@ -12,7 +13,7 @@
 
 html {
     font-size: 16px;
-    color: white;
+    color: $primary-color;
 }
 
 body {
@@ -20,5 +21,5 @@ body {
     height: 100vh;
     margin: 0;
     scroll-behavior: smooth;
-    background-color: rgb(0, 0, 0);
+    background-color: $secondary-color;
 }
