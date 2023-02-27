@@ -2,6 +2,9 @@
 @import 'config';
 @import 'layout';
 @import 'variables';
+@import 'game-board/board';
+@import 'game-board/game';
+@import 'game-board/scoreboard';
 
 * {
     box-sizing: border-box;
