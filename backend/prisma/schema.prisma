@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Highscore {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  score Int
+  id    	String @id @default(auto()) @map("_id") @db.ObjectId
+  name  	String
+  avgTime	Float
 }

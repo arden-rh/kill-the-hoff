@@ -6,15 +6,15 @@ import prisma from '../prisma'
 const debug = Debug('chat:socket_controller')
 
 export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>) => {
-	debug('✅ A user connected', socket.id)
+	debug('✅ User connected:', socket.id)
 
-	socket.on('getHighscore',async (callback) => {
+	socket.on('getHighscore', async callback => {
 		const highscore = await prisma.highscore.findMany()
-		debug('Got request for highscore %o', highscore)
+		debug('🎖️ Highscore request:', highscore)
 		callback(highscore)
 	})
 
 	socket.on('disconnect', () => {
-		debug('❌ A user disconnected', socket.id)
+		debug('❌ User disconnected:', socket.id)
 	})
 }
