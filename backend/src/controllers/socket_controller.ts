@@ -8,8 +8,11 @@ const debug = Debug('chat:socket_controller')
 export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>) => {
 	debug('✅ A user connected', socket.id)
 
-	debug('👋 Said hello to the user')
-	socket.emit('hello')
+	socket.on('getHighscore',async (callback) => {
+		const highscore = await prisma.highscore.findMany()
+		debug('Got request for highscore %o', highscore)
+		callback(highscore)
+	})
 
 	socket.on('disconnect', () => {
 		debug('❌ A user disconnected', socket.id)

@@ -1,4 +1,4 @@
-import { Room, User } from "@prisma/client"
+import { Highscore } from "@prisma/client"
 export {}
 
 export interface ServerToClientEvents {
@@ -6,6 +6,7 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
+	getHighscore: (callback: (highscore: Highscore[]) => void) => void
 }
 
 export interface InterServerEvents {
