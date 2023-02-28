@@ -3,7 +3,7 @@ import { Socket } from 'socket.io'
 import { ClientToServerEvents, ServerToClientEvents } from '../types/shared/SocketTypes'
 import prisma from '../prisma'
 
-const debug = Debug('chat:socket_controller')
+const debug = Debug('hoff:socket_controller')
 
 export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>) => {
 	debug('✅ User connected:', socket.id)
