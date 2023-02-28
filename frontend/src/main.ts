@@ -36,7 +36,7 @@ const usernameFormEl = document.querySelector('#username-form') as HTMLFormEleme
 
 // Views
 const lobbyEl = document.querySelector('#lobby') as HTMLDivElement
-const boardEl = document.querySelector('#game') as HTMLDivElement
+const gameEl = document.querySelector('#game') as HTMLDivElement
 
 // User Detail
 let username: string | null = null
@@ -44,13 +44,13 @@ let username: string | null = null
 // Show board view
 const showBoardView = () => {
 	lobbyEl.classList.add('hide')
-	boardEl.classList.remove('hide')
+	gameEl.classList.remove('hide')
 }
 
 // Show lobby view
 const showLobbyView = () => {
 	lobbyEl.classList.remove('hide')
-	boardEl.classList.add('hide')
+	gameEl.classList.add('hide')
 }
 
 usernameFormEl.addEventListener('submit', e => {
