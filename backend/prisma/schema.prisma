@@ -6,3 +6,9 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Highscore {
+  id    	String @id @default(auto()) @map("_id") @db.ObjectId
+  name  	String
+  avgTime	Float
+}

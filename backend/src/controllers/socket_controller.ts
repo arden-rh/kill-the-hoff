@@ -3,15 +3,18 @@ import { Socket } from 'socket.io'
 import { ClientToServerEvents, ServerToClientEvents } from '../types/shared/SocketTypes'
 import prisma from '../prisma'
 
-const debug = Debug('chat:socket_controller')
+const debug = Debug('hoff:socket_controller')
 
 export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>) => {
-	debug('✅ A user connected', socket.id)
+	debug('✅ User connected:', socket.id)
 
-	debug('👋 Said hello to the user')
-	socket.emit('hello')
+	socket.on('getHighscore', async callback => {
+		const highscore = await prisma.highscore.findMany()
+		debug('🎖️ Highscore request:', highscore)
+		callback(highscore)
+	})
 
 	socket.on('disconnect', () => {
-		debug('❌ A user disconnected', socket.id)
+		debug('❌ User disconnected:', socket.id)
 	})
 }
