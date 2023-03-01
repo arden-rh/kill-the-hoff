@@ -39,6 +39,9 @@ const welcomeViewEl = document.querySelector('#welcome-view-wrapper') as HTMLDiv
 const lobbyEl = document.querySelector('#lobby-view') as HTMLDivElement
 const gameEl = document.querySelector('#game-view') as HTMLDivElement
 
+// Buttons
+const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
+
 // Test user in list
 const yourUsernameEl = document.querySelector('#your-username') as HTMLLIElement
 
