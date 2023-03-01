@@ -1,5 +1,49 @@
-#lobby {
-	background-color: $secondary-color;
-	height: 100vh;
-	width: 100vw;
+#lobby-view {
+	// background-color: rgb(143, 131, 131);
+	max-width: 1000px;
+	height: 88vh;
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: repeat(10, 1fr);
+	gap: 5px;
+}
+
+#ongoing-games {
+	background-color: rgb(107, 93, 93);
+	grid-area: 1 / 7 / 5 / 9;
+	display: flex;
+	justify-content: center;
+	padding: 0.5rem;
+}
+
+#highscore {
+	background-color: rgb(107, 93, 93);
+	grid-area: 1 / 1 / 4 / 7;
+	display: flex;
+	justify-content: center;
+	padding: 0.5rem;
+}
+
+#ten-games {
+	background-color: rgb(107, 93, 93);
+	grid-area: 4 / 1 / 11 / 7;
+	display: flex;
+	justify-content: center;
+	padding: 0.5rem;
+}
+
+#users {
+	background-color: rgb(107, 93, 93);
+	grid-area: 5 / 7 / 9 / 9;
+	display: flex;
+	justify-content: center;
+	padding: 0.5rem;
+}
+
+#enter-game {
+	background-color: rgb(107, 93, 93);
+	grid-area: 9 / 7 / 11 / 9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

@@ -19,7 +19,7 @@
 			<h1>KILL THE HOFF</h1>
 		</header>
 
-		<div id="welcome-view-wrapper">
+		<div id="welcome-view-wrapper" class="hide">
 			<div id="welcome-view">
 
 				<div id="login">
@@ -36,15 +36,23 @@
 			</div>
 		</div>
 
-		<div id="lobby-view" class="container hide">
+		<div id="lobby-view" class="container">
 
-			<div id="highscore"></div>
-			<div id="ten-games"></div>
-			<div id="ongoing-games"></div>
+			<div id="highscore">
+				<h3>Highscore</h3>
+			</div>
+			<div id="ten-games">
+				<h3>10 latest matches</h3>
+			</div>
+			<div id="ongoing-games">
+				<h4>Ongoing games</h4>
+			</div>
+			<div id="users">
+				<h4>Users Online</h4>
+			</div>
 			<div id="enter-game">
 				<button>Play now</button>
 			</div>
-			<div id="users"></div>
 		</div>
 
 		<div id="game-view" class="container hide">
