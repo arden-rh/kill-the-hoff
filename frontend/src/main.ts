@@ -9,10 +9,10 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_HOS
 socket.on('connect', () => {
 	console.log('💥 Connected to the server, socket id:', socket.id)
 
-	// socket.emit('getHighscore', highscores => {
-	// 	highscores.sort((a, b) => a.avgTime - b.avgTime)
+	// socket.emit('getScores', scores => {
+	// 	scores.sort((a, b) => a.avgTime - b.avgTime)
 	// 	const appEl = document.querySelector('#app') as HTMLDivElement
-	// 	appEl.innerHTML = highscores.map(highscore => `<p>${highscore.name} ${highscore.avgTime}</p>`).join('')
+	// 	appEl.innerHTML = scores.map(highscore => `<p>${highscore.name} ${highscore.avgTime}</p>`).join('')
 	// })
 })
 

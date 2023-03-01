@@ -1,4 +1,4 @@
-import { Highscore } from "@prisma/client"
+import { User, Score } from "@prisma/client"
 export {}
 
 export interface ServerToClientEvents {
@@ -6,7 +6,9 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-	getHighscore: (callback: (highscore: Highscore[]) => void) => void
+	userJoinLobby: (username: string) => void
+	getUsers: (callback: (users: User[]) => void) => void
+	getScores: (callback: (scores: Score[]) => void) => void
 }
 
 export interface InterServerEvents {
