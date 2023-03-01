@@ -4,10 +4,10 @@
 
 #scoreboard {
 	background-color: rgb(161, 144, 144);
-	width: 20%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	grid-area: 1 / 7 / 11 / 9;
 
 	div:nth-child(1) {
 		margin-top: 1rem;
