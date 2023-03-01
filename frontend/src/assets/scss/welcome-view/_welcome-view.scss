@@ -1,0 +1,36 @@
+#welcome-view-wrapper {
+	position: absolute;
+    display: flex;
+	justify-content: center;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.35);
+    width: 100vw;
+    height: 100vh;
+}
+
+#welcome-view {
+	display: flex;
+	justify-content: center;
+	z-index: 1;
+}
+
+#username-form {
+	display: flex;
+    background-color: black;
+	border: 2px solid $primary-color;
+    flex-direction: column;
+    justify-content: center;
+    width: 50vw;
+    height: 30vh;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+}
+
+#connectBtn {
+	border: 2px solid $primary-color;
+	width: 150px;
+	height: 80px;
+}
