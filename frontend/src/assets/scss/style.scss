@@ -2,10 +2,11 @@
 @import 'config';
 @import 'layout';
 @import 'variables';
+@import 'welcome-view/welcome-view';
+@import 'lobby/lobby';
 @import 'game-board/board';
 @import 'game-board/game';
 @import 'game-board/scoreboard';
-@import 'lobby/lobby';
 
 * {
     box-sizing: border-box;
