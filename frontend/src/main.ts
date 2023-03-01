@@ -62,7 +62,7 @@ const showGameView = () => {
 }
 
 playBtnEl.addEventListener('click', () => {
-
+	console.log("hej")
 })
 
 usernameFormEl.addEventListener('submit', e => {
