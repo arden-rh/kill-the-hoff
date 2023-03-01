@@ -1,10 +1,9 @@
 #board {
 	background-color: rgb(114, 105, 105);
-	width: 80%;
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(10, 1fr);
-	grid-area: 1 / 1 / 11 / 8;
+	grid-area: 1 / 1 / 11 / 7;
 
 	div {
 		grid-column: 2 / 3;
