@@ -35,22 +35,22 @@ boardEl.addEventListener('click', () => {
 const usernameFormEl = document.querySelector('#username-form') as HTMLFormElement
 
 // Views
-const lobbyEl = document.querySelector('#lobby') as HTMLDivElement
-const gameEl = document.querySelector('#game') as HTMLDivElement
+const welcomeViewEl = document.querySelector('#welcome-view-wrapper') as HTMLDivElement
+const lobbyEl = document.querySelector('#lobby-view') as HTMLDivElement
+const gameEl = document.querySelector('#game-view') as HTMLDivElement
 
 // User Detail
 let username: string | null = null
 
-// Show board view
-const showBoardView = () => {
-	lobbyEl.classList.add('hide')
-	gameEl.classList.remove('hide')
-}
-
 // Show lobby view
 const showLobbyView = () => {
-	lobbyEl.classList.remove('hide')
-	gameEl.classList.add('hide')
+	welcomeViewEl.classList.add('hide')
+}
+
+// Show game view
+const showGameView = () => {
+	lobbyEl.classList.add('hide')
+	gameEl.classList.remove('hide')
 }
 
 usernameFormEl.addEventListener('submit', e => {
@@ -65,8 +65,6 @@ usernameFormEl.addEventListener('submit', e => {
 
 	console.log(username)
 
-	// Show board
-	showBoardView()
+	// Show lobby view
+	showLobbyView()
 })
-
-showLobbyView()
