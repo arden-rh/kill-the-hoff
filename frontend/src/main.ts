@@ -61,6 +61,10 @@ const showGameView = () => {
 	gameEl.classList.remove('hide')
 }
 
+playBtnEl.addEventListener('click', () => {
+
+})
+
 usernameFormEl.addEventListener('submit', e => {
 	e.preventDefault()
 
