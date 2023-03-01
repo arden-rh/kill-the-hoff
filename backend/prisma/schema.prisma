@@ -1,14 +1,21 @@
 generator client {
-  provider = "prisma-client-js"
+	provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+	provider = "mongodb"
+	url = env("DATABASE_URL")
 }
 
-model Highscore {
-  id    	String @id @default(auto()) @map("_id") @db.ObjectId
-  name  	String
-  avgTime	Float
+model Score {
+	id			String @id @default(auto()) @map("_id") @db.ObjectId
+	name 		String
+	avgTime		Float
+	timestamp	Int
+}
+
+model User {
+	id			String @id @map("_id")
+	name		String
+	timestamp	Int
 }
