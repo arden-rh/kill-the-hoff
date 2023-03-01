@@ -13,12 +13,12 @@
 
 	h3 {
 		font-size: 1.2rem;
-		padding-top: 0.6rem;
+		padding-top: 0.8rem;
 	}
 
 	h4 {
 		font-size: 1rem;
-		padding-top: 0.2rem;
+		padding-top: 0.4rem;
 	}
 }
 
@@ -32,6 +32,17 @@
 	justify-content: center;
 	padding: 0.5rem;
 	text-align: center;
+
+	button {
+		background: none;
+		border: $primary-color 2px dashed;
+		color: $primary-color;
+		font-family: $secondary-font;
+		text-transform: uppercase;
+		padding: 0.2rem 0.8rem;
+		letter-spacing: 0.2rem;
+		text-align: center;
+	}
 
 	h4 {
 		padding-bottom: 0.2rem;
@@ -56,6 +67,9 @@
 	padding: 0.5rem;
 
 	ul {
+		margin: 0;
+		padding: 0;
+
 		li {
 			font-weight: 700;
 			list-style: none;
@@ -81,10 +95,21 @@
 	padding: 0.5rem;
 
 	ul {
+		margin: 0;
+		padding: 0;
+		width: 80%;
+		text-align: center;
+
 		li {
 			font-weight: 700;
 			list-style: none;
 			padding: 0;
+			color: $primary-color;
+		}
+
+		#your-username {
+			color: rgb(51, 249, 249);
+			border-bottom: $primary-color 1px solid;
 		}
 	}
 }
