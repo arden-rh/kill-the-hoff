@@ -1,6 +1,5 @@
 #lobby-view {
 	// background-color: rgb(143, 131, 131);
-	max-width: 1000px;
 	height: 88vh;
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
@@ -12,8 +11,17 @@
 	background-color: rgb(107, 93, 93);
 	grid-area: 1 / 7 / 5 / 9;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 	padding: 0.5rem;
+
+	ul {
+		li {
+			font-weight: 700;
+			list-style: none;
+			padding: 0;
+		}
+	}
 }
 
 #highscore {
@@ -44,6 +52,7 @@
 		li {
 			font-weight: 700;
 			list-style: none;
+			padding: 0;
 		}
 	}
 }
