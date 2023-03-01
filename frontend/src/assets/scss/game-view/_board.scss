@@ -4,7 +4,6 @@
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(10, 1fr);
-	border:rgb(255, 255, 255) solid 1px;
 	grid-area: 1 / 1 / 11 / 8;
 
 	div {

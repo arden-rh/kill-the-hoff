@@ -13,7 +13,8 @@
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Press+Start+2P&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Press+Start+2P&display=swap"
+		rel="stylesheet">
 
 	<title>Kill the Hoff</title>
 </head>
@@ -25,7 +26,7 @@
 			<h1>KILL THE HOFF</h1>
 		</header>
 
-		<div id="welcome-view-wrapper" class="">
+		<div id="welcome-view-wrapper" class="hide">
 			<div id="welcome-view">
 
 				<div id="login">
@@ -42,7 +43,7 @@
 			</div>
 		</div>
 
-		<div id="lobby-view" class="container">
+		<div id="lobby-view" class="container hide">
 
 			<div id="highscore">
 				<h3>Highscore</h3>
@@ -71,7 +72,7 @@
 			</div>
 		</div>
 
-		<div id="game-view" class="container hide">
+		<div id="game-view" class="container">
 
 			<div id="board">
 				<div id="testing"></div>
@@ -79,10 +80,10 @@
 			</div>
 
 			<div id="scoreboard">
-				<div>
-					<h2>Scoreboard</h2>
+				<h3>Scoreboard</h3>
+				<div id="score">
+					<span id="pl-1-points">4</span> - <span id="pl-2-points">5</span>
 				</div>
-				<div id="score"></div>
 
 				<div id="players">
 					<div id="player-1">

@@ -1,7 +1,3 @@
-#points {
-
-}
-
 #scoreboard {
 	background-color: rgb(161, 144, 144);
 	display: flex;
@@ -9,22 +5,39 @@
 	align-items: center;
 	grid-area: 1 / 7 / 11 / 9;
 
-	div:nth-child(1) {
-		margin-top: 1rem;
-		padding: 0.5rem;
+	h3 {
+		font-size: 0.9rem;
+		letter-spacing: 0.15rem;
+		margin: 1rem 0 0 0;
+		font-family: $secondary-font;
+		color: $primary-color;
+		padding: 0.8rem 1rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		width: 80%;
-		border: rgb(255, 255, 255) solid 1px;
+		border: $primary-color solid 2px;
+	}
 
-		h2 {
-			font-size: 1.1rem;
-			margin: 0;
+	#score {
+		// background-color: $primary-color;
+		border: $primary-color dashed 2px;
+		height: 7rem;
+		width: 80%;
+		margin: 1.4rem 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-family: $secondary-font;
+		font-size: 2rem;
+		color: $primary-color;
+
+		span {
+			padding: 0 0 0 0.5rem;
+			font-size: 3rem;
 		}
 	}
-}
-
-#time {
 
 }
+
+.timer {}
