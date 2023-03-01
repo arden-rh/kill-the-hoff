@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,17 +17,24 @@
 			<h1>KILL THE HOFF</h1>
 		</header>
 
-		<div id="lobby" class="container">
+		<div id="welcome-view-wrapper">
+			<div id="welcome-view">
 
-			<div id="login">
-				<form id="username-form">
-					<div class="mb-3">
-						<input type="text" id="username" class="form-control form-control-lg" required placeholder="<Enter your username>">
-					</div>
+				<div id="login">
+					<form id="username-form">
+						<div class="mb-3">
+							<input type="text" id="username" class="form-control form-control-lg" required
+								placeholder="<Enter your username>">
+						</div>
 
-					<button type="submit" id="connectBtn" class="btn btn-success">Join lobby</button>
-				</form>
+						<button type="submit" id="connectBtn" class="btn btn-success">Join lobby</button>
+					</form>
+				</div>
+
 			</div>
+		</div>
+
+		<div id="lobby" class="container hide">
 
 			<div id="highscore"></div>
 			<div id="ten-games"></div>
@@ -34,22 +42,31 @@
 			<div id="enter-game">
 				<button>Play now</button>
 			</div>
+			<div id="users"></div>
 		</div>
 
 		<div id="game" class="container hide">
 
-				<div id="board">
-					<div id="testing"></div>
+			<div id="board">
+				<div id="testing"></div>
 
+			</div>
+
+			<div id="scoreboard">
+				<div>
+					<h2>Scoreboard</h2>
 				</div>
+				<div id="score"></div>
 
-				<div id="scoreboard">
-					<div><h2>Scoreboard</h2></div>
-					<div id="points">
-
+				<div id="players">
+					<div id="player-1">
+						<span class="timer"></span>
 					</div>
-					<div id="time"></div>
+					<div id="player-2">
+						<span class="timer"></span>
+					</div>
 				</div>
+			</div>
 
 		</div>
 
@@ -57,4 +74,5 @@
 
 	<script type="module" src="/src/main.ts"></script>
 </body>
+
 </html>
