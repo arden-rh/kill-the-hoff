@@ -39,12 +39,17 @@ const welcomeViewEl = document.querySelector('#welcome-view-wrapper') as HTMLDiv
 const lobbyEl = document.querySelector('#lobby-view') as HTMLDivElement
 const gameEl = document.querySelector('#game-view') as HTMLDivElement
 
+// Test user in list
+const yourUsernameEl = document.querySelector('#your-username') as HTMLLIElement
+
 // User Detail
-let username: string | null = null
+let username: string
 
 // Show lobby view
 const showLobbyView = () => {
 	welcomeViewEl.classList.add('hide')
+
+	yourUsernameEl.innerText = username
 }
 
 // Show game view
@@ -64,6 +69,8 @@ usernameFormEl.addEventListener('submit', e => {
 	}
 
 	console.log(username)
+
+	socket.emit('userJoinLobby', (username))
 
 	// Show lobby view
 	showLobbyView()

@@ -36,8 +36,16 @@
 	background-color: rgb(107, 93, 93);
 	grid-area: 5 / 7 / 9 / 9;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 	padding: 0.5rem;
+
+	ul {
+		li {
+			font-weight: 700;
+			list-style: none;
+		}
+	}
 }
 
 #enter-game {
