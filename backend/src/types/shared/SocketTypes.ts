@@ -1,5 +1,5 @@
 import { User, Score } from "@prisma/client"
-export {}
+export { User }
 
 export interface ServerToClientEvents {
 	hello: () => void

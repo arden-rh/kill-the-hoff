@@ -1,6 +1,6 @@
 import './assets/scss/style.scss'
 import { io, Socket } from 'socket.io-client'
-import { ClientToServerEvents, ServerToClientEvents } from '@backend/types/shared/SocketTypes'
+import { ClientToServerEvents, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
 
 const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
 
@@ -39,8 +39,8 @@ const welcomeViewEl = document.querySelector('#welcome-view-wrapper') as HTMLDiv
 const lobbyEl = document.querySelector('#lobby-view') as HTMLDivElement
 const gameEl = document.querySelector('#game-view') as HTMLDivElement
 
-// Test user in list
-const yourUsernameEl = document.querySelector('#your-username') as HTMLLIElement
+// Views in lobby
+const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
 
 // User Detail
 let username: string
@@ -49,7 +49,14 @@ let username: string
 const showLobbyView = () => {
 	welcomeViewEl.classList.add('hide')
 
-	yourUsernameEl.innerText = username
+	// Online users
+	socket.emit('getUsers', (users: User[]) => {
+		usersOnlineEl.innerHTML = users
+			.map(user => `<li>${user.name}</li>`)
+			.join('')
+	})
+
+	// yourUsernameEl.innerText = username
 }
 
 // Show game view
@@ -58,12 +65,14 @@ const showGameView = () => {
 	gameEl.classList.remove('hide')
 }
 
+/**
+ * Username (in welcome view)
+ */
 usernameFormEl.addEventListener('submit', e => {
 	e.preventDefault()
 
 	username = (usernameFormEl.querySelector('#username') as HTMLInputElement).value.trim()
 
-	// If no username, NO CHAT FOR YOU
 	if (!username) {
 		return
 	}
