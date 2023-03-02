@@ -1,4 +1,4 @@
-import { User, Score, Game } from "@prisma/client"
+import { Game } from "@prisma/client"
 export {}
 
 export interface ServerToClientEvents {
@@ -7,8 +7,6 @@ export interface ServerToClientEvents {
 
 export interface ClientToServerEvents {
 	userJoinLobby: (username: string) => void
-	getUsers: (callback: (users: User[]) => void) => void
-	getScores: (callback: (scores: Score[]) => void) => void
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
 }
 
