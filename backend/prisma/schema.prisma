@@ -7,6 +7,19 @@ datasource db {
 	url = env("DATABASE_URL")
 }
 
+model Game {
+	id					String @id @default(auto()) @map("_id") @db.ObjectId
+	timeCreated			Int
+	timeStarted			Int
+	timeFinished		Int
+	playerOneName		String
+	playerOneScore		Int
+	playerOneAvgTime	Float
+	playerTwoName		String
+	playerTwoScore		Int
+	playerTwoAvgTime	Float
+}
+
 model Score {
 	id			String @id @default(auto()) @map("_id") @db.ObjectId
 	name 		String
