@@ -75,3 +75,15 @@ usernameFormEl.addEventListener('submit', e => {
 	// Show lobby view
 	showLobbyView()
 })
+
+const playNowEl = document.querySelector('#play-now') as HTMLButtonElement
+playNowEl.addEventListener('click', e => {
+	e.preventDefault()
+	socket.emit('userPlayGame', username, game => {
+		if (game.timeStarted === 0) {
+			console.log("Game created, waiting for another player:", game)
+		} else {
+			console.log("Second player joined game:", game)
+		}
+	})
+})

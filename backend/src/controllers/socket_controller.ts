@@ -1,8 +1,10 @@
 import Debug from 'debug'
 import { Socket } from 'socket.io'
+import { Game } from '@prisma/client'
 import { ClientToServerEvents, ServerToClientEvents } from '../types/shared/SocketTypes'
-import { createUser, deleteUser, getUsers } from '../services/user_services'
-import { getScores } from '../services/score_services'
+import { createUser, deleteUser, getUsers } from '../services/user_service'
+import { getScores } from '../services/score_service'
+import { createGame, getAvailableGame, joinGame } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
 
@@ -25,6 +27,21 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		const scores = await getScores()
 		debug("🎖️ Scores requested:", scores)
 		callback(scores)
+	})
+
+	socket.on('userPlayGame', async (username, callback) => {
+		debug("🙋 User wants to play:", socket.id)
+		const availableGame = await getAvailableGame()
+		let game: Game
+		if (availableGame) {
+			game = await joinGame(availableGame.id, username)
+			debug(`👾 ${username} joined game:`, game)
+		} else {
+			game = await createGame(username)
+			debug(`👾 ${username} created game:`, game)
+		}
+		socket.join(game.id)
+		callback(game)
 	})
 
 	socket.on('disconnect', async () => {
