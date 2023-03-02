@@ -39,6 +39,9 @@ const welcomeViewEl = document.querySelector('#welcome-view-wrapper') as HTMLDiv
 const lobbyEl = document.querySelector('#lobby-view') as HTMLDivElement
 const gameEl = document.querySelector('#game-view') as HTMLDivElement
 
+// Buttons
+const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
+
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
 
@@ -64,6 +67,14 @@ const showGameView = () => {
 	lobbyEl.classList.add('hide')
 	gameEl.classList.remove('hide')
 }
+
+playBtnEl.addEventListener('click', () => {
+	console.log("hej")
+})
+
+playBtnEl.addEventListener('click', () => {
+	console.log("hej")
+})
 
 /**
  * Username (in welcome view)

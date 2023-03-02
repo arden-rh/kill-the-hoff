@@ -3,10 +3,10 @@
 @import 'layout';
 @import 'variables';
 @import 'welcome-view/welcome-view';
-@import 'lobby/lobby';
-@import 'game-board/board';
-@import 'game-board/game';
-@import 'game-board/scoreboard';
+@import 'lobby-view/lobby';
+@import 'game-view/board';
+@import 'game-view/game';
+@import 'game-view/scoreboard';
 
 * {
     box-sizing: border-box;
