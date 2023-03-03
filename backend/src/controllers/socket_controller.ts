@@ -16,29 +16,14 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		const user = await createUser(socket.id, username)
 		debug("🙋 User added to database:", user)
 
-		const users = await getUsers()
-		const games = await getGames()
-
-		socket.broadcast.emit('updateUsers', users)
-
-		const data : LobbyInfoData = {
-			users,
-			games
+		const data: LobbyInfoData = {
+			users: await getUsers(),
+			games: await getGames(),
+			scores: await getScores()
 		}
+		socket.broadcast.emit('updateLobby', data)
 		callback(data)
 	})
-
-	// socket.on('getUsers', async callback => {
-	// 	const users = await getUsers()
-	// 	debug("🙋🙋 Users requested:", users)
-	// 	callback(users)
-	// })
-
-	// socket.on('getScores', async callback => {
-	// 	const scores = await getScores()
-	// 	debug("🎖️ Scores requested:", scores)
-	// 	callback(scores)
-	// })
 
 	socket.on('userPlayGame', async (username, callback) => {
 		debug("🙋 User wants to play:", username)
@@ -58,5 +43,6 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	socket.on('disconnect', async () => {
 		debug("❌ User disconnected:", socket.id)
 		await deleteUser(socket.id)
+		socket.broadcast.emit('updateLobbyUsers', await getUsers())
 	})
 }

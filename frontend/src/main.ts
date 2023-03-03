@@ -81,9 +81,16 @@ const updateOnlineUsers = (users: User[]) => {
 }
 
 /**
- * Listen to updated online users list
+ * Listen to updated Lobby information
  */
-socket.on('updateUsers', (users) => {
+socket.on('updateLobby', (data) => {
+	updateOnlineUsers(data.users)
+})
+
+/**
+ * Listen to updated list of users in lobby
+ */
+socket.on('updateLobbyUsers', (users) => {
 	updateOnlineUsers(users)
 })
 
