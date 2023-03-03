@@ -136,7 +136,7 @@ playBtnEl.addEventListener('click', e => {
 		if (game.timeStarted === 0) {
 			console.log("Game created, waiting for another player:", game)
 			hideElement(countdownNoticeEl)
-			waitingNoticeEl.innerHTML = `<p>Waiting for another player..</p>`
+			waitingNoticeEl.innerHTML = `<span class="">Waiting for another player..</span>`
 			// player1NameEl.innerText += `${game.playerOneName}`
 		} else {
 			console.log("Second player joined game:", game)
