@@ -68,8 +68,6 @@ usernameFormEl.addEventListener('submit', e => {
 		return
 	}
 
-	console.log(username)
-
 	socket.emit('userJoinLobby', username, (users) => {
 		updateOnlineUsers(users)
 	})
