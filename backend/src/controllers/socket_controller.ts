@@ -17,20 +17,20 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		debug("🙋 User added to database:", user)
 	})
 
-	socket.on('getUsers', async callback => {
-		const users = await getUsers()
-		debug("🙋🙋 Users requested:", users)
-		callback(users)
-	})
+	// socket.on('getUsers', async callback => {
+	// 	const users = await getUsers()
+	// 	debug("🙋🙋 Users requested:", users)
+	// 	callback(users)
+	// })
 
-	socket.on('getScores', async callback => {
-		const scores = await getScores()
-		debug("🎖️ Scores requested:", scores)
-		callback(scores)
-	})
+	// socket.on('getScores', async callback => {
+	// 	const scores = await getScores()
+	// 	debug("🎖️ Scores requested:", scores)
+	// 	callback(scores)
+	// })
 
 	socket.on('userPlayGame', async (username, callback) => {
-		debug("🙋 User wants to play:", socket.id)
+		debug("🙋 User wants to play:", username)
 		const availableGame = await getAvailableGame()
 		let game: Game
 		if (availableGame) {
