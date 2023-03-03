@@ -1,15 +1,12 @@
 /**
  * Game
 */
-
-import { hideElement, socket } from "../main"
-
+import { hideElement, socket, username } from "../main"
 export { }
 
 /**
  * Queries
  */
-
 // Testing timers
 const playerOneTimerEl = document.querySelector('#timer-1') as HTMLSpanElement
 const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
@@ -62,7 +59,8 @@ const gameStart = () => {
 }
 
 startGameBtnEl.addEventListener('click', () => {
-	console.log("hej")
+
+	console.log("game start")
 	hideElement(waitingNoticeEl)
 	hideElement(countdownNoticeEl)
 
@@ -89,8 +87,7 @@ testingEl.addEventListener('click', () => {
 /**
  * Countdown (before game starts)
  */
-
-export const countdown = (username: string) => {
+const countdown = (username: string) => {
 
 	let counter = 5;
 
@@ -103,6 +100,10 @@ export const countdown = (username: string) => {
 		}
 	}, 1000);
 
+}
+
+const startGame = () => {
+	countdown(username)
 }
 
 
