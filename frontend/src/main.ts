@@ -100,6 +100,7 @@ playBtnEl.addEventListener('click', e => {
 			console.log("Game created, waiting for another player:", game)
 		} else {
 			console.log("Second player joined game:", game)
+			showGameView()
 		}
 	})
 })
