@@ -30,7 +30,7 @@ export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTML
 export const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 
 // User Detail
-let username: string
+export let username: string
 
 // Show elements
 const showElement = (element: HTMLElement) => {
@@ -56,6 +56,18 @@ socket.on('connect', () => {
 })
 
 /**
+ * Listen for reconnection and emit userJoinLobby again
+ */
+socket.io.on('reconnect', () => {
+	console.log('✅ Reconnected to the server')
+	if (username) {
+		socket.emit('userJoinLobby', username, (callbackData) => {
+			updateOnlineUsers(callbackData.users)
+		})
+	}
+})
+
+/**
  * Get username from form, add to online users list and get that list
  */
 usernameFormEl.addEventListener('submit', e => {
@@ -67,8 +79,8 @@ usernameFormEl.addEventListener('submit', e => {
 		return
 	}
 
-	socket.emit('userJoinLobby', username, (users) => {
-		updateOnlineUsers(users)
+	socket.emit('userJoinLobby', username, (callbackData) => {
+		updateOnlineUsers(callbackData.users)
 	})
 
 	showLobbyView()
@@ -84,9 +96,16 @@ const updateOnlineUsers = (users: User[]) => {
 }
 
 /**
- * Listen to updated online users list
+ * Listen to updated Lobby information
  */
-socket.on('updateUsers', (users) => {
+socket.on('updateLobby', (data) => {
+	updateOnlineUsers(data.users)
+})
+
+/**
+ * Listen to updated list of users in lobby
+ */
+socket.on('updateLobbyUsers', (users) => {
 	updateOnlineUsers(users)
 })
 
@@ -105,20 +124,8 @@ const showGameView = () => {
 	showElement(gameEl)
 }
 
-const countdown = () => {
-
-	let counter = 5;
-
-	const countdown = setInterval(() => {
-		countdownNoticeEl.innerHTML = `<span>You are playing against ${username} in ${counter}</span>`
-		console.log(`${counter}`)
-		counter--
-		if (counter === -1) {
-			clearInterval(countdown)
-		}
-	}, 1000);
-
-}
+const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
+const player2NameEl = document.querySelector('#player-2-name') as HTMLSpanElement
 
 /**
  * Listen to play-button
@@ -130,11 +137,16 @@ playBtnEl.addEventListener('click', e => {
 			console.log("Game created, waiting for another player:", game)
 			hideElement(countdownNoticeEl)
 			waitingNoticeEl.innerHTML = `<p>Waiting for another player..</p>`
+			// player1NameEl.innerText += `${game.playerOneName}`
 		} else {
 			console.log("Second player joined game:", game)
-
-			countdown()
+			// player1NameEl.innerText += `${game.playerOneName}`
+			// player2NameEl.innerText = `${game.playerTwoName}`
+			// countdown()
 		}
+
+		player1NameEl.innerText = game.playerOneName
+		player2NameEl.innerText = game.playerTwoName
 
 		showGameView()
 	})

@@ -1,10 +1,10 @@
 import Debug from 'debug'
 import { Socket } from 'socket.io'
 import { Game } from '@prisma/client'
-import { ClientToServerEvents, ServerToClientEvents } from '../types/shared/SocketTypes'
+import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
 import { getScores } from '../services/score_service'
-import { createGame, getAvailableGame, joinGame } from '../services/game_service'
+import { createGame, getAvailableGame, getGames, joinGame } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
 
@@ -16,22 +16,14 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		const user = await createUser(socket.id, username)
 		debug("🙋 User added to database:", user)
 
-		const users = await getUsers()
-		socket.broadcast.emit('updateUsers', users)
-		callback(users)
+		const data: LobbyInfoData = {
+			users: await getUsers(),
+			games: await getGames(),
+			scores: await getScores()
+		}
+		socket.broadcast.emit('updateLobby', data)
+		callback(data)
 	})
-
-	// socket.on('getUsers', async callback => {
-	// 	const users = await getUsers()
-	// 	debug("🙋🙋 Users requested:", users)
-	// 	callback(users)
-	// })
-
-	// socket.on('getScores', async callback => {
-	// 	const scores = await getScores()
-	// 	debug("🎖️ Scores requested:", scores)
-	// 	callback(scores)
-	// })
 
 	socket.on('userPlayGame', async (username, callback) => {
 		debug("🙋 User wants to play:", username)
@@ -51,5 +43,6 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	socket.on('disconnect', async () => {
 		debug("❌ User disconnected:", socket.id)
 		await deleteUser(socket.id)
+		socket.broadcast.emit('updateLobbyUsers', await getUsers())
 	})
 }
