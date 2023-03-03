@@ -42,6 +42,12 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		callback(game)
 	})
 
+	socket.on('startGameRound', async () => {
+		debug("User wants to start a game")
+
+		socket.emit('gameLogicCoordinates', 2, 5, 3000)
+	})
+
 	socket.on('disconnect', async () => {
 		debug("❌ User disconnected:", socket.id)
 		await deleteUser(socket.id)
