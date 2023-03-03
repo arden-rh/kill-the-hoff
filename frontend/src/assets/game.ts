@@ -59,7 +59,7 @@ testingEl.addEventListener('click', () => {
  * Countdown (before game starts)
  */
 
-const countdown = (username: string) => {
+export const countdown = (username: string) => {
 
 	let counter = 5;
 

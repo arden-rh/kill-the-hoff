@@ -30,7 +30,7 @@ const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElem
 const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 
 // User Detail
-let username: string
+export let username: string
 
 // Show elements
 const showElement = (element: HTMLElement) => {
