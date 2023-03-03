@@ -1,11 +1,29 @@
-#board {
+#game-board {
 	background-color: rgb(114, 105, 105);
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(10, 1fr);
 	grid-area: 1 / 1 / 11 / 7;
 
-	div {
+	#waiting-notice {
+		grid-area: 5 / 4 / 7 / 8;
+		background-color: black;
+		color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#countdown-notice {
+		grid-area: 5 / 4 / 7 / 8;
+		background-color: none;
+		color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#testing {
 		grid-area: 2 / 2 / 3 / 3 ;
 		// grid-column: 2 / 3;
 		// grid-row: 2 / 3;
