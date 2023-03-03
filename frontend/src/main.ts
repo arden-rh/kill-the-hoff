@@ -80,8 +80,8 @@ usernameFormEl.addEventListener('submit', e => {
 
 	socket.emit('userJoinLobby', username, (callbackData) => {
 		updateOnlineUsers(callbackData.users)
-		updateOngoingGamesList(callbackData.gamesOngoing)
-		updateFinishedGamesList(callbackData.gamesFinished)
+		updateGamesList(ongoingGamesListEl, callbackData.gamesOngoing)
+		updateGamesList(finishedGamesListEl, callbackData.gamesFinished)
 	})
 
 	showLobbyView()
@@ -97,19 +97,10 @@ const updateOnlineUsers = (users: User[]) => {
 }
 
 /**
- * Update list of ongoing games
+ * Update list of games, specify if 'ongoing' or 'finished'
  */
-const updateOngoingGamesList = (games: Game[]) => {
-	ongoingGamesListEl.innerHTML = games
-		.map(game => `<li>${game.playerOneName} vs. ${game.playerTwoName}</li>`)
-		.join('')
-}
-
-/**
- * Update list of finished games
- */
-const updateFinishedGamesList = (games: Game[]) => {
-	finishedGamesListEl.innerHTML = games
+const updateGamesList = (element: HTMLElement, games: Game[]) => {
+	element.innerHTML = games
 		.map(game => `<li>${game.playerOneName} vs. ${game.playerTwoName}</li>`)
 		.join('')
 }
@@ -119,7 +110,8 @@ const updateFinishedGamesList = (games: Game[]) => {
  */
 socket.on('updateLobby', (data) => {
 	updateOnlineUsers(data.users)
-	updateOngoingGamesList(data.gamesOngoing)
+	updateGamesList(ongoingGamesListEl, data.gamesOngoing)
+	updateGamesList(finishedGamesListEl, data.gamesFinished)
 })
 
 /**
@@ -133,8 +125,8 @@ socket.on('updateLobbyUsers', (users) => {
  * Listen to updated list of games
  */
 socket.on('updateLobbyGames', (gamesOngoing, gamesFinished) => {
-	updateOngoingGamesList(gamesOngoing)
-	updateFinishedGamesList(gamesFinished)
+	updateGamesList(ongoingGamesListEl, gamesOngoing)
+	updateGamesList(finishedGamesListEl, gamesFinished)
 })
 
 /**
