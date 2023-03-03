@@ -28,10 +28,6 @@ const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElemen
 const ongoingGamesListEl = document.querySelector('#ongoing-games-list') as HTMLUListElement
 const finishedGamesListEl = document.querySelector('#finished-games-list') as HTMLUListElement
 
-// Views in game-view
-const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
-const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
-
 // User Detail
 export let username: string
 
