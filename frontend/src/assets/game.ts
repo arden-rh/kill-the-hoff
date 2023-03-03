@@ -1,13 +1,12 @@
 /**
  * Game
 */
-
+import { username } from "../main"
 export { }
 
 /**
  * Queries
  */
-
 // Testing timers
 const playerOneTimerEl = document.querySelector('#timer-1') as HTMLSpanElement
 const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
@@ -58,7 +57,6 @@ testingEl.addEventListener('click', () => {
 /**
  * Countdown (before game starts)
  */
-
 const countdown = (username: string) => {
 
 	let counter = 5;
@@ -72,6 +70,10 @@ const countdown = (username: string) => {
 		}
 	}, 1000);
 
+}
+
+const startGame = () => {
+	countdown(username)
 }
 
 
