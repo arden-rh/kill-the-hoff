@@ -31,7 +31,7 @@ export const createGame = (userId: string, name: string) => {
 			playerOneScore: 0,
 			playerOneAvgTime: 0.00,
 			playerTwoId: '',
-			playerTwoName: '',
+			playerTwoName: '[Player 2]',
 			playerTwoScore: 0,
 			playerTwoAvgTime: 0.00,
 			roundsPlayed: 0
