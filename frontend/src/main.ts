@@ -41,6 +41,18 @@ socket.on('connect', () => {
 })
 
 /**
+ * Listen for reconnection and emit userJoinLobby again
+ */
+socket.io.on('reconnect', () => {
+	console.log('✅ Reconnected toasasa the server')
+	if (username) {
+		socket.emit('userJoinLobby', username, (users) => {
+			updateOnlineUsers(users)
+		})
+	}
+})
+
+/**
  * Get username from form, add to online users list and get that list
  */
 usernameFormEl.addEventListener('submit', e => {
