@@ -44,7 +44,7 @@ socket.on('connect', () => {
  * Listen for reconnection and emit userJoinLobby again
  */
 socket.io.on('reconnect', () => {
-	console.log('✅ Reconnected toasasa the server')
+	console.log('✅ Reconnected to the server')
 	if (username) {
 		socket.emit('userJoinLobby', username, (users) => {
 			updateOnlineUsers(users)
