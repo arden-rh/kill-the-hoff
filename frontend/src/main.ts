@@ -1,4 +1,5 @@
 import './assets/scss/style.scss'
+import './assets/game'
 import { io, Socket } from 'socket.io-client'
 import { ClientToServerEvents, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
 
