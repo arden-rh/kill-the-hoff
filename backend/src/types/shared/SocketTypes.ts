@@ -11,7 +11,7 @@ export interface ServerToClientEvents {
 export interface ClientToServerEvents {
 	userJoinLobby: (username: string, callback: (data: LobbyInfoData) => void) => void
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
-	startGame: (callback: () => void) => void
+	startGameRound: (callback: () => void) => void
 }
 
 export interface InterServerEvents {
