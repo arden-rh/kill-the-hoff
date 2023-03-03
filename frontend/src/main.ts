@@ -24,6 +24,10 @@ const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
 
+// Views in game-view
+const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
+const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
+
 // User Detail
 let username: string
 
@@ -90,6 +94,21 @@ const showGameView = () => {
 	gameEl.classList.remove('hide')
 }
 
+const countdown = () => {
+
+	let counter = 5;
+
+	const countdown = setInterval(() => {
+		countdownNoticeEl.innerHTML = `<span>You are playing against ${username} in ${counter}</span>`
+		console.log(`${counter}`)
+		counter--
+		if (counter === -1) {
+			clearInterval(countdown)
+		}
+	}, 1000);
+
+}
+
 /**
  * Listen to play-button
  */
@@ -98,9 +117,14 @@ playBtnEl.addEventListener('click', e => {
 	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
 			console.log("Game created, waiting for another player:", game)
+			countdownNoticeEl.classList.add('hide')
+			waitingNoticeEl.innerHTML = `<p>Waiting for another player..</p>`
 		} else {
 			console.log("Second player joined game:", game)
-			showGameView()
+
+			countdown()
 		}
+
+		showGameView()
 	})
 })
