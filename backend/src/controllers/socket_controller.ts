@@ -1,10 +1,10 @@
 import Debug from 'debug'
 import { Socket } from 'socket.io'
 import { Game } from '@prisma/client'
-import { ClientToServerEvents, ServerToClientEvents } from '../types/shared/SocketTypes'
+import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
 import { getScores } from '../services/score_service'
-import { createGame, getAvailableGame, joinGame } from '../services/game_service'
+import { createGame, getAvailableGame, getGames, joinGame } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
 
@@ -17,8 +17,15 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		debug("🙋 User added to database:", user)
 
 		const users = await getUsers()
+		const games = await getGames()
+
 		socket.broadcast.emit('updateUsers', users)
-		callback(users)
+
+		const data : LobbyInfoData = {
+			users,
+			games
+		}
+		callback(data)
 	})
 
 	// socket.on('getUsers', async callback => {

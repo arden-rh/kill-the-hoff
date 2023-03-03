@@ -46,8 +46,8 @@ socket.on('connect', () => {
 socket.io.on('reconnect', () => {
 	console.log('✅ Reconnected to the server')
 	if (username) {
-		socket.emit('userJoinLobby', username, (users) => {
-			updateOnlineUsers(users)
+		socket.emit('userJoinLobby', username, (callbackData) => {
+			updateOnlineUsers(callbackData.users)
 		})
 	}
 })
@@ -64,8 +64,8 @@ usernameFormEl.addEventListener('submit', e => {
 		return
 	}
 
-	socket.emit('userJoinLobby', username, (users) => {
-		updateOnlineUsers(users)
+	socket.emit('userJoinLobby', username, (callbackData) => {
+		updateOnlineUsers(callbackData.users)
 	})
 
 	showLobbyView()

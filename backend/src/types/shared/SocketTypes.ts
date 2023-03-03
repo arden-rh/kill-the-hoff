@@ -7,9 +7,18 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-	userJoinLobby: (username: string, callback: (users: User[]) => void) => void
+	userJoinLobby: (username: string, callback: (data: LobbyInfoData) => void) => void
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
 }
 
 export interface InterServerEvents {
+}
+
+export interface LobbyInfoData {
+	users: User[]
+	games: Game[]
+}
+
+export interface UserJoinLobbyResult {
+	data: LobbyInfoData | null
 }
