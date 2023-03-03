@@ -4,7 +4,7 @@ import { Game } from '@prisma/client'
 import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
 import { getScores } from '../services/score_service'
-import { createGame, getAvailableGame, getGames, joinGame } from '../services/game_service'
+import { createGame, getAvailableGame, getGames, getGamesFinished, getGamesOngoing, joinGame } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
 
@@ -18,7 +18,8 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 
 		const data: LobbyInfoData = {
 			users: await getUsers(),
-			games: await getGames(),
+			gamesOngoing: await getGamesOngoing(),
+			gamesFinished: await getGamesFinished(),
 			scores: await getScores()
 		}
 		socket.broadcast.emit('updateLobby', data)
@@ -30,13 +31,14 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		const availableGame = await getAvailableGame()
 		let game: Game
 		if (availableGame) {
-			game = await joinGame(availableGame.id, username)
+			game = await joinGame(availableGame.id, socket.id, username)
 			debug(`👾 ${username} joined game:`, game)
 		} else {
-			game = await createGame(username)
+			game = await createGame(socket.id, username)
 			debug(`👾 ${username} created game:`, game)
 		}
 		socket.join(game.id)
+		socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
 		callback(game)
 	})
 
