@@ -2,10 +2,11 @@ import './assets/scss/style.scss'
 import './assets/game'
 import { io, Socket } from 'socket.io-client'
 import { ClientToServerEvents, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
+import { countdownNoticeEl, waitingNoticeEl } from './assets/game'
 
-const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
+export const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
 
-const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_HOST)
+export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_HOST)
 
 /**
  * Queries
@@ -24,10 +25,6 @@ const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
 
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
-
-// Views in game-view
-export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
-export const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 
 // User Detail
 export let username: string

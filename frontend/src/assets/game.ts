@@ -2,7 +2,7 @@
  * Game
 */
 
-import { countdownNoticeEl, hideElement, waitingNoticeEl } from "../main"
+import { hideElement, socket } from "../main"
 
 export { }
 
@@ -18,7 +18,9 @@ const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLBut
 // Views
 const boardEl = document.querySelector('#board') as HTMLDivElement
 const testingEl = document.querySelector('#testing') as HTMLDivElement
-const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
+export const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
+export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
+
 
 /**
  * Timer
@@ -43,12 +45,28 @@ const tick = () => {
 
 const gameStart = () => {
 
+	socket.emit('startGameRound', () => {
+
+	})
+
+	socket.on('gameLogicCoordinates', (rowStart, columnStart, timer) => {
+
+		console.log(rowStart, columnStart)
+
+		const gameTimer = setTimeout(() => {
+			testingEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
+		}, timer)
+
+	})
+
 }
 
 startGameBtnEl.addEventListener('click', () => {
 	console.log("hej")
 	hideElement(waitingNoticeEl)
 	hideElement(countdownNoticeEl)
+
+	gameStart()
 })
 
 testTimerBtnEl.addEventListener('click', () => {
