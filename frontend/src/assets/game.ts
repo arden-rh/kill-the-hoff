@@ -4,19 +4,28 @@
 
 export { }
 
-// testing timers
+/**
+ * Queries
+ */
 
+// Testing timers
 const playerOneTimerEl = document.querySelector('#timer-1') as HTMLSpanElement
 const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
 
+// Views
 const boardEl = document.querySelector('#board') as HTMLDivElement
 const testingEl = document.querySelector('#testing') as HTMLDivElement
+const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 
+/**
+ * Timer
+ */
 const rowStart = 3
 const columnStart = 5
 let timerId: number
-let start : number
+let start: number
 
+// Time format
 const formatedTime = new Intl.DateTimeFormat("en", {
 	minute: "2-digit",
 	second: "2-digit",
@@ -24,13 +33,9 @@ const formatedTime = new Intl.DateTimeFormat("en", {
 })
 
 const tick = () => {
-
 	const now = Date.now() - start
-
 	const currentTime = formatedTime.format(now)
-
 	playerOneTimerEl.innerText = currentTime
-
 }
 
 testTimerBtnEl.addEventListener('click', () => {
@@ -50,6 +55,24 @@ testingEl.addEventListener('click', () => {
 	clearInterval(timerId)
 })
 
+/**
+ * Countdown (before game starts)
+ */
+
+const countdown = (username: string) => {
+
+	let counter = 5;
+
+	const countdown = setInterval(() => {
+		countdownNoticeEl.innerHTML = `<span>You are playing against ${username} in ${counter}</span>`
+		console.log(`${counter}`)
+		counter--
+		if (counter === -1) {
+			clearInterval(countdown)
+		}
+	}, 1000);
+
+}
 
 
 

@@ -104,20 +104,8 @@ const showGameView = () => {
 	showElement(gameEl)
 }
 
-const countdown = () => {
-
-	let counter = 5;
-
-	const countdown = setInterval(() => {
-		countdownNoticeEl.innerHTML = `<span>You are playing against ${username} in ${counter}</span>`
-		console.log(`${counter}`)
-		counter--
-		if (counter === -1) {
-			clearInterval(countdown)
-		}
-	}, 1000);
-
-}
+const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
+const player2NameEl = document.querySelector('#player-2-name') as HTMLSpanElement
 
 /**
  * Listen to play-button
@@ -129,11 +117,16 @@ playBtnEl.addEventListener('click', e => {
 			console.log("Game created, waiting for another player:", game)
 			hideElement(countdownNoticeEl)
 			waitingNoticeEl.innerHTML = `<p>Waiting for another player..</p>`
+			// player1NameEl.innerText += `${game.playerOneName}`
 		} else {
 			console.log("Second player joined game:", game)
-
-			countdown()
+			// player1NameEl.innerText += `${game.playerOneName}`
+			// player2NameEl.innerText = `${game.playerTwoName}`
+			// countdown()
 		}
+
+		player1NameEl.innerText = game.playerOneName
+		player2NameEl.innerText = game.playerTwoName
 
 		showGameView()
 	})
