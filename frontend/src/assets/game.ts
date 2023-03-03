@@ -2,12 +2,15 @@
  * Game
 */
 
+import { countdownNoticeEl, hideElement, waitingNoticeEl } from "../main"
+
 export { }
 
 // testing timers
 
 const playerOneTimerEl = document.querySelector('#timer-1') as HTMLSpanElement
 const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
+const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLButtonElement
 
 const boardEl = document.querySelector('#board') as HTMLDivElement
 const testingEl = document.querySelector('#testing') as HTMLDivElement
@@ -32,6 +35,16 @@ const tick = () => {
 	playerOneTimerEl.innerText = currentTime
 
 }
+
+const gameStart = () => {
+
+}
+
+startGameBtnEl.addEventListener('click', () => {
+	console.log("hej")
+	hideElement(waitingNoticeEl)
+	hideElement(countdownNoticeEl)
+})
 
 testTimerBtnEl.addEventListener('click', () => {
 

@@ -1,4 +1,5 @@
 import './assets/scss/style.scss'
+import './assets/game'
 import { io, Socket } from 'socket.io-client'
 import { ClientToServerEvents, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
 
@@ -25,8 +26,8 @@ const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
 
 // Views in game-view
-const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
-const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
+export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
+export const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 
 // User Detail
 let username: string
@@ -37,7 +38,7 @@ const showElement = (element: HTMLElement) => {
 }
 
 // Hide elements
-const hideElement = (element: HTMLElement) => {
+export const hideElement = (element: HTMLElement) => {
 	element.classList.add('hide')
 }
 
