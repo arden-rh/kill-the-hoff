@@ -59,3 +59,11 @@ export const joinGame = (id: string, userId: string, name: string) => {
 		}
 	})
 }
+
+export const deleteGame = (id: string) => {
+	return prisma.game.delete({
+		where: {
+			id
+		}
+	})
+}

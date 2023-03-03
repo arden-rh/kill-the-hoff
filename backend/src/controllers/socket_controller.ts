@@ -4,7 +4,7 @@ import { Game } from '@prisma/client'
 import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
 import { getScores } from '../services/score_service'
-import { createGame, getAvailableGame, getGames, getGamesFinished, getGamesOngoing, joinGame } from '../services/game_service'
+import { createGame, deleteGame, getAvailableGame, getGames, getGamesFinished, getGamesOngoing, joinGame } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
 
@@ -50,6 +50,11 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 
 	socket.on('disconnect', async () => {
 		debug("❌ User disconnected:", socket.id)
+		const availableGame = await getAvailableGame()
+		if (availableGame && availableGame.playerOneId === socket.id) {
+			await deleteGame(availableGame.id)
+			socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
+		}
 		await deleteUser(socket.id)
 		socket.broadcast.emit('updateLobbyUsers', await getUsers())
 	})

@@ -81,6 +81,7 @@ usernameFormEl.addEventListener('submit', e => {
 	socket.emit('userJoinLobby', username, (callbackData) => {
 		updateOnlineUsers(callbackData.users)
 		updateOngoingGamesList(callbackData.gamesOngoing)
+		updateFinishedGamesList(callbackData.gamesFinished)
 	})
 
 	showLobbyView()
