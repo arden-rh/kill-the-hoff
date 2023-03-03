@@ -5,6 +5,7 @@ export interface ServerToClientEvents {
 	hello: () => void
 	updateLobby: (data: LobbyInfoData) => void
 	updateLobbyUsers: (users: User[]) => void
+	updateLobbyGames: (gamesOngoing: Game[], gamesFinished: Game[]) => void
 	gameLogicCoordinates: (rowStart : number, columnStart: number, timer: number) => void
 }
 
@@ -19,7 +20,8 @@ export interface InterServerEvents {
 
 export interface LobbyInfoData {
 	users: User[]
-	games: Game[]
+	gamesOngoing: Game[]
+	gamesFinished: Game[]
 	scores: Score[]
 }
 

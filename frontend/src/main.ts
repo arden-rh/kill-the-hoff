@@ -1,7 +1,7 @@
 import './assets/scss/style.scss'
 import './assets/game'
 import { io, Socket } from 'socket.io-client'
-import { ClientToServerEvents, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
+import { ClientToServerEvents, Game, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
 import { countdownNoticeEl, waitingNoticeEl } from './assets/game'
 
 export const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
@@ -25,6 +25,12 @@ const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
 
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
+const ongoingGamesListEl = document.querySelector('#ongoing-games-list') as HTMLUListElement
+const finishedGamesListEl = document.querySelector('#finished-games-list') as HTMLUListElement
+
+// Views in game-view
+const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
+const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 
 // User Detail
 export let username: string
@@ -78,6 +84,7 @@ usernameFormEl.addEventListener('submit', e => {
 
 	socket.emit('userJoinLobby', username, (callbackData) => {
 		updateOnlineUsers(callbackData.users)
+		updateOngoingGamesList(callbackData.gamesOngoing)
 	})
 
 	showLobbyView()
@@ -93,10 +100,29 @@ const updateOnlineUsers = (users: User[]) => {
 }
 
 /**
+ * Update list of ongoing games
+ */
+const updateOngoingGamesList = (games: Game[]) => {
+	ongoingGamesListEl.innerHTML = games
+		.map(game => `<li>${game.playerOneName} vs. ${game.playerTwoName}</li>`)
+		.join('')
+}
+
+/**
+ * Update list of finished games
+ */
+const updateFinishedGamesList = (games: Game[]) => {
+	finishedGamesListEl.innerHTML = games
+		.map(game => `<li>${game.playerOneName} vs. ${game.playerTwoName}</li>`)
+		.join('')
+}
+
+/**
  * Listen to updated Lobby information
  */
 socket.on('updateLobby', (data) => {
 	updateOnlineUsers(data.users)
+	updateOngoingGamesList(data.gamesOngoing)
 })
 
 /**
@@ -104,6 +130,14 @@ socket.on('updateLobby', (data) => {
  */
 socket.on('updateLobbyUsers', (users) => {
 	updateOnlineUsers(users)
+})
+
+/**
+ * Listen to updated list of games
+ */
+socket.on('updateLobbyGames', (gamesOngoing, gamesFinished) => {
+	updateOngoingGamesList(gamesOngoing)
+	updateFinishedGamesList(gamesFinished)
 })
 
 /**

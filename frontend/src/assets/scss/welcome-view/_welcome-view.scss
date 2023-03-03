@@ -19,9 +19,9 @@
 #username-form {
 	display: flex;
     background-color: black;
-	border: 2px solid $primary-color;
     flex-direction: column;
     justify-content: center;
+	font-family: $secondary-font;
     width: 50vw;
     height: 30vh;
     flex-wrap: wrap;
@@ -31,6 +31,15 @@
 
 #connectBtn {
 	border: 2px solid $primary-color;
-	width: 150px;
-	height: 80px;
+	font-family: $secondary-font;
+	border: $primary-color 2px dashed;
+	text-transform: uppercase;
+	padding: 0.2rem 0.8rem;
+	letter-spacing: 0.2rem;
+
+	&:hover {
+		background-color: $primary-color;
+		color: $secondary-color;
+		box-shadow: 5px 5px 3px 0px rgba(0,0,0,0.6);
+	}
 }
