@@ -54,7 +54,7 @@ export const joinGame = (id: string, userId: string, name: string) => {
 		},
 		data: {
 			timeStarted: Date.now(),
-			playerOneId: userId,
+			playerTwoId: userId,
 			playerTwoName: name
 		}
 	})
