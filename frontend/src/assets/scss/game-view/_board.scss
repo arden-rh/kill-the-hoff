@@ -1,15 +1,14 @@
 #board {
 	background-color: rgb(114, 105, 105);
-	width: 80%;
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(10, 1fr);
-	border:rgb(255, 255, 255) solid 1px;
-	grid-area: 1 / 1 / 11 / 8;
+	grid-area: 1 / 1 / 11 / 7;
 
 	div {
-		grid-column: 2 / 3;
-		grid-row: 2 / 3;
+		grid-area: 2 / 2 / 3 / 3 ;
+		// grid-column: 2 / 3;
+		// grid-row: 2 / 3;
 		background-color: white;
 	}
 }

@@ -11,10 +11,14 @@ const debug = Debug('hoff:socket_controller')
 export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>) => {
 	debug("✅ User connected:", socket.id)
 
-	socket.on('userJoinLobby', async username => {
+	socket.on('userJoinLobby', async (username, callback) => {
 		debug("🙋 User wants to join lobby:", socket.id, username)
 		const user = await createUser(socket.id, username)
 		debug("🙋 User added to database:", user)
+
+		const users = await getUsers()
+		socket.broadcast.emit('updateUsers', users)
+		callback(users)
 	})
 
 	// socket.on('getUsers', async callback => {

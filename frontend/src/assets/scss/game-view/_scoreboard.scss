@@ -1,0 +1,90 @@
+#scoreboard {
+	background-color: rgb(163, 153, 153);
+	font-family: $secondary-font;
+	color: $primary-color;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	grid-area: 1 / 7 / 11 / 9;
+
+	h3 {
+		font-size: 1rem;
+		letter-spacing: 0.15rem;
+		margin: 1rem 0 0 0;
+		padding: 0.8rem 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 80%;
+	}
+
+	#score {
+		border: $primary-color dashed 2px;
+		height: 7rem;
+		width: 80%;
+		margin: 1rem 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-size: 2rem;
+
+		span {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.points {
+			padding: 0 0 0 0.5rem;
+			font-size: 3rem;
+		}
+
+		#point-header {
+			font-size: 0.8rem;
+			width: 70%;
+			padding-top: 0.8rem;
+			display: flex;
+			justify-content: space-around;
+		}
+	}
+
+	#players {
+		width: 80%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		div {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 2rem 0;
+		}
+
+		span {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin-top: 0.2rem;
+		}
+
+		.timer {
+			background-color: $primary-color;
+			height: 3rem;
+			width: 100%;
+			color: $secondary-color;
+			font-size: 1.25rem;
+		}
+
+		#player-1-name {
+			color: rgb(51, 249, 249);
+			;
+		}
+	}
+
+}
+
+

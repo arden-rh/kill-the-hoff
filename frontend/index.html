@@ -13,7 +13,8 @@
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Press+Start+2P&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Press+Start+2P&display=swap"
+		rel="stylesheet">
 
 	<title>Kill the Hoff</title>
 </head>
@@ -25,7 +26,7 @@
 			<h1>KILL THE HOFF</h1>
 		</header>
 
-		<div id="welcome-view-wrapper" class="">
+		<div id="welcome-view-wrapper" class="hide">
 			<div id="welcome-view">
 
 				<div id="login">
@@ -42,7 +43,7 @@
 			</div>
 		</div>
 
-		<div id="lobby-view" class="container">
+		<div id="lobby-view" class="container hide">
 
 			<div id="highscore">
 				<h3>Highscore</h3>
@@ -61,17 +62,16 @@
 			</div>
 			<div id="users">
 				<h4>Users Online</h4>
-				<ul>
-					<li id="your-username"></li>
+				<ul id="users-online">
 				</ul>
 			</div>
 			<div id="enter-game">
 				<h4>Ready to play?</h4>
-				<button id="play-now">Play now</button>
+				<button id="play-btn">Play</button>
 			</div>
 		</div>
 
-		<div id="game-view" class="container hide">
+		<div id="game-view" class="container">
 
 			<div id="board">
 				<div id="testing"></div>
@@ -79,20 +79,24 @@
 			</div>
 
 			<div id="scoreboard">
-				<div>
-					<h2>Scoreboard</h2>
+				<h3>Scoreboard</h3>
+				<div id="score">
+					<span id="point-header"><span>P1</span><span>P2</span></span>
+					<span>
+						<span id="pl-1-points" class="points">4</span> - <span id="pl-2-points" class="points">5</span>
+					</span>
 				</div>
-				<div id="score"></div>
 
 				<div id="players">
 					<div id="player-1">
-						<span id="player-1-name"></span>
-						<span class="timer"></span>
+						<span id="player-1-name">h4xx0r</span>
+						<span id="timer-1" class="timer">00:00.00</span>
 					</div>
 					<div id="player-2">
-						<span id="player-2-name"></span>
-						<span class="timer"></span>
+						<span id="player-2-name">trouble</span>
+						<span id="timer-2" class="timer">00:04.56</span>
 					</div>
+					<button id="test-timer-btn">START</button>
 				</div>
 			</div>
 
