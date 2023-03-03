@@ -79,7 +79,7 @@ usernameFormEl.addEventListener('submit', e => {
 const playNowEl = document.querySelector('#play-now') as HTMLButtonElement
 playNowEl.addEventListener('click', e => {
 	e.preventDefault()
-	socket.emit('userPlayGame', username, game => {
+	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
 			console.log("Game created, waiting for another player:", game)
 		} else {
