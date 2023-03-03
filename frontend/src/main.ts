@@ -24,8 +24,22 @@ const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
 
+// Views in game-view
+const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
+const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
+
 // User Detail
 let username: string
+
+// Show elements
+const showElement = (element: HTMLElement) => {
+	element.classList.remove('hide')
+}
+
+// Hide elements
+const hideElement = (element: HTMLElement) => {
+	element.classList.add('hide')
+}
 
 /**
  * Connection to server and get socket id
@@ -79,15 +93,30 @@ socket.on('updateUsers', (users) => {
  * Show lobby view
  */
 const showLobbyView = () => {
-	welcomeViewEl.classList.add('hide')
+	hideElement(welcomeViewEl)
 }
 
 /**
  * Show game view
  */
 const showGameView = () => {
-	lobbyEl.classList.add('hide')
-	gameEl.classList.remove('hide')
+	hideElement(lobbyEl)
+	showElement(gameEl)
+}
+
+const countdown = () => {
+
+	let counter = 5;
+
+	const countdown = setInterval(() => {
+		countdownNoticeEl.innerHTML = `<span>You are playing against ${username} in ${counter}</span>`
+		console.log(`${counter}`)
+		counter--
+		if (counter === -1) {
+			clearInterval(countdown)
+		}
+	}, 1000);
+
 }
 
 /**
@@ -98,8 +127,14 @@ playBtnEl.addEventListener('click', e => {
 	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
 			console.log("Game created, waiting for another player:", game)
+			hideElement(countdownNoticeEl)
+			waitingNoticeEl.innerHTML = `<p>Waiting for another player..</p>`
 		} else {
 			console.log("Second player joined game:", game)
+
+			countdown()
 		}
+
+		showGameView()
 	})
 })
