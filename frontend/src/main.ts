@@ -25,8 +25,8 @@ const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
 
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
-const ongoingGamesListEl = document.querySelector('#ongoing-games-list') as HTMLUListElement
-const finishedGamesListEl = document.querySelector('#finished-games-list') as HTMLUListElement
+const gamesFinishedEl = document.querySelector('#games-finished') as HTMLUListElement
+const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElement
 
 // User Detail
 export let username: string
@@ -80,8 +80,8 @@ usernameFormEl.addEventListener('submit', e => {
 
 	socket.emit('userJoinLobby', username, (callbackData) => {
 		updateOnlineUsers(callbackData.users)
-		updateGamesList(ongoingGamesListEl, callbackData.gamesOngoing)
-		updateGamesList(finishedGamesListEl, callbackData.gamesFinished)
+		updateGamesList(gamesOngoingEl, callbackData.gamesOngoing)
+		updateGamesList(gamesFinishedEl, callbackData.gamesFinished)
 	})
 
 	showLobbyView()
@@ -97,11 +97,11 @@ const updateOnlineUsers = (users: User[]) => {
 }
 
 /**
- * Update list of games, specify if 'ongoing' or 'finished'
+ * Update list of games, specify element 'ongoing' or 'finished' as first parameter
  */
 const updateGamesList = (element: HTMLElement, games: Game[]) => {
 	element.innerHTML = games
-		.map(game => `<li>${game.playerOneName} vs. ${game.playerTwoName}</li>`)
+		.map(game => `<li>${game.playerOneName}-${game.playerTwoName} ${game.playerOneScore}-${game.playerTwoScore}</li>`)
 		.join('')
 }
 
@@ -110,8 +110,8 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
  */
 socket.on('updateLobby', (data) => {
 	updateOnlineUsers(data.users)
-	updateGamesList(ongoingGamesListEl, data.gamesOngoing)
-	updateGamesList(finishedGamesListEl, data.gamesFinished)
+	updateGamesList(gamesOngoingEl, data.gamesOngoing)
+	updateGamesList(gamesFinishedEl, data.gamesFinished)
 })
 
 /**
@@ -125,8 +125,8 @@ socket.on('updateLobbyUsers', (users) => {
  * Listen to updated list of games
  */
 socket.on('updateLobbyGames', (gamesOngoing, gamesFinished) => {
-	updateGamesList(ongoingGamesListEl, gamesOngoing)
-	updateGamesList(finishedGamesListEl, gamesFinished)
+	updateGamesList(gamesOngoingEl, gamesOngoing)
+	updateGamesList(gamesFinishedEl, gamesFinished)
 })
 
 /**
