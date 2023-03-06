@@ -61,33 +61,30 @@ export const joinGame = (id: string, userId: string, name: string) => {
 }
 
 
-export const updateGame = (id: string, gameOwner: boolean, round: number, responseTime: number) => {
-
-	console.log(responseTime)
-
+export const updateGame = async (id: string, gameOwner: boolean, round: number, responseTime: number) => {
 	if (gameOwner) {
-		return prisma.game.update({
+		return await prisma.game.update({
 			where: {
-				id,
+				id
 			},
 			data: {
 				playerOneResponseTimes: {
-					push: responseTime,
+					push: responseTime
 				}
 			}
 		})
-}
-
-	return prisma.game.update({
-		where: {
-			id,
-		},
-		data: {
-			playerOneResponseTimes: {
-				push: responseTime,
+	} else {
+		return await prisma.game.update({
+			where: {
+				id
+			},
+			data: {
+				playerTwoResponseTimes: {
+					push: responseTime
+				}
 			}
-		}
-	})
+		})
+	}
 }
 
 export const deleteGame = (id: string) => {
