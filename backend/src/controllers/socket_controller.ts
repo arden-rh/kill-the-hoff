@@ -73,10 +73,6 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	})
 
 	socket.on('roundResult', async (game, gameOwner, round, responseTime) => {
-		debug("PING PING", gameOwner)
-
-		debug("Response time:", responseTime)
-
-		updateGame(game.id, gameOwner, round, responseTime)
+		const updatedGame = await updateGame(game.id, gameOwner, round, responseTime)
 	})
 }
