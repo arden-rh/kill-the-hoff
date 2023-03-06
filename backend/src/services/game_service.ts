@@ -8,6 +8,9 @@ export const getGamesOngoing = () => {
 	return prisma.game.findMany({
 		where: {
 			timeFinished: 0
+		},
+		orderBy: {
+			timeCreated: 'desc'
 		}
 	})
 }
@@ -33,7 +36,7 @@ export const createGame = (userId: string, name: string) => {
 			playerOneScore: 0,
 			playerOneResponseTimes: [],
 			playerTwoId: '',
-			playerTwoName: '[Player 2]',
+			playerTwoName: '',
 			playerTwoScore: 0,
 			playerTwoResponseTimes: []
 		}
