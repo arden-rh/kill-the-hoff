@@ -45,7 +45,20 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	socket.on('startGameRound', async () => {
 		debug("User wants to start a game")
 
-		socket.emit('gameLogicCoordinates', 2, 5, 3000)
+		const getRandomNumber = (max : number) => {
+			return Math.ceil( Math.random() * max );
+		}
+
+		const getRandomDelay = (max : number) => {
+			return Math.ceil( Math.random() * max * 1000 + 1000);
+		}
+
+		const rowStart = getRandomNumber(10)
+		const columnStart = getRandomNumber(10)
+		const delayTimer = getRandomDelay(8)
+
+
+		socket.emit('gameLogicCoordinates', rowStart, columnStart, delayTimer)
 	})
 
 	socket.on('disconnect', async () => {
