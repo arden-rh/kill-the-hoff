@@ -15,7 +15,7 @@ const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLBut
 
 // Views
 const boardEl = document.querySelector('#board') as HTMLDivElement
-const testingEl = document.querySelector('#testing') as HTMLDivElement
+const targetImgEl = document.querySelector('#target-img') as HTMLDivElement
 export const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
 
@@ -28,7 +28,6 @@ let start: number
 
 // Time format
 const formatedTime = new Intl.DateTimeFormat("en", {
-	minute: "2-digit",
 	second: "2-digit",
 	fractionalSecondDigits: 2
 })
@@ -41,7 +40,7 @@ const tick = () => {
 
 }
 
-const gameStart = () => {
+const startGameRound = () => {
 
 	socket.emit('startGameRound', () => {
 
@@ -53,11 +52,11 @@ const gameStart = () => {
 		console.log(timer)
 
 		const gameTimer = setTimeout(() => {
-			showElement(testingEl)
-			testingEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
+			showElement(targetImgEl)
+			targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
 		}, timer)
 
-		hideElement(testingEl)
+		hideElement(targetImgEl)
 
 	})
 
@@ -68,9 +67,9 @@ startGameBtnEl.addEventListener('click', () => {
 	console.log("game start")
 	hideElement(waitingNoticeEl)
 	hideElement(countdownNoticeEl)
-	hideElement(testingEl)
+	hideElement(targetImgEl)
 
-	gameStart()
+	startGameRound()
 })
 
 testTimerBtnEl.addEventListener('click', () => {
@@ -82,12 +81,12 @@ testTimerBtnEl.addEventListener('click', () => {
 
 })
 
-testingEl.addEventListener('click', () => {
+targetImgEl.addEventListener('click', () => {
 	// testingEl.style.gridArea = "4 / 5 / 5 / 6"
 	// testingEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
 
 	clearInterval(timerId)
-	gameStart()
+	startGameRound()
 })
 
 /**
