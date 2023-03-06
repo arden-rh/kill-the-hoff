@@ -8,19 +8,19 @@ datasource db {
 }
 
 model Game {
-	id					String @id @default(auto()) @map("_id") @db.ObjectId
-	timeCreated			Int
-	timeStarted			Int
-	timeFinished		Int
-	playerOneId			String
-	playerOneName		String
-	playerOneScore		Int
-	playerOneAvgTime	Float
-	playerTwoId			String
-	playerTwoName		String
-	playerTwoScore		Int
-	playerTwoAvgTime	Float
-	roundsPlayed		Int
+	id						String @id @default(auto()) @map("_id") @db.ObjectId
+	timeCreated				Int
+	timeStarted				Int
+	timeFinished			Int
+	playerOneId				String
+	playerOneName			String
+	playerOneScore			Int
+	playerOneResponseTimes	Int[]
+	playerTwoId				String
+	playerTwoName			String
+	playerTwoScore			Int
+	playerTwoResponseTimes	Int[]
+	roundsPlayed			Int
 }
 
 model Score {

@@ -2,7 +2,7 @@
  * Game
 */
 import { Game } from "@backend/types/shared/SocketTypes"
-import { hideElement, showElement, socket, username } from "../main"
+import { hideElement, showElement, socket } from "../main"
 export { }
 
 /**
@@ -93,51 +93,51 @@ let start: number
 /**
  * Countdown (before game starts)
  */
-export const startGame = (game: Game, player: string) => {
+export const startGame = (game: Game, gameOwner: boolean) => {
 
 	let counter = 5;
 
 	const countdown = setInterval(() => {
-		countdownNoticeEl.innerHTML = `<span>You are playing against ${( player === 'playerTwoId') ? game.playerOneName : game.playerTwoName} in ${counter}</span>`
+		countdownNoticeEl.innerHTML = `<span>You are playing against ${(gameOwner) ? game.playerOneName : game.playerTwoName} in ${counter}</span>`
 		console.log(`${counter}`)
 		counter--
 		if (counter === -1) {
 			clearInterval(countdown)
 
-			startRound(game, player, 1)
+			startRound(game, gameOwner, 1)
 		}
 	}, 1000);
 
 }
 
-const startRound = (game: Game, player: string, round: number) => {
+const startRound = (game: Game, gameOwner: boolean, round: number) => {
 
-console.log("GAME IS STARTING")
+	console.log("GAME IS STARTING")
 
-// Show box
-hideElement(waitingNoticeEl)
-hideElement(countdownNoticeEl)
-showElement(targetImgEl)
+	// Show box
+	hideElement(waitingNoticeEl)
+	hideElement(countdownNoticeEl)
+	showElement(targetImgEl)
 
-console.log('Timern ska gå igång')
-start = Date.now()
-console.log('Start:', start)
+	console.log('Timern ska gå igång')
+	start = Date.now()
+	console.log('Start:', start)
 
-// Klick event på box
-targetImgEl.addEventListener('click', () => {
+	// Klick event på box
+	targetImgEl.addEventListener('click', () => {
 
-	let end = Date.now()
+		let end = Date.now()
 
-	let result = end - start
+		let responseTime = end - start
 
-	console.log('Slut:', end)
+		console.log('Slut:', end)
 
-	console.log('Resultat:', result)
+		console.log('Resultat:', responseTime)
 
-	socket.emit('roundResult', game, socket.id, player, round, result)
+		socket.emit('roundResult', game, gameOwner, round, responseTime)
 
-	clearInterval(timerId)
-	// startGameRound()
-})
+		clearInterval(timerId)
+		// startGameRound()
+	})
 
 }

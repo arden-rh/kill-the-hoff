@@ -29,11 +29,11 @@ export const createGame = (userId: string, name: string) => {
 			playerOneId: userId,
 			playerOneName: name,
 			playerOneScore: 0,
-			playerOneAvgTime: 0.00,
+			playerOneResponseTimes: [],
 			playerTwoId: '',
 			playerTwoName: '[Player 2]',
 			playerTwoScore: 0,
-			playerTwoAvgTime: 0.00,
+			playerTwoResponseTimes: [],
 			roundsPlayed: 0
 		}
 	})
@@ -60,17 +60,35 @@ export const joinGame = (id: string, userId: string, name: string) => {
 	})
 }
 
-// export const updateGame = (id: string) {
-// 	return prisma.game.update({
-// 		where: {
-// 			id,
 
-// 		},
-// 		data: {
+export const updateGame = (id: string, gameOwner: boolean, round: number, responseTime: number) => {
 
-// 		}
-// 	})
-// }
+	console.log(responseTime)
+
+	if (gameOwner) {
+		return prisma.game.update({
+			where: {
+				id,
+			},
+			data: {
+				playerOneResponseTimes: {
+					push: responseTime,
+				}
+			}
+		})
+}
+
+	return prisma.game.update({
+		where: {
+			id,
+		},
+		data: {
+			playerOneResponseTimes: {
+				push: responseTime,
+			}
+		}
+	})
+}
 
 export const deleteGame = (id: string) => {
 	return prisma.game.delete({

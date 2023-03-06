@@ -13,7 +13,7 @@ export interface ClientToServerEvents {
 	userJoinLobby: (username: string, callback: (data: LobbyInfoData) => void) => void
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
 	startGameRound: (callback: () => void) => void
-	roundResult: (game: Game, playerId: string, player: string, round: number, result: number) => void
+	roundResult: (game: Game, gameOwner: boolean, round: number, responseTime: number) => void
 }
 
 export interface InterServerEvents {

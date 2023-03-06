@@ -30,7 +30,7 @@ const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElem
 
 // User Detail
 export let username: string
-let player: string
+let gameOwner: boolean
 
 // Show elements
 export const showElement = (element: HTMLElement) => {
@@ -140,11 +140,11 @@ const showLobbyView = () => {
 /**
  * Show game view
  */
-const showGameView = (game: Game, player: string) => {
+const showGameView = (game: Game, gameOwner: boolean) => {
 	hideElement(lobbyEl)
 	showElement(gameEl)
 
-	startGame(game, player)
+	startGame(game, gameOwner)
 }
 
 const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
@@ -159,23 +159,21 @@ playBtnEl.addEventListener('click', e => {
 		if (game.timeStarted === 0) {
 			console.log("Game created, waiting for another player:", game)
 
-			player = 'playerOneId'
+			gameOwner = true
 
 			hideElement(countdownNoticeEl)
 			waitingNoticeEl.innerHTML = `<span class="">Waiting for another player..</span>`
-			// player1NameEl.innerText += `${game.playerOneName}`
+
 		} else {
 			console.log("Second player joined game:", game)
 
-			player = 'playerTwoId'
-			// player1NameEl.innerText += `${game.playerOneName}`
-			// player2NameEl.innerText = `${game.playerTwoName}`
-			// countdown()
+			gameOwner = false
+
 		}
 
 		player1NameEl.innerText = game.playerOneName
 		player2NameEl.innerText = game.playerTwoName
 
-		showGameView(game, player)
+		showGameView(game, gameOwner)
 	})
 })
