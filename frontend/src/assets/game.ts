@@ -104,13 +104,13 @@ export const startGame = (game: Game, gameOwner: boolean) => {
 		if (counter === -1) {
 			clearInterval(countdown)
 
-			startRound(game, gameOwner, 1)
+			startRound(game, gameOwner)
 		}
 	}, 1000);
 
 }
 
-const startRound = (game: Game, gameOwner: boolean, round: number) => {
+const startRound = (game: Game, gameOwner: boolean) => {
 
 	console.log("GAME IS STARTING")
 
@@ -134,7 +134,7 @@ const startRound = (game: Game, gameOwner: boolean, round: number) => {
 
 		console.log('Resultat:', responseTime)
 
-		socket.emit('roundResult', game, gameOwner, round, responseTime)
+		socket.emit('roundResult', game, gameOwner, responseTime)
 
 		clearInterval(timerId)
 		// startGameRound()

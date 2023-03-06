@@ -72,8 +72,8 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		socket.broadcast.emit('updateLobbyUsers', await getUsers())
 	})
 
-	socket.on('roundResult', async (game, gameOwner, round, responseTime) => {
-		const updatedGame = await updateGame(game.id, gameOwner, round, responseTime)
+	socket.on('roundResult', async (game, gameOwner, responseTime) => {
+		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
 		debug("Updated game:", updatedGame)
 		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
 			console.log("Kör ny runda")

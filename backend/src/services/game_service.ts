@@ -15,7 +15,9 @@ export const getGamesOngoing = () => {
 export const getGamesFinished = () => {
 	return prisma.game.findMany({
 		where: {
-			roundsPlayed: 10
+			timeFinished: {
+				gt: 0
+			}
 		}
 	})
 }
@@ -33,8 +35,7 @@ export const createGame = (userId: string, name: string) => {
 			playerTwoId: '',
 			playerTwoName: '[Player 2]',
 			playerTwoScore: 0,
-			playerTwoResponseTimes: [],
-			roundsPlayed: 0
+			playerTwoResponseTimes: []
 		}
 	})
 }
@@ -61,7 +62,7 @@ export const joinGame = (id: string, userId: string, name: string) => {
 }
 
 
-export const updateGame = (id: string, gameOwner: boolean, round: number, responseTime: number) => {
+export const updateGame = (id: string, gameOwner: boolean, responseTime: number) => {
 	if (gameOwner) {
 		return prisma.game.update({
 			where: {
