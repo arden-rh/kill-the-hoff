@@ -22,6 +22,7 @@ const gameEl = document.querySelector('#game-view') as HTMLDivElement
 
 // Buttons
 const playBtnEl = document.querySelector('#play-btn') as HTMLButtonElement
+const availableNameEl = document.querySelector('.available-name') as HTMLSpanElement
 
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
@@ -100,8 +101,14 @@ const updateOnlineUsers = (users: User[]) => {
  * Update list of games, specify element 'ongoing' or 'finished' as first parameter
  */
 const updateGamesList = (element: HTMLElement, games: Game[]) => {
+	if (element === gamesOngoingEl) {
+		const availableGame = games.find(game => game.timeStarted === 0)
+		if (availableGame) {
+			availableNameEl.innerText = ` vs. ${availableGame.playerOneName}`
+		}
+	}
 	element.innerHTML = games
-		.map(game => `<li>${game.playerOneName}-${game.playerTwoName} ${game.playerOneScore}-${game.playerTwoScore}</li>`)
+		.map(game => `<li>${game.playerOneName}-${(game.playerTwoId) ? game.playerTwoName : '<em>[waiting for opponent]</em>' } ${game.playerOneScore}-${game.playerTwoScore}</li>`)
 		.join('')
 }
 
