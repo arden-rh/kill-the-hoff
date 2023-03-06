@@ -32,7 +32,7 @@ const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElem
 export let username: string
 
 // Show elements
-const showElement = (element: HTMLElement) => {
+export const showElement = (element: HTMLElement) => {
 	element.classList.remove('hide')
 }
 
