@@ -60,6 +60,18 @@ export const joinGame = (id: string, userId: string, name: string) => {
 	})
 }
 
+// export const updateGame = (id: string) {
+// 	return prisma.game.update({
+// 		where: {
+// 			id,
+
+// 		},
+// 		data: {
+
+// 		}
+// 	})
+// }
+
 export const deleteGame = (id: string) => {
 	return prisma.game.delete({
 		where: {

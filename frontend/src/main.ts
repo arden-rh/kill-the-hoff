@@ -2,7 +2,7 @@ import './assets/scss/style.scss'
 import './assets/game'
 import { io, Socket } from 'socket.io-client'
 import { ClientToServerEvents, Game, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
-import { countdownNoticeEl, waitingNoticeEl } from './assets/game'
+import { countdownNoticeEl, startGame, waitingNoticeEl } from './assets/game'
 
 export const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
 
@@ -30,6 +30,7 @@ const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElem
 
 // User Detail
 export let username: string
+let player: string
 
 // Show elements
 export const showElement = (element: HTMLElement) => {
@@ -139,9 +140,11 @@ const showLobbyView = () => {
 /**
  * Show game view
  */
-const showGameView = () => {
+const showGameView = (game: Game, player: string) => {
 	hideElement(lobbyEl)
 	showElement(gameEl)
+
+	startGame(game, player)
 }
 
 const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
@@ -155,11 +158,16 @@ playBtnEl.addEventListener('click', e => {
 	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
 			console.log("Game created, waiting for another player:", game)
+
+			player = 'playerOneId'
+
 			hideElement(countdownNoticeEl)
 			waitingNoticeEl.innerHTML = `<span class="">Waiting for another player..</span>`
 			// player1NameEl.innerText += `${game.playerOneName}`
 		} else {
 			console.log("Second player joined game:", game)
+
+			player = 'playerTwoId'
 			// player1NameEl.innerText += `${game.playerOneName}`
 			// player2NameEl.innerText = `${game.playerTwoName}`
 			// countdown()
@@ -168,6 +176,6 @@ playBtnEl.addEventListener('click', e => {
 		player1NameEl.innerText = game.playerOneName
 		player2NameEl.innerText = game.playerTwoName
 
-		showGameView()
+		showGameView(game, player)
 	})
 })

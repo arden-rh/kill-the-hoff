@@ -1,6 +1,7 @@
 /**
  * Game
 */
+import { Game } from "@backend/types/shared/SocketTypes"
 import { hideElement, showElement, socket, username } from "../main"
 export { }
 
@@ -26,87 +27,117 @@ export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTML
 let timerId: number
 let start: number
 
-// Time format
-const formatedTime = new Intl.DateTimeFormat("en", {
-	second: "2-digit",
-	fractionalSecondDigits: 2
-})
+// // Time format
+// const formatedTime = new Intl.DateTimeFormat("en", {
+// 	second: "2-digit",
+// 	fractionalSecondDigits: 2
+// })
 
-const tick = () => {
-	const now = Date.now() - start
-	const currentTime = formatedTime.format(now)
-	playerOneTimerEl.innerText = currentTime
-	playerTwoTimerEl.innerText = currentTime
+// const tick = () => {
+// 	const now = Date.now() - start
+// 	const currentTime = formatedTime.format(now)
+// 	playerOneTimerEl.innerText = currentTime
+// 	playerTwoTimerEl.innerText = currentTime
 
-}
+// }
 
-const startGameRound = () => {
+// // const startGameRound = () => {
 
-	socket.emit('startGameRound', () => {
+// // 	socket.emit('startGameRound', () => {
 
-	})
+// // 	})
 
-	socket.on('gameLogicCoordinates', (rowStart, columnStart, timer) => {
+// // 	socket.on('gameLogicCoordinates', (rowStart, columnStart, timer) => {
 
-		console.log(rowStart, columnStart)
-		console.log(timer)
+// // 		console.log(rowStart, columnStart)
+// // 		console.log(timer)
 
-		const gameTimer = setTimeout(() => {
-			showElement(targetImgEl)
-			targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
-		}, timer)
+// // 		const gameTimer = setTimeout(() => {
+// // 			showElement(targetImgEl)
+// // 			targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
+// // 		}, timer)
 
-		hideElement(targetImgEl)
+// // 		hideElement(targetImgEl)
 
-	})
+// // 	})
 
-}
+// // }
 
-startGameBtnEl.addEventListener('click', () => {
+// startGameBtnEl.addEventListener('click', () => {
 
-	console.log("game start")
-	hideElement(waitingNoticeEl)
-	hideElement(countdownNoticeEl)
-	hideElement(targetImgEl)
+// 	// console.log("game start")
+// 	// hideElement(waitingNoticeEl)
+// 	// hideElement(countdownNoticeEl)
+// 	// hideElement(targetImgEl)
 
-	startGameRound()
-})
+// 	// startGameRound()
+// })
 
-testTimerBtnEl.addEventListener('click', () => {
+// testTimerBtnEl.addEventListener('click', () => {
 
-	start = Date.now()
+// 	start = Date.now()
 
-	clearInterval(timerId)
-	timerId = setInterval(tick, 100)
+// 	clearInterval(timerId)
+// 	timerId = setInterval(tick, 100)
 
-})
+// })
 
-targetImgEl.addEventListener('click', () => {
-	// testingEl.style.gridArea = "4 / 5 / 5 / 6"
-	// testingEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
+// targetImgEl.addEventListener('click', () => {
+// 	// testingEl.style.gridArea = "4 / 5 / 5 / 6"
+// 	// testingEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
 
-	clearInterval(timerId)
-	startGameRound()
-})
+// 	clearInterval(timerId)
+// 	// startGameRound()
+// })
 
 /**
  * Countdown (before game starts)
  */
-const countdown = (username: string) => {
+export const startGame = (game: Game, player: string) => {
 
 	let counter = 5;
 
 	const countdown = setInterval(() => {
-		countdownNoticeEl.innerHTML = `<span>You are playing against ${username} in ${counter}</span>`
+		countdownNoticeEl.innerHTML = `<span>You are playing against ${( player === 'playerTwoId') ? game.playerOneName : game.playerTwoName} in ${counter}</span>`
 		console.log(`${counter}`)
 		counter--
 		if (counter === -1) {
 			clearInterval(countdown)
+
+			startRound(game, player, 1)
 		}
 	}, 1000);
 
 }
 
-const startGame = () => {
-	countdown(username)
+const startRound = (game: Game, player: string, round: number) => {
+
+console.log("GAME IS STARTING")
+
+// Show box
+hideElement(waitingNoticeEl)
+hideElement(countdownNoticeEl)
+showElement(targetImgEl)
+
+console.log('Timern ska gå igång')
+start = Date.now()
+console.log('Start:', start)
+
+// Klick event på box
+targetImgEl.addEventListener('click', () => {
+
+	let end = Date.now()
+
+	let result = end - start
+
+	console.log('Slut:', end)
+
+	console.log('Resultat:', result)
+
+	socket.emit('roundResult', game, socket.id, player, round, result)
+
+	clearInterval(timerId)
+	// startGameRound()
+})
+
 }

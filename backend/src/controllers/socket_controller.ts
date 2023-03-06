@@ -71,4 +71,10 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		await deleteUser(socket.id)
 		socket.broadcast.emit('updateLobbyUsers', await getUsers())
 	})
+
+	socket.on('roundResult', async (game, playerId, player) => {
+		debug("PING PING", player)
+
+		// updateGame(game.id, player)
+	})
 }
