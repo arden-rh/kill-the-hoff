@@ -24,8 +24,9 @@
 	}
 }
 
+/* Individual divs in grid */
 
-// indvidual divs in grid
+// Join game
 #enter-game {
 	background-color: $primary-color;
 	grid-area: 10 / 5 / 11 / 9;
@@ -68,6 +69,7 @@
 	}
 }
 
+// Highscore
 #highscore {
 	background-color: $primary-color;
 	grid-area: 1 / 1 / 2 / 11;
@@ -109,26 +111,15 @@
 			-webkit-transform: translateX(100%);
 			transform: translateX(100%);
 
-			-moz-animation: scroll-animation 15s linear infinite;
-			-webkit-animation: scroll-animation 15s linear infinite;
-			animation: scroll-animation 15s linear infinite;
+			-moz-animation: scroll-animation 10s linear infinite;
+			-webkit-animation: scroll-animation 10s linear infinite;
+			animation: scroll-animation 10s linear infinite;
 		}
 
 	}
-
-	/* for Firefox */
-	@-moz-keyframes scroll-animation {
-		from {
-			-moz-transform: translateX(100%);
-		}
-
-		to {
-			-moz-transform: translateX(-100%);
-		}
-	}
-
 }
 
+// Ongoing games
 #ongoing-games {
 	background-color: $primary-color;
 	grid-area: 2 / 5 / 7 / 9;
@@ -192,16 +183,7 @@
 	}
 }
 
-@keyframes blink {
-	0% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
-
+// Ten latest played games
 #ten-games {
 	background-color: $primary-color;
 	grid-area: 2 / 1 / 11 / 5;
@@ -245,6 +227,7 @@
 	}
 }
 
+// Online users
 #users {
 	background-color: $primary-color;
 	grid-area: 7 / 5 / 10 / 9;
@@ -279,17 +262,15 @@
 	}
 }
 
-// animations
+/* Animations */
 
-
-/* for Chrome */
-@-webkit-keyframes scroll-animation {
-	from {
-		-webkit-transform: translateX(100%);
+@keyframes blink {
+	0% {
+		opacity: 0;
 	}
 
-	to {
-		-webkit-transform: translateX(-100%);
+	100% {
+		opacity: 1;
 	}
 }
 
@@ -305,5 +286,26 @@
 		-webkit-transform: translateX(-100%);
 		transform: translateX(-100%);
 	}
+}
 
+// for Chrome
+@-webkit-keyframes scroll-animation {
+	from {
+		-webkit-transform: translateX(100%);
+	}
+
+	to {
+		-webkit-transform: translateX(-100%);
+	}
+}
+
+// for Firefox
+@-moz-keyframes scroll-animation {
+	from {
+		-moz-transform: translateX(100%);
+	}
+
+	to {
+		-moz-transform: translateX(-100%);
+	}
 }
