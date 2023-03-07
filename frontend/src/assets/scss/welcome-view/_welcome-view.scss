@@ -21,7 +21,7 @@
     background-color: black;
     flex-direction: column;
     justify-content: center;
-	font-family: $secondary-font;
+	font-family: $primary-font;
     width: 50vw;
     height: 30vh;
     flex-wrap: wrap;
@@ -31,7 +31,7 @@
 
 #connectBtn {
 	border: 2px solid $primary-color;
-	font-family: $secondary-font;
+	font-family: $primary-font;
 	border: $primary-color 2px dashed;
 	text-transform: uppercase;
 	padding: 0.2rem 0.8rem;

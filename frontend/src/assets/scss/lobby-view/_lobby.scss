@@ -3,11 +3,11 @@
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	grid-template-rows: repeat(10, 1fr);
-	font-family: $secondary-font;
+	font-family: $primary-font;
 
 	h3,
 	h4 {
-		font-family: $secondary-font;
+		font-family: $primary-font;
 		color: $primary-color;
 	}
 
@@ -84,11 +84,13 @@
 	padding: 0.5rem;
 	margin-bottom: 5px;
 	font-size: 0.7rem;
+	letter-spacing: 0.05rem;
 	color: $primary-color;
 
 	ul {
 		margin: 0;
 		padding: 0;
+		overflow-y: scroll;
 
 		li {
 			display: flex;
