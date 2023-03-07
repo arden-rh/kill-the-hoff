@@ -19,6 +19,9 @@ const boardEl = document.querySelector('#board') as HTMLDivElement
 const targetImgEl = document.querySelector('#target-img') as HTMLDivElement
 export const noticeEl = document.querySelector('#notice') as HTMLDivElement
 
+// Scores
+const playerOneScoreEl = document.querySelector('#pl-1-points') as HTMLSpanElement
+const playerTwoScoreEl = document.querySelector('#pl-2-points') as HTMLSpanElement
 
 /**
  * Timer
@@ -98,12 +101,13 @@ export const startRound = (game: Game) => {
 	start = Date.now()
 	console.log('Start:', start)
 
-	// Klick event på target
+	let responseTime: number
+
 	targetImgEl.addEventListener('click', () => {
 
 		let end = Date.now()
 
-		let responseTime = end - start
+		responseTime = end - start
 
 		console.log('Slut:', end)
 
@@ -114,6 +118,5 @@ export const startRound = (game: Game) => {
 		clearInterval(timerId)
 		// startGameRound()
 	})
-
 }
 

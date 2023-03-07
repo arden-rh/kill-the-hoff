@@ -8,6 +8,7 @@ export interface ServerToClientEvents {
 	updateLobbyGames: (gamesOngoing: Game[], gamesFinished: Game[]) => void
 	updateGameInfo: (playerTwoName: string) => void
 	gameLogicCoordinates: (rowStart : number, columnStart: number, timer: number, game: Game) => void
+	roundResult: (game: Game, gameOwner: boolean, responseTime: number) => void
 }
 
 export interface ClientToServerEvents {

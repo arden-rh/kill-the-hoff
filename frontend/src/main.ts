@@ -26,6 +26,7 @@ const availableNameEl = document.querySelector('.available-name') as HTMLSpanEle
 
 // Views in lobby
 const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElement
+const userEl = document.querySelector('#user') as HTMLSpanElement
 const gamesFinishedEl = document.querySelector('#games-finished') as HTMLUListElement
 const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElement
 
@@ -85,6 +86,7 @@ usernameFormEl.addEventListener('submit', e => {
 		updateGamesList(gamesFinishedEl, callbackData.gamesFinished)
 	})
 
+	console.log(socket.id)
 	showLobbyView()
 })
 
@@ -92,8 +94,21 @@ usernameFormEl.addEventListener('submit', e => {
  * Update online user list
  */
 const updateOnlineUsers = (users: User[]) => {
+
+	const user = users.find(name => name.id === socket.id)
+
+	if (user) {
+		userEl.innerText = `${user.name}`
+	}
+
 	usersOnlineEl.innerHTML = users
-		.map(user => `<li>${user.name}</li>`)
+		.map(user => {
+			if (socket.id === user.id) {
+				return `<li class='hide'>${user.name}</li>`
+			} else {
+				return `<li>${user.name}</li>`
+			}
+		})
 		.join('')
 }
 
@@ -110,7 +125,7 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 		}
 	}
 	element.innerHTML = games
-		.map(game => `<li>${game.playerOneName}-${(game.playerTwoId) ? game.playerTwoName : '<em>[waiting for opponent]</em>' } ${game.playerOneScore}-${game.playerTwoScore}</li>`)
+		.map(game => `<li><span>${game.playerOneName}-${(game.playerTwoId) ? game.playerTwoName : '<em>[waiting for opponent]</em>'}</span> <span class="game-score">${game.playerOneScore}-${game.playerTwoScore}</span></li>`)
 		.join('')
 }
 
