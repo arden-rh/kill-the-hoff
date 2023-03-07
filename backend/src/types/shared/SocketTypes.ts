@@ -9,6 +9,7 @@ export interface ServerToClientEvents {
 	updateGameInfo: (playerTwoName: string) => void
 	gameLogicCoordinates: (rowStart : number, columnStart: number, timer: number, game: Game) => void
 	roundResult: (game: Game, responseTime: number) => void
+	updateResponseTime: (gameOwner: boolean, responseTime: number) => void
 }
 
 export interface ClientToServerEvents {

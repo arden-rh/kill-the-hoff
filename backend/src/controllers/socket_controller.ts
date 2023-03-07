@@ -4,7 +4,7 @@ import { Game } from '@prisma/client'
 import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
 import { getScores } from '../services/score_service'
-import { createGame, deleteGame, getAvailableGame, getGames, getGamesFinished, getGamesOngoing, joinGame, updateGame } from '../services/game_service'
+import { createGame, deleteGame, getAvailableGame, getGames, getGamesFinished, getGamesOngoing, joinGame, updateGame, updateScore } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
 
@@ -64,33 +64,35 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 
 	socket.on('roundResult', async (game, responseTime) => {
 		const gameOwner = (game.playerOneId === socket.id) ? true : false
+		socket.broadcast.to(game.id).emit('updateResponseTime', gameOwner, responseTime)
 		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
 		debug("Updated game:", updatedGame)
 		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
 
 			console.log(`playerOneResponseTimes${updatedGame.playerOneResponseTimes}, playerTwoResponseTimes${updatedGame.playerTwoResponseTimes}`)
 
-			const playerOneTime : number = [...updatedGame.playerOneResponseTimes].pop()!
-			const playerTwoTime : number = [...updatedGame.playerTwoResponseTimes].pop()!
+			const playerOneResponseTime : number = [...updatedGame.playerOneResponseTimes].pop()!
+			const playerTwoResponseTime : number = [...updatedGame.playerTwoResponseTimes].pop()!
+			// const playerOneResponseTime : number = updatedGame.playerOneResponseTimes[game.playerOneResponseTimes.length-1]
+			// const playerTwoResponseTime : number = updatedGame.playerTwoResponseTimes[game.playerTwoResponseTimes.length-1]
 
-			console.log(playerOneTime, playerTwoTime)
+			console.log(playerOneResponseTime, playerTwoResponseTime)
 
-			if (playerOneTime! < playerTwoTime!) {
-
-				updatedGame.playerOneScore + 1
-
-				socket.emit('roundResult', game, responseTime)
+			if (playerOneResponseTime < playerTwoResponseTime) {
+				await updateScore(game.id, gameOwner)
+				// updatedGame.playerOneScore + 1
 
 
-				return console.log(`${playerOneTime} is lower than ${playerTwoTime}, 1 point to player one`)
 
-			} else if (playerOneTime! > playerTwoTime!) {
+				return console.log(`${playerOneResponseTime} is lower than ${playerTwoResponseTime}, 1 point to player one`)
+
+			} else if (playerOneResponseTime! > playerTwoResponseTime!) {
 
 				updatedGame.playerTwoScore + 1
 
 				socket.emit('roundResult', game, responseTime)
 
-				return console.log(`${playerTwoTime} is lower than ${playerOneTime}, 1 point to player two`)
+				return console.log(`${playerTwoResponseTime} is lower than ${playerOneResponseTime}, 1 point to player two`)
 
 			}
 			if (updatedGame.playerOneResponseTimes.length === 10) {

@@ -9,8 +9,8 @@ export { }
  * Queries
  */
 // Testing timers
-const playerOneTimerEl = document.querySelector('#timer-1') as HTMLSpanElement
-const playerTwoTimerEl = document.querySelector('#timer-2') as HTMLSpanElement
+export const playerOneTimerEl = document.querySelector('#player-1-timer') as HTMLSpanElement
+export const playerTwoTimerEl = document.querySelector('#player-2-timer') as HTMLSpanElement
 const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
 const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLButtonElement
 
@@ -26,22 +26,9 @@ const playerTwoScoreEl = document.querySelector('#pl-2-points') as HTMLSpanEleme
 /**
  * Timer
  */
-let timerId: number
+export let playerOneTimerId: number
+export let playerTwoTimerId: number
 let start: number
-
-// // Time format
-// const formatedTime = new Intl.DateTimeFormat("en", {
-// 	second: "2-digit",
-// 	fractionalSecondDigits: 2
-// })
-
-// const tick = () => {
-// 	const now = Date.now() - start
-// 	const currentTime = formatedTime.format(now)
-// 	playerOneTimerEl.innerText = currentTime
-// 	playerTwoTimerEl.innerText = currentTime
-
-// }
 
 // // const startGameRound = () => {
 
@@ -65,25 +52,6 @@ let start: number
 
 // // }
 
-// startGameBtnEl.addEventListener('click', () => {
-
-// 	// console.log("game start")
-// 	// hideElement(waitingNoticeEl)
-// 	// hideElement(countdownNoticeEl)
-// 	// hideElement(targetImgEl)
-
-// 	// startGameRound()
-// })
-
-// testTimerBtnEl.addEventListener('click', () => {
-
-// 	start = Date.now()
-
-// 	clearInterval(timerId)
-// 	timerId = setInterval(tick, 100)
-
-// })
-
 // targetImgEl.addEventListener('click', () => {
 // 	// testingEl.style.gridArea = "4 / 5 / 5 / 6"
 // 	// testingEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
@@ -92,12 +60,31 @@ let start: number
 // 	// startGameRound()
 // })
 
+// Time format
+export const formatedTime = new Intl.DateTimeFormat("en", {
+	second: "2-digit",
+	fractionalSecondDigits: 2
+})
+
+const playerOneTick = () => {
+	const now = Date.now() - start
+	const currentTime = formatedTime.format(now)
+	playerOneTimerEl.innerText = currentTime
+}
+
+const playerTwoTick = () => {
+	const now = Date.now() - start
+	const currentTime = formatedTime.format(now)
+	playerTwoTimerEl.innerText = currentTime
+}
+
 export const startRound = (game: Game) => {
-	// Show box
 	hideElement(noticeEl)
 	showElement(targetImgEl)
 
-	// console.log('Timern ska gå igång')
+	playerOneTimerId = setInterval(playerOneTick, 100)
+	playerTwoTimerId = setInterval(playerTwoTick, 100)
+
 	start = Date.now()
 	console.log('Start:', start)
 
@@ -109,14 +96,20 @@ export const startRound = (game: Game) => {
 
 		responseTime = end - start
 
-		console.log('Slut:', end)
+		console.log('End:', end)
 
-		console.log('Result:', responseTime)
+		console.log('Response Time:', responseTime)
 
 		socket.emit('roundResult', game, responseTime)
 
-		clearInterval(timerId)
-		// startGameRound()
+		const time = formatedTime.format(responseTime)
+		if (socket.id === game.playerOneId) {
+			clearInterval(playerOneTimerId)
+			playerOneTimerEl.innerText = time
+		} else {
+			clearInterval(playerTwoTimerId)
+			playerTwoTimerEl.innerText = time
+		}
 	})
 }
 

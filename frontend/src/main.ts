@@ -2,7 +2,7 @@ import './assets/scss/style.scss'
 import './assets/game'
 import { io, Socket } from 'socket.io-client'
 import { ClientToServerEvents, Game, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
-import { noticeEl, startRound } from './assets/game'
+import { formatedTime, noticeEl, playerOneTimerEl, playerOneTimerId, playerTwoTimerEl, playerTwoTimerId, startRound } from './assets/game'
 
 export const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
 
@@ -220,5 +220,16 @@ socket.on('gameLogicCoordinates', (rowStart, columnStart, timer, game) => {
 		startRound(game)
 	} else {
 		// end game
+	}
+})
+
+socket.on('updateResponseTime', (gameOwner, responseTime) => {
+	const time = formatedTime.format(responseTime)
+	if (gameOwner) {
+		clearInterval(playerOneTimerId)
+		playerOneTimerEl.innerText = time
+	} else {
+		clearInterval(playerTwoTimerId)
+		playerTwoTimerEl.innerText = time
 	}
 })

@@ -64,7 +64,6 @@ export const joinGame = (id: string, userId: string, name: string) => {
 	})
 }
 
-
 export const updateGame = (id: string, gameOwner: boolean, responseTime: number) => {
 	if (gameOwner) {
 		return prisma.game.update({
@@ -86,6 +85,39 @@ export const updateGame = (id: string, gameOwner: boolean, responseTime: number)
 				playerTwoResponseTimes: {
 					push: responseTime
 				}
+			}
+		})
+	}
+}
+
+export const updateScore = async (id: string, gameOwner: boolean) => {
+
+
+	const game = await prisma.game.findUnique({
+		where: {
+			id
+		}
+	})
+	console.log("Updating score", game)
+	if (gameOwner) {
+		const newScore = game!.playerOneScore++
+		console.log("Updating score", newScore)
+		return prisma.game.update({
+			where: {
+				id
+			},
+			data: {
+				playerOneScore: newScore
+			}
+		})
+	} else {
+		const newScore = game!.playerTwoScore++
+		return prisma.game.update({
+			where: {
+				id
+			},
+			data: {
+				playerTwoScore: newScore
 			}
 		})
 	}
