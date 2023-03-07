@@ -13,7 +13,7 @@
 
 html {
     font-size: 16px;
-    color: $light-color;
+    color: $secondary-color;
 }
 
 body {
@@ -21,7 +21,7 @@ body {
     height: 100vh;
     margin: 0;
     scroll-behavior: smooth;
-    background-color: $dark-color;
+    background-color: $background-color;
 }
 
 header {
@@ -29,7 +29,7 @@ header {
 
 	h1 {
 		font-family: 'Bungee Shade', Arial, Helvetica, sans-serif;
-		color: $light-color;
+		color: $secondary-color;
 		padding-top: 1rem;
 		font-size: 2.5rem;
 	}

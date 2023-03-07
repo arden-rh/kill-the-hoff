@@ -8,7 +8,7 @@
 	h3,
 	h4 {
 		font-family: $primary-font;
-		color: $light-color;
+		color: $secondary-color;
 	}
 
 	h3 {
@@ -24,10 +24,12 @@
 	}
 }
 
+
 // indvidual divs in grid
 #enter-game {
-	background-color: rgb(107, 93, 93);
+	background-color: $primary-color;
 	grid-area: 10 / 5 / 11 / 9;
+	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -37,19 +39,22 @@
 
 	button {
 		background: none;
-		border: $light-color 2px dashed;
-		color: $light-color;
+		border: $secondary-color 2px dashed;
+		border-radius: 8px;
+		color: $secondary-color;
 		text-transform: uppercase;
 		padding: 0.2rem 0.8rem;
 		letter-spacing: 0.2rem;
+		font-size: 0.9rem;
+		margin-bottom: 0.2rem;
 		text-align: center;
 		box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 		-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 		-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
 		&:hover {
-			background-color: $light-color;
-			color: $dark-color;
+			background-color: $secondary-color;
+			color: $background-color;
 			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -58,26 +63,76 @@
 
 	h4 {
 		font-size: 0.9rem;
+		line-height: 1.4rem;
+		padding-bottom: 0.2rem;
 	}
 }
 
 #highscore {
-	background-color: rgb(107, 93, 93);
+	background-color: $primary-color;
 	grid-area: 1 / 1 / 2 / 11;
+	border-radius: 8px;
 	display: flex;
 	justify-content: start;
 	align-items: center;
-	padding: 0.5rem 1.5rem;
+	// padding: 0.5rem 1.5rem 0.5rem 0;
 	margin-bottom: 5px;
+
 
 	h3 {
 		margin: 0;
 	}
+
+	#highscore-wrapper {
+
+		display: flex;
+		align-items: center;
+		margin: 0 2%;
+		overflow: hidden;
+		width: 96%;
+		height: 100%;
+
+		div:nth-child(1) {
+			background-color: $primary-color;
+			z-index: 1;
+			width: auto;
+			padding-right: 0.2rem;
+		}
+
+		div:last-child {
+			width: 60%;
+			color: aqua;
+			font-style: italic;
+
+			/* animation properties */
+			-moz-transform: translateX(100%);
+			-webkit-transform: translateX(100%);
+			transform: translateX(100%);
+
+			-moz-animation: scroll-animation 15s linear infinite;
+			-webkit-animation: scroll-animation 15s linear infinite;
+			animation: scroll-animation 15s linear infinite;
+		}
+
+	}
+
+	/* for Firefox */
+	@-moz-keyframes scroll-animation {
+		from {
+			-moz-transform: translateX(100%);
+		}
+
+		to {
+			-moz-transform: translateX(-100%);
+		}
+	}
+
 }
 
 #ongoing-games {
-	background-color: rgb(107, 93, 93);
+	background-color: $primary-color;
 	grid-area: 2 / 5 / 7 / 9;
+	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -85,12 +140,14 @@
 	margin-bottom: 5px;
 	font-size: 0.7rem;
 	letter-spacing: 0.05rem;
-	color: $light-color;
+	color: $secondary-color;
 
 	ul {
 		margin: 0;
 		padding: 0;
 		overflow-y: scroll;
+		width: 75%;
+		max-width: 480px;
 
 		li {
 			display: flex;
@@ -99,27 +156,56 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0.5rem 0.7rem;
-			border: 2px dashed $light-color;
-			margin-bottom: 0.5rem;
+			border: 2px dashed $secondary-color;
+			border-radius: 8px;
+			margin-bottom: 0.7rem;
 			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
-			span:first-child {
-				padding: 0.5rem 0.8rem 0.5rem 0.2rem;
+			.game-score {
+				padding: 0 0 0 1rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				border-left: 2px dashed $secondary-color;
+				max-width: 35px;
 			}
 
-			.game-score {
-				padding: 0.5rem 0.2rem 0.5rem 0.8rem;
-				border-left: 2px dashed $light-color;
+			.player-names {
+				// padding: 0.5rem 0.8rem 0.5rem 0.2rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: start;
+				width: 90%;
+			}
+
+			.fa-terminal {
+				font-size: 0.8rem;
+				line-height: 0.4rem;
+				color: aqua;
+				animation: blink 1s infinite;
 			}
 		}
 	}
 }
 
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
 #ten-games {
-	background-color: rgb(107, 93, 93);
+	background-color: $primary-color;
 	grid-area: 2 / 1 / 11 / 5;
+	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -141,8 +227,8 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0.5rem 0.7rem;
-			border: 2px dashed $light-color;
-			margin-bottom: 0.5rem;
+			border: 2px dashed $secondary-color;
+			margin-bottom: 0.7rem;
 			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -153,15 +239,16 @@
 
 			.game-score {
 				padding: 0.5rem 0.2rem 0.5rem 0.8rem;
-				border-left: 2px dashed $light-color;
+				border-left: 2px dashed $secondary-color;
 			}
 		}
 	}
 }
 
 #users {
-	background-color: rgb(107, 93, 93);
+	background-color: $primary-color;
 	grid-area: 7 / 5 / 10 / 9;
+	border-radius: 8px;
 	font-size: 0.8rem;
 	display: flex;
 	flex-direction: column;
@@ -180,7 +267,7 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0 0 2px 0;
-			color: $light-color;
+			color: $secondary-color;
 		}
 	}
 
@@ -190,4 +277,33 @@
 		padding: 0 0 0.2rem 0;
 		font-size: 0.9rem;
 	}
+}
+
+// animations
+
+
+/* for Chrome */
+@-webkit-keyframes scroll-animation {
+	from {
+		-webkit-transform: translateX(100%);
+	}
+
+	to {
+		-webkit-transform: translateX(-100%);
+	}
+}
+
+@keyframes scroll-animation {
+	from {
+		-moz-transform: translateX(100%);
+		-webkit-transform: translateX(100%);
+		transform: translateX(100%);
+	}
+
+	to {
+		-moz-transform: translateX(-100%);
+		-webkit-transform: translateX(-100%);
+		transform: translateX(-100%);
+	}
+
 }

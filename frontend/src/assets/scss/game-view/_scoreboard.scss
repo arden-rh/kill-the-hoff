@@ -1,7 +1,7 @@
 #scoreboard {
-	background-color: rgb(163, 153, 153);
+	background-color: $primary-color;
 	font-family: $primary-font;
-	color: $light-color;
+	color: $secondary-color;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -14,7 +14,8 @@
 	}
 
 	h3 {
-		font-size: 1rem;
+		// font-size: 1rem;
+		overflow-wrap: break-word;
 		letter-spacing: 0.15rem;
 		margin: 1rem 0 0 0;
 		padding: 0.8rem 1rem;
@@ -25,7 +26,7 @@
 	}
 
 	#score {
-		border: $light-color dashed 2px;
+		border: $secondary-color dashed 2px;
 		height: 7rem;
 		width: 80%;
 		margin: 1rem 0;
@@ -80,10 +81,10 @@
 		}
 
 		.timer {
-			background-color: $light-color;
+			background-color: $secondary-color;
 			height: 3rem;
 			width: 100%;
-			color: $light-color;
+			color: $background-color;
 			font-size: 0.8rem;
 		}
 

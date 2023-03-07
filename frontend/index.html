@@ -7,6 +7,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Stylesheets-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+		integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="/src/assets/scss/style.scss">
 	<!-- <link rel="stylesheet" href="/src/assets/css/style.min.css"> -->
 
@@ -45,7 +48,12 @@
 		<div id="lobby-view" class="container">
 
 			<div id="highscore">
-				<h3>Highscore:</h3>
+				<div id="highscore-wrapper">
+					<div>
+						<h3>Highscore:</h3>
+					</div>
+					<div><span id="high-score-time">00.74</span> <span id="high-score-name">haxx0r</span></div>
+				</div>
 			</div>
 			<div id="ten-games">
 				<h4>Last 10 Games</h4>
