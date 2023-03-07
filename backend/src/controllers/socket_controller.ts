@@ -73,10 +73,24 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	})
 
 	socket.on('roundResult', async (game, gameOwner, responseTime) => {
+
 		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
+
 		debug("Updated game:", updatedGame)
+
 		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
+
+			console.log(updatedGame.playerOneResponseTimes, updatedGame.playerTwoResponseTimes)
+
+			if (updatedGame.playerOneResponseTimes > updatedGame.playerTwoResponseTimes) {
+				return console.log("1 point to player two")
+			} else if (updatedGame.playerOneResponseTimes < updatedGame.playerTwoResponseTimes) {
+				return console.log("1 point to player one")
+			}
+
 			console.log("Kör ny runda")
+
+
 		} else {
 			console.log("Vänta, kör inte ny runda")
 		}
