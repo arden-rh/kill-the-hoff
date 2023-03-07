@@ -1,8 +1,36 @@
 generator client {
-  provider = "prisma-client-js"
+	provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+	provider = "mongodb"
+	url = env("DATABASE_URL")
+}
+
+model Game {
+	id						String @id @default(auto()) @map("_id") @db.ObjectId
+	timeCreated				Int
+	timeStarted				Int
+	timeFinished			Int
+	playerOneId				String
+	playerOneName			String
+	playerOneScore			Int
+	playerOneResponseTimes	Int[]
+	playerTwoId				String
+	playerTwoName			String
+	playerTwoScore			Int
+	playerTwoResponseTimes	Int[]
+}
+
+model Score {
+	id			String @id @default(auto()) @map("_id") @db.ObjectId
+	name 		String
+	avgTime		Float
+	timestamp	Int
+}
+
+model User {
+	id			String @id @map("_id")
+	name		String
+	timestamp	Int
 }

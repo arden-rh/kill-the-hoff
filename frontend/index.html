@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Stylesheets-->
 	<link rel="stylesheet" href="/src/assets/scss/style.scss">
+	<!-- <link rel="stylesheet" href="/src/assets/css/style.min.css"> -->
+
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Press+Start+2P&display=swap"
+		rel="stylesheet">
+
 	<title>Kill the Hoff</title>
 </head>
 
@@ -15,36 +26,79 @@
 			<h1>KILL THE HOFF</h1>
 		</header>
 
-		<div id="lobby" class="container">
+		<div id="welcome-view-wrapper" class="">
+			<div id="welcome-view">
 
-			<div id="login">
-				<form id="username-form">
-					<div class="mb-3">
-						<input type="text" id="username" class="form-control form-control-lg" required placeholder="<Enter your username>">
-					</div>
+				<div id="login">
+					<form id="username-form">
+						<div class="mb-3">
+							<input type="text" id="username" class="username-input form-control form-control-md" required placeholder="<Enter your username>">
+						</div>
 
-					<button type="submit" id="connectBtn" class="btn btn-success">Join lobby</button>
-				</form>
-			</div>
+						<button type="submit" id="connectBtn" class="btn btn-dark">Join lobby</button>
+					</form>
+				</div>
 
-			<div id="highscore"></div>
-			<div id="ten-games"></div>
-			<div id="ongoing-games"></div>
-			<div id="enter-game">
-				<button>Play now</button>
 			</div>
 		</div>
 
-		<div id="game" class="container hide">
+		<div id="lobby-view" class="container">
 
-				<div id="board">
+			<div id="highscore">
+				<h3>Highscore:</h3>
+			</div>
+			<div id="ten-games">
+				<h4>Last 10 Games</h4>
+				<ul id="games-finished">
 
+				</ul>
+			</div>
+			<div id="ongoing-games">
+				<h4>Ongoing Games</h4>
+				<ul id="games-ongoing">
+
+				</ul>
+			</div>
+			<div id="users">
+				<h4>Users Online</h4>
+				<span id="user"></span>
+				<ul id="users-online">
+				</ul>
+			</div>
+			<div id="enter-game">
+				<h4>Ready to play<span class="available-name"></span>?</h4>
+				<button id="play-btn">Play</button>
+			</div>
+		</div>
+
+		<div id="game-view" class="container hide">
+
+			<div id="game-board">
+				<div id="target-img" class="hide">
+					<img src="src\assets\images\david_hasselhoff.png" id="targetImg" class="img-fluid">
 				</div>
-
-				<div id="scoreboard">
-					<div id="points"></div>
-					<div id="time"></div>
+				<div id="notice">
 				</div>
+			</div>
+
+			<div id="scoreboard">
+				<h3>Scoreboard</h3>
+				<div id="players">
+					<div id="player-1">
+						<span id="player-1-name"></span>
+						<span id="pl-1-points" class="points">0</span>
+						<span id="timer-1" class="timer">00.00</span>
+					</div>
+					-
+					<div id="player-2">
+						<span id="player-2-name"></span>
+						<span id="pl-2-points" class="points">0</span>
+						<span id="timer-2" class="timer">00.00</span>
+					</div>
+				</div>
+				<button id="test-timer-btn">START TIMER</button>
+				<button id="test-start-game-btn">START GAME</button>
+			</div>
 
 		</div>
 
@@ -52,4 +106,5 @@
 
 	<script type="module" src="/src/main.ts"></script>
 </body>
+
 </html>

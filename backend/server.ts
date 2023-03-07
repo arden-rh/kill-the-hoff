@@ -26,7 +26,7 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEve
  * Handle incoming Socket.IO connection
  */
 io.on('connection', (socket) => {
-	handleConnection(socket)
+	handleConnection(socket, io)
 })
 
 /**
