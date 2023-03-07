@@ -125,7 +125,7 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 		}
 	}
 	element.innerHTML = games
-		.map(game => `<li><span>${game.playerOneName}-${(game.playerTwoId) ? game.playerTwoName : '<em>[waiting for opponent]</em>'}</span> <span class="game-score">${game.playerOneScore}-${game.playerTwoScore}</span></li>`)
+		.map(game => `<li><span>${game.playerOneName} - ${(game.playerTwoId) ? game.playerTwoName : '<em>[waiting for opponent]</em>'}</span> <span class="game-score">${game.playerOneScore} - ${game.playerTwoScore}</span></li>`)
 		.join('')
 }
 
