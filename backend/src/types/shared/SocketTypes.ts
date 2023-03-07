@@ -7,6 +7,7 @@ export interface ServerToClientEvents {
 	updateLobbyUsers: (users: User[]) => void
 	updateLobbyGames: (gamesOngoing: Game[], gamesFinished: Game[]) => void
 	gameLogicCoordinates: (rowStart : number, columnStart: number, timer: number) => void
+	roundResult: (game: Game, gameOwner: boolean, responseTime: number) => void
 }
 
 export interface ClientToServerEvents {

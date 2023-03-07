@@ -93,6 +93,9 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 
 				updatedGame.playerOneScore + 1
 
+				socket.emit('roundResult', game, gameOwner, responseTime)
+
+
 				return console.log(`${playerOneTime} is lower than ${playerTwoTime}, 1 point to player one`)
 
 
@@ -101,7 +104,7 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 
 				updatedGame.playerTwoScore + 1
 
-				socket.emit()
+				socket.emit('roundResult', game, gameOwner, responseTime)
 
 				return console.log(`${playerTwoTime} is lower than ${playerOneTime}, 1 point to player two`)
 

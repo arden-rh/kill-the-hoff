@@ -20,6 +20,9 @@ const targetImgEl = document.querySelector('#target-img') as HTMLDivElement
 export const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
 export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
 
+// Scores
+const playerOneScoreEl = document.querySelector('#pl-1-points') as HTMLSpanElement
+const playerTwoScoreEl = document.querySelector('#pl-2-points') as HTMLSpanElement
 
 /**
  * Timer
@@ -123,12 +126,14 @@ const startRound = (game: Game, gameOwner: boolean) => {
 	start = Date.now()
 	console.log('Start:', start)
 
+	let responseTime: number
+
 	// Klick event på box
 	targetImgEl.addEventListener('click', () => {
 
 		let end = Date.now()
 
-		let responseTime = end - start
+		responseTime = end - start
 
 		console.log('Slut:', end)
 
@@ -139,5 +144,5 @@ const startRound = (game: Game, gameOwner: boolean) => {
 		clearInterval(timerId)
 		// startGameRound()
 	})
-
 }
+
