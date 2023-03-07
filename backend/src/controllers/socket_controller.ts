@@ -80,12 +80,31 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 
 		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
 
-			console.log(updatedGame.playerOneResponseTimes, updatedGame.playerTwoResponseTimes)
+			console.log(`playerOneResponseTimes${updatedGame.playerOneResponseTimes}, playerTwoResponseTimes${updatedGame.playerTwoResponseTimes}`)
 
-			if (updatedGame.playerOneResponseTimes > updatedGame.playerTwoResponseTimes) {
-				return console.log("1 point to player two")
-			} else if (updatedGame.playerOneResponseTimes < updatedGame.playerTwoResponseTimes) {
-				return console.log("1 point to player one")
+			const playerOneTime = [...updatedGame.playerOneResponseTimes].pop()
+			const playerTwoTime = [...updatedGame.playerTwoResponseTimes].pop()
+
+			console.log(playerOneTime, playerTwoTime)
+
+
+
+			if (playerOneTime! < playerTwoTime!) {
+
+				updatedGame.playerOneScore + 1
+
+				return console.log(`${playerOneTime} is lower than ${playerTwoTime}, 1 point to player one`)
+
+
+
+			} else if (playerOneTime! > playerTwoTime!) {
+
+				updatedGame.playerTwoScore + 1
+
+				socket.emit()
+
+				return console.log(`${playerTwoTime} is lower than ${playerOneTime}, 1 point to player two`)
+
 			}
 
 			console.log("Kör ny runda")
