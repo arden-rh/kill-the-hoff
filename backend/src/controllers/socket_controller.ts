@@ -67,6 +67,32 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
 		debug("Updated game:", updatedGame)
 		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
+
+			console.log(`playerOneResponseTimes${updatedGame.playerOneResponseTimes}, playerTwoResponseTimes${updatedGame.playerTwoResponseTimes}`)
+
+			const playerOneTime : number = [...updatedGame.playerOneResponseTimes].pop()!
+			const playerTwoTime : number = [...updatedGame.playerTwoResponseTimes].pop()!
+
+			console.log(playerOneTime, playerTwoTime)
+
+			if (playerOneTime! < playerTwoTime!) {
+
+				updatedGame.playerOneScore + 1
+
+				socket.emit('roundResult', game, responseTime)
+
+
+				return console.log(`${playerOneTime} is lower than ${playerTwoTime}, 1 point to player one`)
+
+			} else if (playerOneTime! > playerTwoTime!) {
+
+				updatedGame.playerTwoScore + 1
+
+				socket.emit('roundResult', game, responseTime)
+
+				return console.log(`${playerTwoTime} is lower than ${playerOneTime}, 1 point to player two`)
+
+			}
 			if (updatedGame.playerOneResponseTimes.length === 10) {
 				// finishGame()
 			} else {
@@ -86,51 +112,5 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		}
 		await deleteUser(socket.id)
 		socket.broadcast.emit('updateLobbyUsers', await getUsers())
-	})
-
-	socket.on('roundResult', async (game, gameOwner, responseTime) => {
-
-		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
-
-		debug("Updated game:", updatedGame)
-
-		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
-
-			console.log(`playerOneResponseTimes${updatedGame.playerOneResponseTimes}, playerTwoResponseTimes${updatedGame.playerTwoResponseTimes}`)
-
-			const playerOneTime = [...updatedGame.playerOneResponseTimes].pop()
-			const playerTwoTime = [...updatedGame.playerTwoResponseTimes].pop()
-
-			console.log(playerOneTime, playerTwoTime)
-
-
-
-			if (playerOneTime! < playerTwoTime!) {
-
-				updatedGame.playerOneScore + 1
-
-				socket.emit('roundResult', game, gameOwner, responseTime)
-
-
-				return console.log(`${playerOneTime} is lower than ${playerTwoTime}, 1 point to player one`)
-
-
-
-			} else if (playerOneTime! > playerTwoTime!) {
-
-				updatedGame.playerTwoScore + 1
-
-				socket.emit('roundResult', game, gameOwner, responseTime)
-
-				return console.log(`${playerTwoTime} is lower than ${playerOneTime}, 1 point to player two`)
-
-			}
-
-			console.log("Kör ny runda")
-
-
-		} else {
-			console.log("Vänta, kör inte ny runda")
-		}
 	})
 }
