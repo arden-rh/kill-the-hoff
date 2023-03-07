@@ -7,7 +7,7 @@
 
 	#notice {
 		grid-area: 5 / 4 / 7 / 8;
-		border: $secondary-color dashed 2px;
+		border: $light-color dashed 2px;
 		color: rgb(255, 255, 255);
 		display: flex;
 		margin: 0;
@@ -23,5 +23,5 @@
 }
 
 .black {
-	background-color: $background-color!important;
+	background-color: $dark-color!important;
 }
