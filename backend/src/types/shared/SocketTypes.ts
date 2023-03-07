@@ -6,14 +6,15 @@ export interface ServerToClientEvents {
 	updateLobby: (data: LobbyInfoData) => void
 	updateLobbyUsers: (users: User[]) => void
 	updateLobbyGames: (gamesOngoing: Game[], gamesFinished: Game[]) => void
-	gameLogicCoordinates: (rowStart : number, columnStart: number, timer: number) => void
+	updateGameInfo: (playerTwoName: string) => void
+	gameLogicCoordinates: (rowStart : number, columnStart: number, timer: number, game: Game) => void
 }
 
 export interface ClientToServerEvents {
 	userJoinLobby: (username: string, callback: (data: LobbyInfoData) => void) => void
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
-	startGameRound: (callback: () => void) => void
-	roundResult: (game: Game, gameOwner: boolean, responseTime: number) => void
+	requestGameRound: (game: Game) => void
+	roundResult: (game: Game, responseTime: number) => void
 }
 
 export interface InterServerEvents {

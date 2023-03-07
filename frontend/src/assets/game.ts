@@ -17,8 +17,7 @@ const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLBut
 // Views
 const boardEl = document.querySelector('#board') as HTMLDivElement
 const targetImgEl = document.querySelector('#target-img') as HTMLDivElement
-export const countdownNoticeEl = document.querySelector('#countdown-notice') as HTMLDivElement
-export const waitingNoticeEl = document.querySelector('#waiting-notice') as HTMLDivElement
+export const noticeEl = document.querySelector('#notice') as HTMLDivElement
 
 
 /**
@@ -90,40 +89,16 @@ let start: number
 // 	// startGameRound()
 // })
 
-/**
- * Countdown (before game starts)
- */
-export const startGame = (game: Game, gameOwner: boolean) => {
-
-	let counter = 5;
-
-	const countdown = setInterval(() => {
-		countdownNoticeEl.innerHTML = `<span>You are playing against ${(gameOwner) ? game.playerOneName : game.playerTwoName} in ${counter}</span>`
-		console.log(`${counter}`)
-		counter--
-		if (counter === -1) {
-			clearInterval(countdown)
-
-			startRound(game, gameOwner)
-		}
-	}, 1000);
-
-}
-
-const startRound = (game: Game, gameOwner: boolean) => {
-
-	console.log("GAME IS STARTING")
-
+export const startRound = (game: Game) => {
 	// Show box
-	hideElement(waitingNoticeEl)
-	hideElement(countdownNoticeEl)
+	hideElement(noticeEl)
 	showElement(targetImgEl)
 
-	console.log('Timern ska gå igång')
+	// console.log('Timern ska gå igång')
 	start = Date.now()
 	console.log('Start:', start)
 
-	// Klick event på box
+	// Klick event på target
 	targetImgEl.addEventListener('click', () => {
 
 		let end = Date.now()
@@ -132,12 +107,13 @@ const startRound = (game: Game, gameOwner: boolean) => {
 
 		console.log('Slut:', end)
 
-		console.log('Resultat:', responseTime)
+		console.log('Result:', responseTime)
 
-		socket.emit('roundResult', game, gameOwner, responseTime)
+		socket.emit('roundResult', game, responseTime)
 
 		clearInterval(timerId)
 		// startGameRound()
 	})
 
 }
+

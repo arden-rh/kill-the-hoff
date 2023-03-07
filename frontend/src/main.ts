@@ -2,7 +2,7 @@ import './assets/scss/style.scss'
 import './assets/game'
 import { io, Socket } from 'socket.io-client'
 import { ClientToServerEvents, Game, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
-import { countdownNoticeEl, startGame, waitingNoticeEl } from './assets/game'
+import { noticeEl, startRound } from './assets/game'
 
 export const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
 
@@ -31,7 +31,6 @@ const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElem
 
 // User Detail
 export let username: string
-let gameOwner: boolean
 
 // Show elements
 export const showElement = (element: HTMLElement) => {
@@ -59,14 +58,14 @@ socket.on('connect', () => {
 /**
  * Listen for reconnection and emit userJoinLobby again
  */
-socket.io.on('reconnect', () => {
-	console.log('✅ Reconnected to the server')
-	if (username) {
-		socket.emit('userJoinLobby', username, (callbackData) => {
-			updateOnlineUsers(callbackData.users)
-		})
-	}
-})
+// socket.io.on('reconnect', () => {
+// 	console.log('✅ Reconnected to the server')
+// 	if (username) {
+// 		socket.emit('userJoinLobby', username, (callbackData) => {
+// 			updateOnlineUsers(callbackData.users)
+// 		})
+// 	}
+// })
 
 /**
  * Get username from form, add to online users list and get that list
@@ -106,6 +105,8 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 		const availableGame = games.find(game => game.timeStarted === 0)
 		if (availableGame) {
 			availableNameEl.innerText = ` vs. ${availableGame.playerOneName}`
+		} else {
+			availableNameEl.innerText = ''
 		}
 	}
 	element.innerHTML = games
@@ -147,11 +148,10 @@ const showLobbyView = () => {
 /**
  * Show game view
  */
-const showGameView = (game: Game, gameOwner: boolean) => {
+const showGameView = () => {
 	hideElement(lobbyEl)
 	showElement(gameEl)
-
-	startGame(game, gameOwner)
+	showElement(noticeEl)
 }
 
 const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
@@ -166,21 +166,44 @@ playBtnEl.addEventListener('click', e => {
 		if (game.timeStarted === 0) {
 			console.log("Game created, waiting for another player:", game)
 
-			gameOwner = true
-
-			hideElement(countdownNoticeEl)
-			waitingNoticeEl.innerHTML = `<span class="">Waiting for another player..</span>`
+			noticeEl.innerHTML = `<span class="">Waiting for another player..</span>`
 
 		} else {
 			console.log("Second player joined game:", game)
 
-			gameOwner = false
+			// if player 2, start the game
+			socket.emit('requestGameRound', game)
 
 		}
 
 		player1NameEl.innerText = game.playerOneName
 		player2NameEl.innerText = game.playerTwoName
 
-		showGameView(game, gameOwner)
+		showGameView()
 	})
+})
+
+socket.on('updateGameInfo', playerTwoName => {
+	player2NameEl.innerText = playerTwoName
+})
+
+socket.on('gameLogicCoordinates', (rowStart, columnStart, timer, game) => {
+	// console.log('Received gameLogicCoordinates', rowStart, columnStart, timer)
+	const round = game.playerOneResponseTimes.length
+	if (round === 0) {
+		let counter = 5;
+		const countdown = setInterval(() => {
+			noticeEl.innerHTML = `<span>You are playing against ${(socket.id === game.playerTwoId) ? game.playerOneName : game.playerTwoName} in ${counter}</span>`
+			console.log(`${counter}`)
+			counter--
+			if (counter === -1) {
+				clearInterval(countdown)
+				startRound(game)
+			}
+		}, 1000);
+	} else if (round < 10) {
+		startRound(game)
+	} else {
+		// end game
+	}
 })

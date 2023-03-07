@@ -5,8 +5,7 @@
 	grid-template-rows: repeat(10, 1fr);
 	grid-area: 1 / 1 / 11 / 7;
 
-	#waiting-notice,
-	#countdown-notice {
+	#notice {
 		grid-area: 5 / 4 / 7 / 8;
 		border: $primary-color dashed 2px;
 		color: rgb(255, 255, 255);

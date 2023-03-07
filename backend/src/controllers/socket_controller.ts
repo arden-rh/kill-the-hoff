@@ -1,5 +1,5 @@
 import Debug from 'debug'
-import { Socket } from 'socket.io'
+import { Socket, Server } from 'socket.io'
 import { Game } from '@prisma/client'
 import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
@@ -8,7 +8,15 @@ import { createGame, deleteGame, getAvailableGame, getGames, getGamesFinished, g
 
 const debug = Debug('hoff:socket_controller')
 
-export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>) => {
+const getRandomNumber = (max : number) => {
+	return Math.ceil( Math.random() * max );
+}
+
+const getRandomDelay = (max : number) => {
+	return Math.ceil( Math.random() * max * 1000 + 1000);
+}
+
+export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>, io: Server<ClientToServerEvents, ServerToClientEvents>) => {
 	debug("✅ User connected:", socket.id)
 
 	socket.on('userJoinLobby', async (username, callback) => {
@@ -37,28 +45,36 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 			game = await createGame(socket.id, username)
 			debug(`👾 ${username} created game:`, game)
 		}
+		debug("User joins game:", username, socket.id)
 		socket.join(game.id)
 		socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
+		socket.broadcast.to(game.id).emit('updateGameInfo', username)
 		callback(game)
 	})
 
-	socket.on('startGameRound', async () => {
-		debug("User wants to start a game")
-
-		const getRandomNumber = (max : number) => {
-			return Math.ceil( Math.random() * max );
-		}
-
-		const getRandomDelay = (max : number) => {
-			return Math.ceil( Math.random() * max * 1000 + 1000);
-		}
+	socket.on('requestGameRound', async (game) => {
+		debug("User requests a game round", game)
 
 		const rowStart = getRandomNumber(10)
 		const columnStart = getRandomNumber(10)
 		const delayTimer = getRandomDelay(8)
 
+		io.to(game.id).emit('gameLogicCoordinates', rowStart, columnStart, delayTimer, game)
+	})
 
-		socket.emit('gameLogicCoordinates', rowStart, columnStart, delayTimer)
+	socket.on('roundResult', async (game, responseTime) => {
+		const gameOwner = (game.playerOneId === socket.id) ? true : false
+		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
+		debug("Updated game:", updatedGame)
+		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
+			if (updatedGame.playerOneResponseTimes.length === 10) {
+				// finishGame()
+			} else {
+				console.log("Kör ny runda")
+			}
+		} else {
+			console.log("Vänta, kör inte ny runda")
+		}
 	})
 
 	socket.on('disconnect', async () => {
@@ -70,15 +86,5 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		}
 		await deleteUser(socket.id)
 		socket.broadcast.emit('updateLobbyUsers', await getUsers())
-	})
-
-	socket.on('roundResult', async (game, gameOwner, responseTime) => {
-		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
-		debug("Updated game:", updatedGame)
-		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
-			console.log("Kör ny runda")
-		} else {
-			console.log("Vänta, kör inte ny runda")
-		}
 	})
 }
