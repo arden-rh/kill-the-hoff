@@ -103,7 +103,7 @@
 
 		div:last-child {
 			width: inherit;
-			color: aqua;
+			color: $secondary-color;
 			font-style: italic;
 
 			/* animation properties */
@@ -176,7 +176,7 @@
 			.fa-terminal {
 				font-size: 0.8rem;
 				line-height: 0.4rem;
-				color: aqua;
+				color: $secondary-color;
 				animation: blink 1s infinite;
 			}
 		}
