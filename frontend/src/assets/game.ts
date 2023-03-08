@@ -25,6 +25,9 @@ export const noticeEl = document.querySelector('#notice') as HTMLDivElement
 export const playerOnePointsEl = document.querySelector('#player-1-points') as HTMLSpanElement
 export const playerTwoPointsEl = document.querySelector('#player-2-points') as HTMLSpanElement
 
+// Game's rounds
+const roundCounterEl = document.querySelector('#round') as HTMLSpanElement
+
 // Timer start
 let start: number
 
@@ -66,9 +69,16 @@ const playerTwoTick = () => {
  * @param columnStart
  * @param timer
  */
-export const startRound = (game: Game, rowStart: number, columnStart: number, timer: number) => {
+export const startRound = (game: Game, round: number, rowStart: number, columnStart: number, timer: number) => {
 
 	inGame = game
+
+	round++
+
+	setTimeout(() => {
+		console.log("Delayed for 1 second.");
+		roundCounterEl.innerText = round.toString()
+	  }, 1000)
 
 	hideElement(noticeEl)
 

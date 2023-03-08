@@ -268,7 +268,7 @@ socket.on('newGameRound', (game, round, rowStart, columnStart, timer) => {
 			if (counter === 0) {
 
 				clearInterval(countdown)
-				startRound(game, rowStart, columnStart, timer)
+				startRound(game, round, rowStart, columnStart, timer)
 
 			}
 
@@ -278,7 +278,7 @@ socket.on('newGameRound', (game, round, rowStart, columnStart, timer) => {
 
 	} else if (round < 10) {
 
-		startRound(game, rowStart, columnStart, timer)
+		startRound(game, round, rowStart, columnStart, timer)
 
 	} else {
 
