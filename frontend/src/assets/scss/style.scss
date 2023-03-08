@@ -1,7 +1,6 @@
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import 'config';
 @import 'layout';
-@import 'variables';
 @import 'welcome-view/welcome-view';
 @import 'lobby-view/lobby';
 @import 'game-view/board';
@@ -14,7 +13,7 @@
 
 html {
     font-size: 16px;
-    color: $primary-color;
+    color: $light-color;
 }
 
 body {
@@ -22,15 +21,15 @@ body {
     height: 100vh;
     margin: 0;
     scroll-behavior: smooth;
-    background-color: $secondary-color;
+    background-color: $dark-color;
 }
 
 header {
 	height: 80px;
 
 	h1 {
-		font-family: 'Bungee Shade', cursive;
-		color: $primary-color;
+		font-family: 'Bungee Shade', Arial, Helvetica, sans-serif;
+		color: $light-color;
 		padding-top: 1rem;
 		font-size: 2.5rem;
 	}

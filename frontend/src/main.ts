@@ -131,12 +131,13 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 		}
 	}
 	element.innerHTML = games
-		.map(game => `
-			<li>
-				<span>${game.playerOneName}-${(game.playerTwoId) ? game.playerTwoName : ' ? '}</span>
-				<span class="game-score">${game.playerOnePoints}-${game.playerTwoPoints}</span>
-			</li>
-		`)
+		.map(game => `<li>
+			<span class="player-names">
+				<span>${game.playerOneName}</span> -
+				<span>${(game.playerTwoId) ? game.playerTwoName : '<span class="fa-solid fa-terminal"></span>'}</span>
+			</span>
+			<span class="game-score">${game.playerOnePoints} - ${game.playerTwoPoints}</span>
+			</li>`)
 		.join('')
 }
 

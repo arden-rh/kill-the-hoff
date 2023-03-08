@@ -7,6 +7,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Stylesheets-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+		integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="/src/assets/scss/style.scss">
 	<!-- <link rel="stylesheet" href="/src/assets/css/style.min.css"> -->
 
@@ -23,7 +26,7 @@
 	<div id="app">
 
 		<header>
-			<h1>KILL THE HOFF</h1>
+			<h1>Kill The Hoff</h1>
 		</header>
 
 		<div id="welcome-view-wrapper" class="">
@@ -31,11 +34,14 @@
 
 				<div id="login">
 					<form id="username-form">
-						<div class="mb-3">
-							<input type="text" id="username" class="form-control form-control-md" required placeholder="<Enter your username>">
+						<div>
+							<h2>Kill the Hoff</h2>
+							<div class="mb-4">
+								<input type="text" id="username" class="username-input form-control form-control-md"
+									required placeholder="<Enter Username>">
+							</div>
+							<button type="submit" id="connect-btn" class="btn btn-dark">Join lobby</button>
 						</div>
-
-						<button type="submit" id="connectBtn" class="btn btn-dark">Join lobby</button>
 					</form>
 				</div>
 
@@ -44,28 +50,33 @@
 
 		<div id="lobby-view" class="container">
 
-			<div id="highscore">
-				<h3>Highscore:</h3>
+			<div id="highscore" class="grid-container">
+				<div id="highscore-wrapper">
+					<div>
+						<h3>Highscore:</h3>
+					</div>
+					<div><span id="high-score-time">00.74</span> <span id="high-score-name">haxx0r</span></div>
+				</div>
 			</div>
-			<div id="ten-games">
+			<div id="ten-games" class="grid-container">
 				<h4>Last 10 Games</h4>
 				<ul id="games-finished">
 
 				</ul>
 			</div>
-			<div id="ongoing-games">
+			<div id="ongoing-games" class="grid-container">
 				<h4>Ongoing Games</h4>
 				<ul id="games-ongoing">
 
 				</ul>
 			</div>
-			<div id="users">
+			<div id="users" class="grid-container">
 				<h4>Users Online</h4>
 				<span id="user"></span>
 				<ul id="users-online">
 				</ul>
 			</div>
-			<div id="enter-game">
+			<div id="enter-game" class="grid-container">
 				<h4>Ready to play<span class="available-name"></span>?</h4>
 				<button id="play-btn">Play</button>
 			</div>
@@ -73,7 +84,7 @@
 
 		<div id="game-view" class="container hide">
 
-			<div id="game-board">
+			<div id="game-board" class="grid-container">
 				<div id="target-img" class="hide">
 					<img src="src\assets\images\david_hasselhoff.png" id="targetImg" class="img-fluid">
 				</div>
@@ -81,7 +92,7 @@
 				</div>
 			</div>
 
-			<div id="scoreboard">
+			<div id="scoreboard" class="grid-container">
 				<h3>Scoreboard</h3>
 				<div id="players">
 					<div id="player-1">

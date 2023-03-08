@@ -1,5 +1,5 @@
 #game-board {
-	background-color: rgb(114, 105, 105);
+	background-color: $primary-color;
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(10, 1fr);
@@ -7,21 +7,24 @@
 
 	#notice {
 		grid-area: 5 / 4 / 7 / 8;
-		border: $primary-color dashed 2px;
+		border: $light-color dashed 2px;
+		background-color: $dark-color;
+		border-radius: 8px;
 		color: rgb(255, 255, 255);
 		display: flex;
 		margin: 0;
 		justify-content: center;
 		align-items: center;
-		font-family: $secondary-font;
+		font-family: $primary-font;
 		font-size: .7rem;
 	}
 
 	#target-img {
 		grid-area: 2 / 2 / 3 / 3 ;
+		cursor: crosshair;
 	}
 }
 
 .black {
-	background-color: black!important;
+	background-color: $dark-color!important;
 }

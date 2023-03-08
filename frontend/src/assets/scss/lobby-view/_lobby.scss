@@ -3,12 +3,12 @@
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	grid-template-rows: repeat(10, 1fr);
-	font-family: $secondary-font;
+	font-family: $primary-font;
 
 	h3,
 	h4 {
-		font-family: $secondary-font;
-		color: $primary-color;
+		font-family: $primary-font;
+		color: $light-color;
 	}
 
 	h3 {
@@ -24,9 +24,10 @@
 	}
 }
 
-// indvidual divs in grid
+/* Individual divs in grid */
+
+// Join game
 #enter-game {
-	background-color: rgb(107, 93, 93);
 	grid-area: 10 / 5 / 11 / 9;
 	display: flex;
 	flex-direction: column;
@@ -37,19 +38,22 @@
 
 	button {
 		background: none;
-		border: $primary-color 2px dashed;
-		color: $primary-color;
+		border: $light-color 2px dashed;
+		border-radius: 8px;
+		color: $light-color;
 		text-transform: uppercase;
 		padding: 0.2rem 0.8rem;
 		letter-spacing: 0.2rem;
+		font-size: 0.9rem;
+		margin-bottom: 0.2rem;
 		text-align: center;
 		box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 		-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 		-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
 		&:hover {
-			background-color: $primary-color;
-			color: $secondary-color;
+			background-color: $light-color;
+			color: $dark-color;
 			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -58,25 +62,60 @@
 
 	h4 {
 		font-size: 0.9rem;
+		line-height: 1.4rem;
+		padding-bottom: 0.2rem;
 	}
 }
 
+// Highscore
 #highscore {
-	background-color: rgb(107, 93, 93);
 	grid-area: 1 / 1 / 2 / 11;
 	display: flex;
 	justify-content: start;
 	align-items: center;
-	padding: 0.5rem 1.5rem;
+	// padding: 0.5rem 1.5rem 0.5rem 0;
 	margin-bottom: 5px;
+
 
 	h3 {
 		margin: 0;
 	}
+
+	#highscore-wrapper {
+		display: flex;
+		align-items: center;
+		margin: 0 2%;
+		overflow: hidden;
+		width: 96%;
+		height: 100%;
+
+		div:nth-child(1) {
+			background-color: $primary-color;
+			z-index: 1;
+			max-width: fit-content;
+			padding-right: 0.2rem;
+		}
+
+		div:last-child {
+			width: inherit;
+			color: $secondary-color;
+			font-style: italic;
+
+			/* animation properties */
+			-moz-transform: translateX(100%);
+			-webkit-transform: translateX(100%);
+			transform: translateX(100%);
+
+			-moz-animation: scroll-animation 10s linear infinite;
+			-webkit-animation: scroll-animation 10s linear infinite;
+			animation: scroll-animation 10s linear infinite;
+		}
+
+	}
 }
 
+// Ongoing games
 #ongoing-games {
-	background-color: rgb(107, 93, 93);
 	grid-area: 2 / 5 / 7 / 9;
 	display: flex;
 	flex-direction: column;
@@ -84,11 +123,15 @@
 	padding: 0.5rem;
 	margin-bottom: 5px;
 	font-size: 0.7rem;
-	color: $primary-color;
+	letter-spacing: 0.05rem;
+	color: $light-color;
 
 	ul {
 		margin: 0;
 		padding: 0;
+		overflow-y: scroll;
+		width: 75%;
+		max-width: 480px;
 
 		li {
 			display: flex;
@@ -97,26 +140,44 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0.5rem 0.7rem;
-			border: 2px dashed $primary-color;
-			margin-bottom: 0.5rem;
+			border: 2px dashed $light-color;
+			border-radius: 8px;
+			margin-bottom: 0.7rem;
 			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
-			span:first-child {
-				padding: 0.5rem 0.8rem 0.5rem 0.2rem;
+			.game-score {
+				padding: 0 0 0 1rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				border-left: 2px dashed $light-color;
+				max-width: 35px;
 			}
 
-			.game-score {
-				padding: 0.5rem 0.2rem 0.5rem 0.8rem;
-				border-left: 2px dashed $primary-color;
+			.player-names {
+				// padding: 0.5rem 0.8rem 0.5rem 0.2rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: start;
+				width: 90%;
+			}
+
+			.fa-terminal {
+				font-size: 0.8rem;
+				line-height: 0.4rem;
+				color: $secondary-color;
+				animation: blink 1s infinite;
 			}
 		}
 	}
 }
 
+// Ten latest played games
 #ten-games {
-	background-color: rgb(107, 93, 93);
 	grid-area: 2 / 1 / 11 / 5;
 	display: flex;
 	flex-direction: column;
@@ -139,8 +200,8 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0.5rem 0.7rem;
-			border: 2px dashed $primary-color;
-			margin-bottom: 0.5rem;
+			border: 2px dashed $light-color;
+			margin-bottom: 0.7rem;
 			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -151,14 +212,14 @@
 
 			.game-score {
 				padding: 0.5rem 0.2rem 0.5rem 0.8rem;
-				border-left: 2px dashed $primary-color;
+				border-left: 2px dashed $light-color;
 			}
 		}
 	}
 }
 
+// Online users
 #users {
-	background-color: rgb(107, 93, 93);
 	grid-area: 7 / 5 / 10 / 9;
 	font-size: 0.8rem;
 	display: flex;
@@ -178,14 +239,84 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0 0 2px 0;
-			color: $primary-color;
+			color: $light-color;
 		}
 	}
 
 	#user {
-		color: orange;
+		color: $tertiary-color;
 		font-style: italic;
 		padding: 0 0 0.2rem 0;
 		font-size: 0.9rem;
+	}
+}
+
+/* Animations */
+
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes scroll-animation {
+	from {
+		-moz-transform: translateX(100%);
+		-webkit-transform: translateX(100%);
+		transform: translateX(100%);
+	}
+
+	to {
+		-moz-transform: translateX(-100%);
+		-webkit-transform: translateX(-100%);
+		transform: translateX(-100%);
+	}
+}
+
+// for Chrome
+@-webkit-keyframes scroll-animation {
+	from {
+		-webkit-transform: translateX(100%);
+	}
+
+	to {
+		-webkit-transform: translateX(-100%);
+	}
+}
+
+// for Firefox
+@-moz-keyframes scroll-animation {
+	from {
+		-moz-transform: translateX(100%);
+	}
+
+	to {
+		-moz-transform: translateX(-100%);
+	}
+}
+
+@media screen and (min-width: 1140px) {
+
+	#enter-game {
+		grid-area: 8 / 7 / 11 / 11;
+
+	}
+
+	#ongoing-games {
+		grid-area: 2 / 4 / 11 / 7;
+		margin-bottom: 0;
+		margin-right: 5px;
+	}
+
+	#ten-games {
+		grid-area: 2 / 1 / 11 / 4;
+	}
+
+	#users {
+		grid-area: 2 / 7 / 8 / 11;
 	}
 }
