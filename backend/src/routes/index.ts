@@ -1,6 +1,5 @@
 import express from "express"
 
-// instantiate a new router
 const router = express.Router()
 
 /**
@@ -8,7 +7,7 @@ const router = express.Router()
  */
 router.get('/', (req, res) => {
 	res.send({
-		message: "I AM VIRUS-API, BEEP BOOP",
+		message: "WELCOME TO KILL THE HOFF",
 	})
 })
 
