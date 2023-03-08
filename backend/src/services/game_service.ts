@@ -4,6 +4,14 @@ export const getGames = () => {
 	return prisma.game.findMany()
 }
 
+export const getGame = (id: string) => {
+	return prisma.game.findUnique({
+		where: {
+			id
+		}
+	})
+}
+
 export const getGamesOngoing = () => {
 	return prisma.game.findMany({
 		where: {
@@ -33,11 +41,11 @@ export const createGame = (userId: string, name: string) => {
 			timeFinished: 0,
 			playerOneId: userId,
 			playerOneName: name,
-			playerOneScore: 0,
+			playerOnePoints: 0,
 			playerOneResponseTimes: [],
 			playerTwoId: '',
 			playerTwoName: '',
-			playerTwoScore: 0,
+			playerTwoPoints: 0,
 			playerTwoResponseTimes: []
 		}
 	})
@@ -90,34 +98,23 @@ export const updateGame = (id: string, gameOwner: boolean, responseTime: number)
 	}
 }
 
-export const updateScore = async (id: string, gameOwner: boolean) => {
-
-
-	const game = await prisma.game.findUnique({
-		where: {
-			id
-		}
-	})
-	console.log("Updating score", game)
-	if (gameOwner) {
-		const newScore = game!.playerOneScore++
-		console.log("Updating score", newScore)
+export const increasePoints = (id: string, isPlayerOne: boolean, points: number) => {
+	if (isPlayerOne) {
 		return prisma.game.update({
 			where: {
 				id
 			},
 			data: {
-				playerOneScore: newScore
+				playerOnePoints: points
 			}
 		})
 	} else {
-		const newScore = game!.playerTwoScore++
 		return prisma.game.update({
 			where: {
 				id
 			},
 			data: {
-				playerTwoScore: newScore
+				playerTwoPoints: points
 			}
 		})
 	}
@@ -127,6 +124,17 @@ export const deleteGame = (id: string) => {
 	return prisma.game.delete({
 		where: {
 			id
+		}
+	})
+}
+
+export const endGame = (id: string) => {
+	return prisma.game.update({
+		where: {
+			id
+		},
+		data: {
+			timeFinished: Date.now()
 		}
 	})
 }

@@ -2,7 +2,7 @@ import './assets/scss/style.scss'
 import './assets/game'
 import { io, Socket } from 'socket.io-client'
 import { ClientToServerEvents, Game, ServerToClientEvents, User } from '@backend/types/shared/SocketTypes'
-import { formatedTime, noticeEl, playerOneTimerEl, playerOneTimerId, playerTwoTimerEl, playerTwoTimerId, startRound } from './assets/game'
+import { formatedTime, noticeEl, playerOnePointsEl, playerOneTimerEl, playerOneTimerId, playerTwoPointsEl, playerTwoTimerEl, playerTwoTimerId, startRound } from './assets/game'
 
 export const SOCKET_HOST = import.meta.env.VITE_APP_SOCKET_HOST
 
@@ -33,12 +33,18 @@ const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElem
 // User Detail
 export let username: string
 
-// Show elements
+/**
+ * Show element
+ * @params element
+ */
 export const showElement = (element: HTMLElement) => {
 	element.classList.remove('hide')
 }
 
-// Hide elements
+/**
+ * Hide element
+ * @params element
+ */
 export const hideElement = (element: HTMLElement) => {
 	element.classList.add('hide')
 }
@@ -125,7 +131,12 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 		}
 	}
 	element.innerHTML = games
-		.map(game => `<li><span>${game.playerOneName}-${(game.playerTwoId) ? game.playerTwoName : '<em>[waiting for opponent]</em>'}</span> <span class="game-score">${game.playerOneScore}-${game.playerTwoScore}</span></li>`)
+		.map(game => `
+			<li>
+				<span>${game.playerOneName}-${(game.playerTwoId) ? game.playerTwoName : ' ? '}</span>
+				<span class="game-score">${game.playerOnePoints}-${game.playerTwoPoints}</span>
+			</li>
+		`)
 		.join('')
 }
 
@@ -153,6 +164,10 @@ socket.on('updateLobbyGames', (gamesOngoing, gamesFinished) => {
 	updateGamesList(gamesFinishedEl, gamesFinished)
 })
 
+socket.on('updateLobbyGamesOngoing', (gamesOngoing) => {
+	updateGamesList(gamesOngoingEl, gamesOngoing)
+})
+
 /**
  * Show lobby view
  */
@@ -175,19 +190,19 @@ const player2NameEl = document.querySelector('#player-2-name') as HTMLSpanElemen
 /**
  * Listen to play-button
  */
-playBtnEl.addEventListener('click', e => {
-	e.preventDefault()
+playBtnEl.addEventListener('click', () => {
+	// e.preventDefault()
 	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
-			console.log("Game created, waiting for another player:", game)
+			// console.log("Game created, waiting for another player:", game)
 
-			noticeEl.innerHTML = `<span class="">Waiting for another player..</span>`
+			noticeEl.innerText = 'Waiting for another player...'
 
 		} else {
-			console.log("Second player joined game:", game)
+			// console.log("Second player joined game:", game)
 
 			// if player 2, start the game
-			socket.emit('requestGameRound', game)
+			socket.emit('startGame', game)
 
 		}
 
@@ -202,24 +217,24 @@ socket.on('updateGameInfo', playerTwoName => {
 	player2NameEl.innerText = playerTwoName
 })
 
-socket.on('gameLogicCoordinates', (rowStart, columnStart, timer, game) => {
-	// console.log('Received gameLogicCoordinates', rowStart, columnStart, timer)
-	const round = game.playerOneResponseTimes.length
+socket.on('newGameRound', (game, round, rowStart, columnStart, timer) => {
+	console.log('main.ts: newGameRound', round, rowStart, columnStart, timer)
 	if (round === 0) {
 		let counter = 5;
 		const countdown = setInterval(() => {
 			noticeEl.innerHTML = `<span>You are playing against ${(socket.id === game.playerTwoId) ? game.playerOneName : game.playerTwoName} in ${counter}</span>`
-			console.log(`${counter}`)
-			counter--
-			if (counter === -1) {
+			console.log(counter)
+			if (counter === 0) {
 				clearInterval(countdown)
-				startRound(game)
+				startRound(game, rowStart, columnStart, timer)
 			}
+			counter--
 		}, 1000);
 	} else if (round < 10) {
-		startRound(game)
+		startRound(game, rowStart, columnStart, timer)
 	} else {
-		// end game
+		console.log("THIS SHOULD NEVER HAPPEN, since newGameRound won't be called from server if we've reached 10 rounds")
+		// game has ended
 	}
 })
 
@@ -232,4 +247,19 @@ socket.on('updateResponseTime', (gameOwner, responseTime) => {
 		clearInterval(playerTwoTimerId)
 		playerTwoTimerEl.innerText = time
 	}
+})
+
+socket.on('updatePoints', (isPlayerOne, points) => {
+	if (isPlayerOne) {
+		playerOnePointsEl.innerText = points.toString()
+	} else {
+		playerTwoPointsEl.innerText = points.toString()
+	}
+})
+
+socket.on('endGame', game => {
+	showElement(noticeEl)
+	noticeEl.innerHTML = `
+		Game ended: ${game.playerOneName}-${game.playerTwoName} ${game.playerOnePoints}-${game.playerTwoPoints}
+	`
 })

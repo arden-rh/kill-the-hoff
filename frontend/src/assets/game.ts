@@ -5,23 +5,25 @@ import { Game } from "@backend/types/shared/SocketTypes"
 import { hideElement, showElement, socket } from "../main"
 export { }
 
+let inGame: Game
+
 /**
  * Queries
  */
 // Testing timers
 export const playerOneTimerEl = document.querySelector('#player-1-timer') as HTMLSpanElement
 export const playerTwoTimerEl = document.querySelector('#player-2-timer') as HTMLSpanElement
-const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
-const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLButtonElement
+// const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
+// const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLButtonElement
 
 // Views
-const boardEl = document.querySelector('#board') as HTMLDivElement
+// const boardEl = document.querySelector('#board') as HTMLDivElement
 const targetImgEl = document.querySelector('#target-img') as HTMLDivElement
 export const noticeEl = document.querySelector('#notice') as HTMLDivElement
 
 // Scores
-const playerOneScoreEl = document.querySelector('#pl-1-points') as HTMLSpanElement
-const playerTwoScoreEl = document.querySelector('#pl-2-points') as HTMLSpanElement
+export const playerOnePointsEl = document.querySelector('#player-1-points') as HTMLSpanElement
+export const playerTwoPointsEl = document.querySelector('#player-2-points') as HTMLSpanElement
 
 /**
  * Timer
@@ -30,27 +32,27 @@ export let playerOneTimerId: number
 export let playerTwoTimerId: number
 let start: number
 
-// // const startGameRound = () => {
+// const startGameRound = () => {
 
-// // 	socket.emit('startGameRound', () => {
+// 	socket.emit('startGameRound', () => {
 
-// // 	})
+// 	})
 
-// // 	socket.on('gameLogicCoordinates', (rowStart, columnStart, timer) => {
+// 	socket.on('gameLogicCoordinates', (rowStart, columnStart, timer) => {
 
-// // 		console.log(rowStart, columnStart)
-// // 		console.log(timer)
+// 		console.log(rowStart, columnStart)
+// 		console.log(timer)
 
-// // 		const gameTimer = setTimeout(() => {
-// // 			showElement(targetImgEl)
-// // 			targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
-// // 		}, timer)
+// 		const gameTimer = setTimeout(() => {
+// 			showElement(targetImgEl)
+// 			targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
+// 		}, timer)
 
-// // 		hideElement(targetImgEl)
+// 		hideElement(targetImgEl)
 
-// // 	})
+// 	})
 
-// // }
+// }
 
 // targetImgEl.addEventListener('click', () => {
 // 	// testingEl.style.gridArea = "4 / 5 / 5 / 6"
@@ -78,38 +80,37 @@ const playerTwoTick = () => {
 	playerTwoTimerEl.innerText = currentTime
 }
 
-export const startRound = (game: Game) => {
+export const startRound = (game: Game, rowStart: number, columnStart: number, timer: number) => {
+	inGame = game
 	hideElement(noticeEl)
-	showElement(targetImgEl)
 
-	playerOneTimerId = setInterval(playerOneTick, 100)
-	playerTwoTimerId = setInterval(playerTwoTick, 100)
+	setTimeout(() => {
+		targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
+		showElement(targetImgEl)
 
-	start = Date.now()
-	console.log('Start:', start)
+		start = Date.now()
+		playerOneTimerId = setInterval(playerOneTick, 100)
+		playerTwoTimerId = setInterval(playerTwoTick, 100)
+	}, timer)
 
-	let responseTime: number
-
-	targetImgEl.addEventListener('click', () => {
-
-		let end = Date.now()
-
-		responseTime = end - start
-
-		console.log('End:', end)
-
-		console.log('Response Time:', responseTime)
-
-		socket.emit('roundResult', game, responseTime)
-
-		const time = formatedTime.format(responseTime)
-		if (socket.id === game.playerOneId) {
-			clearInterval(playerOneTimerId)
-			playerOneTimerEl.innerText = time
-		} else {
-			clearInterval(playerTwoTimerId)
-			playerTwoTimerEl.innerText = time
-		}
-	})
+	targetImgEl.addEventListener('click', targetImgEventListener)
 }
 
+const targetImgEventListener = () => {
+	let end = Date.now()
+	let responseTime: number
+	responseTime = end - start
+
+	socket.emit('roundResult', inGame, responseTime)
+
+	const time = formatedTime.format(responseTime)
+	if (socket.id === inGame.playerOneId) {
+		clearInterval(playerOneTimerId)
+		playerOneTimerEl.innerText = time
+	} else {
+		clearInterval(playerTwoTimerId)
+		playerTwoTimerEl.innerText = time
+	}
+	hideElement(targetImgEl)
+	// targetImgEl.removeEventListener('click', targetImgEventListener)
+}
