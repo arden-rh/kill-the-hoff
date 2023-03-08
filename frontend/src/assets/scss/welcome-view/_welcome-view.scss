@@ -5,7 +5,7 @@
     flex-direction: column;
     top: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.35);
+    background-color: rgba(30, 167, 167, 0.35);
     width: 100vw;
     height: 100vh;
 	z-index: 2;
@@ -30,23 +30,25 @@
     width: 50vw;
     height: 30vh;
     flex-wrap: wrap;
-    align-content: center;
     align-items: center;
 }
 
 .username-input {
-	border: 1px solid;
-	padding: 10px;
+	padding: 0.8rem;
 	// box-shadow: 5px 5px 3px 0px rgba(0,0,0,0.6);
 	font-size: .8rem;
+	// max-width: 100%;
+	text-align: center;
+	letter-spacing: 0.08rem;
 }
 
-#connectBtn {
+#connect-btn {
 	font-family: $primary-font;
 	border: $light-color 2px dashed;
 	text-transform: uppercase;
 	padding: 0.2rem 0.8rem;
 	letter-spacing: 0.2rem;
+	background-color: $dark-color;
 
 	&:hover {
 		background-color: $light-color;
