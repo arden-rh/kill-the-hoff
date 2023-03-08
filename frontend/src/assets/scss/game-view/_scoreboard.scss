@@ -43,8 +43,6 @@
 			align-items: center;
 		}
 
-
-
 		#point-header {
 			font-size: 0.8rem;
 			width: 70%;
@@ -59,6 +57,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		text-align: center;
 
 		div {
 			width: 100%;
@@ -83,17 +82,40 @@
 
 		.timer {
 			background-color: $light-color;
+			border-radius: 8px;
 			height: 3rem;
 			width: 100%;
 			color: $dark-color;
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 		}
 
-		#me {
-			color: rgb(51, 249, 249);
-			;
+		#player-1 {
+			color: $tertiary-color;
+
+			#player-1-name {
+				font-style: italic;
+			}
+		}
+
+		#wait-placeholder {
+			font-size: 1rem;
+			color: $secondary-color;
+			animation: blink 1.2s infinite;
 		}
 	}
+}
+
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@media screen and (min-width: $breakpoint-desktop) {
 
 }
 

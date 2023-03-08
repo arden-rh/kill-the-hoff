@@ -33,6 +33,7 @@ const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElem
 // Views in game
 const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
 const player2NameEl = document.querySelector('#player-2-name') as HTMLSpanElement
+const waitiPlaceholderEl = document.querySelector('#wait-placeholder') as HTMLSpanElement
 
 // User Detail
 export let username: string
@@ -221,8 +222,13 @@ playBtnEl.addEventListener('click', () => {
 		if (game.timeStarted === 0) {
 
 			noticeEl.innerText = 'Waiting for another player...'
+			showElement(waitiPlaceholderEl)
+
 
 		} else {
+
+			hideElement(waitiPlaceholderEl)
+			player2NameEl.innerText = game.playerTwoName
 
 			// If player 2, start the game
 			socket.emit('startGame', game)
@@ -230,7 +236,7 @@ playBtnEl.addEventListener('click', () => {
 		}
 
 		player1NameEl.innerText = game.playerOneName
-		player2NameEl.innerText = game.playerTwoName
+		// player2NameEl.innerText = game.playerTwoName
 
 		showGameView()
 
@@ -328,7 +334,7 @@ socket.on('endGame', game => {
 	showElement(noticeEl)
 
 	noticeEl.innerHTML = `
-		Game ended: ${game.playerOneName}-${game.playerTwoName} ${game.playerOnePoints}-${game.playerTwoPoints}
+		<span>Game ended:</span> ${game.playerOneName}-${game.playerTwoName} ${game.playerOnePoints}-${game.playerTwoPoints}
 	`
 
 })
