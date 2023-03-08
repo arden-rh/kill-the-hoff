@@ -38,16 +38,13 @@ const waitPlaceholderEl = document.querySelector('#wait-placeholder') as HTMLSpa
 // User Detail
 export let username: string
 
+// Format time
 const formatedEndTime = new Intl.DateTimeFormat("sv", {
 	day: "2-digit",
 	month: "2-digit",
 	hour: "2-digit",
 	minute: "2-digit"
 })
-
-const formatedDate = new Intl.DateTimeFormat("sv", {
-})
-
 
 /**
  * Show element
