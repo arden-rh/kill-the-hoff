@@ -27,7 +27,7 @@
 
 		<!-- Header -->
 		<header>
-			<h1>KILL THE HOFF</h1>
+			<h1>Kill The Hoff</h1>
 		</header>
 
 		<!-- Welcome view -->
@@ -35,10 +35,14 @@
 			<div id="welcome-view">
 				<div id="login">
 					<form id="username-form">
-						<div class="mb-3">
-							<input type="text" id="username" class="username-input form-control form-control-md" required placeholder="<Enter your username>">
+						<div>
+							<h1>Kill the Hoff</h1>
+							<div class="mb-4">
+								<input type="text" id="username" class="username-input form-control form-control-md"
+									required placeholder="<Enter Username>">
+							</div>
+							<button type="submit" id="connect-btn" class="btn btn-dark">Join lobby</button>
 						</div>
-						<button type="submit" id="connectBtn" class="btn btn-dark">Join lobby</button>
 					</form>
 				</div>
 			</div>
@@ -46,7 +50,8 @@
 
 		<!-- Lobby view -->
 		<div id="lobby-view" class="container">
-			<div id="highscore">
+
+			<div id="highscore" class="grid-container">
 				<div id="highscore-wrapper">
 					<div>
 						<h3>Highscore:</h3>
@@ -54,24 +59,20 @@
 					<div><span id="high-score-time">00.74</span> <span id="high-score-name">haxx0r</span></div>
 				</div>
 			</div>
-
-			<div id="ten-games">
+			<div id="ten-games" class="grid-container">
 				<h4>Last 10 Games</h4>
 				<ul id="games-finished"></ul>
 			</div>
-
-			<div id="ongoing-games">
+			<div id="ongoing-games" class="grid-container">
 				<h4>Ongoing Games</h4>
 				<ul id="games-ongoing"></ul>
 			</div>
-
-			<div id="users">
+			<div id="users" class="grid-container">
 				<h4>Users Online</h4>
 				<span id="user"></span>
 				<ul id="users-online"></ul>
 			</div>
-
-			<div id="enter-game">
+			<div id="enter-game" class="grid-container">
 				<h4>Ready to play<span class="available-name"></span>?</h4>
 				<button id="play-btn">Play</button>
 			</div>
@@ -79,14 +80,15 @@
 
 		<!-- Game view -->
 		<div id="game-view" class="container hide">
-			<div id="game-board">
+
+			<div id="game-board" class="grid-container">
 				<div id="target-img" class="hide">
 					<img src="src\assets\images\david_hasselhoff.png" id="targetImg" class="img-fluid">
 				</div>
 				<div id="notice"></div>
 			</div>
 
-			<div id="scoreboard">
+			<div id="scoreboard" class="grid-container">
 				<h3>Scoreboard</h3>
 				<div id="players">
 					<div id="player-1">

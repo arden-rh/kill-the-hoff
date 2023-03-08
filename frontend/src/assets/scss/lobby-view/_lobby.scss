@@ -28,9 +28,7 @@
 
 // Join game
 #enter-game {
-	background-color: $primary-color;
 	grid-area: 10 / 5 / 11 / 9;
-	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -71,9 +69,7 @@
 
 // Highscore
 #highscore {
-	background-color: $primary-color;
 	grid-area: 1 / 1 / 2 / 11;
-	border-radius: 8px;
 	display: flex;
 	justify-content: start;
 	align-items: center;
@@ -86,7 +82,6 @@
 	}
 
 	#highscore-wrapper {
-
 		display: flex;
 		align-items: center;
 		margin: 0 2%;
@@ -121,9 +116,7 @@
 
 // Ongoing games
 #ongoing-games {
-	background-color: $primary-color;
 	grid-area: 2 / 5 / 7 / 9;
-	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -191,9 +184,7 @@
 
 // Ten latest played games
 #ten-games {
-	background-color: $primary-color;
 	grid-area: 2 / 1 / 11 / 5;
-	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -235,9 +226,7 @@
 
 // Online users
 #users {
-	background-color: $primary-color;
 	grid-area: 7 / 5 / 10 / 9;
-	border-radius: 8px;
 	font-size: 0.8rem;
 	display: flex;
 	flex-direction: column;
@@ -267,7 +256,7 @@
 	}
 
 	#user {
-		color: orange;
+		color: $tertiary-color;
 		font-style: italic;
 		padding: 0 0 0.2rem 0;
 		font-size: 0.9rem;
