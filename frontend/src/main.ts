@@ -191,7 +191,8 @@ const player2NameEl = document.querySelector('#player-2-name') as HTMLSpanElemen
  * Listen to play-button
  */
 playBtnEl.addEventListener('click', () => {
-	// e.preventDefault()
+
+	//calling if there's a open room
 	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
 			// console.log("Game created, waiting for another player:", game)
