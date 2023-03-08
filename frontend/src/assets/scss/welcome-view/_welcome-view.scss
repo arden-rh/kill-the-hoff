@@ -39,10 +39,12 @@
 		align-items: center;
 	}
 
-	h1 {
-		padding-top: 0;
+	h2 {
 		padding-bottom: 1.2rem;
 		margin: 0;
+		font-family: 'Bungee Shade', Arial, Helvetica, sans-serif;
+		color: $light-color;
+		font-size: 2.5rem;
 	}
 }
 
