@@ -29,6 +29,8 @@ const usersOnlineEl = document.querySelector('#users-online') as HTMLUListElemen
 const userEl = document.querySelector('#user') as HTMLSpanElement
 const gamesFinishedEl = document.querySelector('#games-finished') as HTMLUListElement
 const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElement
+const highscoreEl = document.querySelector('#high-score-time') as HTMLSpanElement
+const HighscoreHolderEl = document.querySelector('#high-score-name') as HTMLSpanElement
 
 // User Detail
 export let username: string
@@ -94,6 +96,20 @@ usernameFormEl.addEventListener('submit', e => {
 
 	console.log(socket.id)
 	showLobbyView()
+	socket.on('updateHighScore',(leaderScore:number,name:string) =>{
+
+		const highscore = formatedTime.format(leaderScore)
+		if(Number(highscore)===0){
+			highscoreEl.innerText = "No Highscore yet, be the first to claim honor!"
+			HighscoreHolderEl.innerText = ""
+			console.log("Highscore: ", highscore, "Hold by: ", name);
+
+		} else{
+			highscoreEl.innerText = name
+			HighscoreHolderEl.innerText = highscore
+			console.log("Highscore: ", highscore, "Hold by: ", name);
+		}
+	})
 })
 
 /**
@@ -264,4 +280,20 @@ socket.on('endGame', game => {
 	noticeEl.innerHTML = `
 		Game ended: ${game.playerOneName}-${game.playerTwoName} ${game.playerOnePoints}-${game.playerTwoPoints}
 	`
+
+})
+
+socket.on('updateHighScore', (avgTime:number, name:string) =>{
+	const highscore = formatedTime.format(avgTime)
+
+	if(Number(highscore)===0){
+		highscoreEl.innerText = "No Highscore yet, be the first to claim honor!"
+		HighscoreHolderEl.innerText = ""
+		console.log("Highscore: ", highscore, "Hold by: ", name);
+
+	} else{
+		highscoreEl.innerText = name
+		HighscoreHolderEl.innerText = highscore
+		console.log("Highscore: ", highscore, "Hold by: ", name);
+	}
 })
