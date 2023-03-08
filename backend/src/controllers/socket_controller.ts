@@ -4,7 +4,7 @@ import { Game } from '@prisma/client'
 import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
 import { getScores } from '../services/score_service'
-import { createGame, deleteGame, getAvailableGame, getGames, getGamesFinished, getGamesOngoing, joinGame, updateGame } from '../services/game_service'
+import { createGame, deleteGame, endGame, getAvailableGame, getGamesFinished, getGamesOngoing, increasePoints, joinGame, updateGame } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
 
@@ -20,7 +20,7 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	debug("✅ User connected:", socket.id)
 
 	socket.on('userJoinLobby', async (username, callback) => {
-		debug("🙋 User wants to join lobby:", socket.id, username)
+		// debug("🙋 User wants to join lobby:", socket.id, username)
 		const user = await createUser(socket.id, username)
 		debug("🙋 User added to database:", user)
 
@@ -35,7 +35,7 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	})
 
 	socket.on('userPlayGame', async (username, callback) => {
-		debug("🙋 User wants to play:", username)
+		// debug("🙋 User wants to play:", username)
 		const availableGame = await getAvailableGame()
 		let game: Game
 		if (availableGame) {
@@ -52,54 +52,56 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 		callback(game)
 	})
 
-	socket.on('requestGameRound', async (game) => {
-		debug("User requests a game round", game)
-
+	const newGameRound = (game: Game, round: number) => {
 		const rowStart = getRandomNumber(10)
 		const columnStart = getRandomNumber(10)
 		const delayTimer = getRandomDelay(8)
 
-		io.to(game.id).emit('gameLogicCoordinates', rowStart, columnStart, delayTimer, game)
+		io.to(game.id).emit('newGameRound', game, round, rowStart, columnStart, delayTimer)
+	}
+
+	socket.on('startGame', async (game) => {
+		newGameRound(game, 0)
 	})
 
 	socket.on('roundResult', async (game, responseTime) => {
 		const gameOwner = (game.playerOneId === socket.id) ? true : false
+		socket.broadcast.to(game.id).emit('updateResponseTime', gameOwner, responseTime)
+
 		const updatedGame = await updateGame(game.id, gameOwner, responseTime)
-		debug("Updated game:", updatedGame)
+		const round = updatedGame.playerOneResponseTimes.length
+		debug("Storing response time for round:", round)
+		// debug("🎯 Updated game:", updatedGame)
+
 		if (updatedGame.playerOneResponseTimes.length === updatedGame.playerTwoResponseTimes.length) {
+			debug("Second result came in, let's store in database. Round:", round)
+			const playerOneResponseTime: number = updatedGame.playerOneResponseTimes[updatedGame.playerOneResponseTimes.length-1]
+			const playerTwoResponseTime: number = updatedGame.playerTwoResponseTimes[updatedGame.playerTwoResponseTimes.length-1]
 
-			console.log(`playerOneResponseTimes${updatedGame.playerOneResponseTimes}, playerTwoResponseTimes${updatedGame.playerTwoResponseTimes}`)
+			if (playerOneResponseTime < playerTwoResponseTime) {
+				io.to(game.id).emit('updatePoints', true, updatedGame.playerOnePoints+1)
+				await increasePoints(updatedGame.id, true, updatedGame.playerOnePoints+1)
+				debug("Increasing points for round:", round)
 
-			const playerOneTime : number = [...updatedGame.playerOneResponseTimes].pop()!
-			const playerTwoTime : number = [...updatedGame.playerTwoResponseTimes].pop()!
-
-			console.log(playerOneTime, playerTwoTime)
-
-			if (playerOneTime! < playerTwoTime!) {
-
-				updatedGame.playerOneScore + 1
-
-				socket.emit('roundResult', game, responseTime)
-
-
-				return console.log(`${playerOneTime} is lower than ${playerTwoTime}, 1 point to player one`)
-
-			} else if (playerOneTime! > playerTwoTime!) {
-
-				updatedGame.playerTwoScore + 1
-
-				socket.emit('roundResult', game, responseTime)
-
-				return console.log(`${playerTwoTime} is lower than ${playerOneTime}, 1 point to player two`)
-
+			} else if (playerOneResponseTime > playerTwoResponseTime) {
+				io.to(game.id).emit('updatePoints', false, updatedGame.playerTwoPoints+1)
+				await increasePoints(updatedGame.id, false, updatedGame.playerTwoPoints+1)
+				debug("Increasing points for round:", round)
 			}
-			if (updatedGame.playerOneResponseTimes.length === 10) {
-				// finishGame()
+
+			socket.broadcast.emit('updateLobbyGamesOngoing', await getGamesOngoing())
+
+			if (round >= 10) {
+				debug("Reached 10 rounds", round)
+				const finalGame = await endGame(game.id)
+				io.to(game.id).emit('endGame', finalGame)
+				socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
+				// store both players scores in Score
 			} else {
-				console.log("Kör ny runda")
+				newGameRound(game, round)
 			}
 		} else {
-			console.log("Vänta, kör inte ny runda")
+			debug("First result came in, waiting for second. Round:", round)
 		}
 	})
 
