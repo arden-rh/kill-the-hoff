@@ -334,7 +334,7 @@ socket.on('endGame', game => {
 	showElement(noticeEl)
 
 	noticeEl.innerHTML = `
-		<span>Game ended:</span> ${game.playerOneName}-${game.playerTwoName} ${game.playerOnePoints}-${game.playerTwoPoints}
+		<span>Game ended:</span> ${game.playerOneName} - ${game.playerTwoName} ${game.playerOnePoints} - ${game.playerTwoPoints}
 	`
 
 })
