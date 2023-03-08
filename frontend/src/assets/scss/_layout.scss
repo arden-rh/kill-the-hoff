@@ -12,4 +12,13 @@
 .grid-container {
 	border-radius: 8px;
 	background-color: $primary-color;
+	padding: 0.5rem;
+}
+
+// Media-queries
+@media screen and (min-width: $breakpoint-desktop) {
+
+	.grid-container {
+		padding: 1rem;
+	}
 }

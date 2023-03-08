@@ -7,8 +7,9 @@ $dark-color: black;
 
 // Fonts
 $primary-font: 'Press Start 2P', Helvetica, Arial, sans-serif;
-$logo-font: 
+$logo-font: 'Bungee Shade', Arial, Helvetica, sans-serif;
 
-$breakpoints: (phone: 640px,
-               tablet: 768px,
-               desktop: 1024px) !default;
+// Breakpoints for media-queries
+$breakpoint-phone: 576px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 992px;
