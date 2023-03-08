@@ -14,11 +14,11 @@ model Game {
 	timeFinished			Int
 	playerOneId				String
 	playerOneName			String
-	playerOneScore			Int
+	playerOnePoints			Int
 	playerOneResponseTimes	Int[]
 	playerTwoId				String
 	playerTwoName			String
-	playerTwoScore			Int
+	playerTwoPoints			Int
 	playerTwoResponseTimes	Int[]
 }
 
