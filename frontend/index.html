@@ -25,13 +25,14 @@
 <body>
 	<div id="app">
 
+		<!-- Header -->
 		<header>
 			<h1>Kill The Hoff</h1>
 		</header>
 
+		<!-- Welcome view -->
 		<div id="welcome-view-wrapper" class="">
 			<div id="welcome-view">
-
 				<div id="login">
 					<form id="username-form">
 						<div>
@@ -44,10 +45,10 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 
+		<!-- Lobby view -->
 		<div id="lobby-view" class="container">
 
 			<div id="highscore" class="grid-container">
@@ -60,21 +61,16 @@
 			</div>
 			<div id="ten-games" class="grid-container">
 				<h4>Last 10 Games</h4>
-				<ul id="games-finished">
-
-				</ul>
+				<ul id="games-finished"></ul>
 			</div>
 			<div id="ongoing-games" class="grid-container">
 				<h4>Ongoing Games</h4>
-				<ul id="games-ongoing">
-
-				</ul>
+				<ul id="games-ongoing"></ul>
 			</div>
 			<div id="users" class="grid-container">
 				<h4>Users Online</h4>
 				<span id="user"></span>
-				<ul id="users-online">
-				</ul>
+				<ul id="users-online"></ul>
 			</div>
 			<div id="enter-game" class="grid-container">
 				<h4>Ready to play<span class="available-name"></span>?</h4>
@@ -82,14 +78,14 @@
 			</div>
 		</div>
 
+		<!-- Game view -->
 		<div id="game-view" class="container hide">
 
 			<div id="game-board" class="grid-container">
 				<div id="target-img" class="hide">
 					<img src="src\assets\images\david_hasselhoff.png" id="targetImg" class="img-fluid">
 				</div>
-				<div id="notice">
-				</div>
+				<div id="notice"></div>
 			</div>
 
 			<div id="scoreboard" class="grid-container">
@@ -108,12 +104,12 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 
 	</div>
 
 	<script type="module" src="/src/main.ts"></script>
+
 </body>
 
 </html>

@@ -1,6 +1,9 @@
 import { Game, Score, User } from "@prisma/client"
 export { Game, Score, User }
 
+/**
+ * Server to client
+ */
 export interface ServerToClientEvents {
 	hello: () => void
 	updateLobby: (data: LobbyInfoData) => void
@@ -15,6 +18,9 @@ export interface ServerToClientEvents {
 	endGame: (game: Game) => void
 }
 
+/**
+ * Client to server
+ */
 export interface ClientToServerEvents {
 	userJoinLobby: (username: string, callback: (data: LobbyInfoData) => void) => void
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
@@ -22,16 +28,12 @@ export interface ClientToServerEvents {
 	roundResult: (game: Game, responseTime: number) => void
 }
 
-export interface InterServerEvents {
-}
-
+/**
+ * All data in the lobby
+ */
 export interface LobbyInfoData {
 	users: User[]
 	gamesOngoing: Game[]
 	gamesFinished: Game[]
 	scores: Score[]
-}
-
-export interface UserJoinLobbyResult {
-	data: LobbyInfoData | null
 }

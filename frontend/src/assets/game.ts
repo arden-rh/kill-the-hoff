@@ -10,14 +10,14 @@ let inGame: Game
 /**
  * Queries
  */
-// Testing timers
+
+// The player's timers
 export const playerOneTimerEl = document.querySelector('#player-1-timer') as HTMLSpanElement
 export const playerTwoTimerEl = document.querySelector('#player-2-timer') as HTMLSpanElement
-// const testTimerBtnEl = document.querySelector('#test-timer-btn') as HTMLButtonElement
-// const startGameBtnEl = document.querySelector('#test-start-game-btn') as HTMLButtonElement
+export let playerOneTimerId: number
+export let playerTwoTimerId: number
 
 // Views
-// const boardEl = document.querySelector('#board') as HTMLDivElement
 const targetImgEl = document.querySelector('#target-img') as HTMLDivElement
 export const noticeEl = document.querySelector('#notice') as HTMLDivElement
 
@@ -25,78 +25,72 @@ export const noticeEl = document.querySelector('#notice') as HTMLDivElement
 export const playerOnePointsEl = document.querySelector('#player-1-points') as HTMLSpanElement
 export const playerTwoPointsEl = document.querySelector('#player-2-points') as HTMLSpanElement
 
-/**
- * Timer
- */
-export let playerOneTimerId: number
-export let playerTwoTimerId: number
+// Timer start
 let start: number
 
-// const startGameRound = () => {
-
-// 	socket.emit('startGameRound', () => {
-
-// 	})
-
-// 	socket.on('gameLogicCoordinates', (rowStart, columnStart, timer) => {
-
-// 		console.log(rowStart, columnStart)
-// 		console.log(timer)
-
-// 		const gameTimer = setTimeout(() => {
-// 			showElement(targetImgEl)
-// 			targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
-// 		}, timer)
-
-// 		hideElement(targetImgEl)
-
-// 	})
-
-// }
-
-// targetImgEl.addEventListener('click', () => {
-// 	// testingEl.style.gridArea = "4 / 5 / 5 / 6"
-// 	// testingEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
-
-// 	clearInterval(timerId)
-// 	// startGameRound()
-// })
-
-// Time format
+/**
+ * Time format
+ */
 export const formatedTime = new Intl.DateTimeFormat("en", {
 	second: "2-digit",
 	fractionalSecondDigits: 2
 })
 
+/**
+ * Player one's tick
+ */
 const playerOneTick = () => {
+
 	const now = Date.now() - start
 	const currentTime = formatedTime.format(now)
 	playerOneTimerEl.innerText = currentTime
+
 }
 
+/**
+ * Player two's tick
+ */
 const playerTwoTick = () => {
+
 	const now = Date.now() - start
+
 	const currentTime = formatedTime.format(now)
 	playerTwoTimerEl.innerText = currentTime
+
 }
 
+/**
+ * Start of a new round
+ * @param game
+ * @param rowStart
+ * @param columnStart
+ * @param timer
+ */
 export const startRound = (game: Game, rowStart: number, columnStart: number, timer: number) => {
+
 	inGame = game
+
 	hideElement(noticeEl)
 
 	setTimeout(() => {
+
 		targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
 		showElement(targetImgEl)
 
 		start = Date.now()
 		playerOneTimerId = setInterval(playerOneTick, 100)
 		playerTwoTimerId = setInterval(playerTwoTick, 100)
+
 	}, timer)
 
 	targetImgEl.addEventListener('click', targetImgEventListener)
 }
 
+/**
+ * Listen to the click on the target
+ */
 const targetImgEventListener = () => {
+
 	let end = Date.now()
 	let responseTime: number
 	responseTime = end - start
@@ -104,13 +98,19 @@ const targetImgEventListener = () => {
 	socket.emit('roundResult', inGame, responseTime)
 
 	const time = formatedTime.format(responseTime)
+
 	if (socket.id === inGame.playerOneId) {
+
 		clearInterval(playerOneTimerId)
 		playerOneTimerEl.innerText = time
+
 	} else {
+
 		clearInterval(playerTwoTimerId)
 		playerTwoTimerEl.innerText = time
+
 	}
+
 	hideElement(targetImgEl)
 	// targetImgEl.removeEventListener('click', targetImgEventListener)
 }
