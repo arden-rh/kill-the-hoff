@@ -8,6 +8,7 @@ export interface ServerToClientEvents {
 	updateLobbyGames: (gamesOngoing: Game[], gamesFinished: Game[]) => void
 	updateLobbyGamesOngoing: (gamesOngoing: Game[]) => void
 	updateGameInfo: (playerTwoName: string) => void
+	updateHighScore: (highscore:number,name:string) => void
 	newGameRound: (game: Game, round: number, rowStart : number, columnStart: number, timer: number) => void
 	roundResult: (game: Game, responseTime: number) => void
 	updateResponseTime: (gameOwner: boolean, responseTime: number) => void
@@ -20,16 +21,19 @@ export interface ClientToServerEvents {
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
 	startGame: (game: Game) => void
 	roundResult: (game: Game, responseTime: number) => void
+	callHighscore:() => void
+
 }
 
 export interface InterServerEvents {
 }
 
+
 export interface LobbyInfoData {
 	users: User[]
 	gamesOngoing: Game[]
 	gamesFinished: Game[]
-	scores: Score[]
+	scores:Score[]
 }
 
 export interface UserJoinLobbyResult {

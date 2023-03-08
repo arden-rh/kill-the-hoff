@@ -10,6 +10,7 @@ import { Result } from 'express-validator'
 const debug = Debug('hoff:socket_controller')
 
 
+
 const getRandomNumber = (max : number) => {
 	return Math.ceil( Math.random() * max );
 }
@@ -20,6 +21,47 @@ const getRandomDelay = (max : number) => {
 
 export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToClientEvents>, io: Server<ClientToServerEvents, ServerToClientEvents>) => {
 	debug("✅ User connected:", socket.id)
+
+	//Get all highscores and compare
+	const getScoreLeader = async () =>{
+
+		const score = await getScores()
+		// console.log(score);
+
+		let winner = {
+			minTime:0,
+			name:""
+		}
+
+		if(score.length >0){
+
+			// let minTime = 0
+			for(let i=0;i< score.length;i++){
+				if(i=== 0){
+					winner.minTime = score[i].avgTime
+					winner.name += score[i].name
+				}
+				if(winner.minTime>score[i].avgTime){
+					winner.minTime = score[i].avgTime
+					winner.name = score[i].name
+				}
+			}
+		}
+		// io.emit('updateHighScore',winner.minTime, winner.name)
+
+		return winner
+
+	}
+
+	const leaderScore =  getScoreLeader().then((item)=> {
+		console.log(item);
+		io.emit('updateHighScore', item.minTime,item.name )
+	console.log(leaderScore);
+	})
+
+
+
+
 
 	socket.on('userJoinLobby', async (username, callback) => {
 		// debug("🙋 User wants to join lobby:", socket.id, username)
@@ -98,9 +140,8 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 				const finalGame = await endGame(game.id)
 				io.to(game.id).emit('endGame', finalGame)
 				socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
+
 				// store both players scores in Score
-
-
 				// Get all players response time
 				const playersResponseTimes = await getResponseTimes(game.id)
 
@@ -117,8 +158,17 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 				const fastest2 = Math.min(...playersResponseTimes!.playerTwoResponseTimes)
 
 					// create document of players to database on table "Score"
-					await createScore(game.playerOneName, average1, fastest1)
-					await createScore(game.playerTwoName, average2, fastest2)
+					await createScore(game.playerOneName, average1, fastest1,0 )
+					await createScore(game.playerTwoName, average2, fastest2,0)
+
+
+					const leaderScore =  getScoreLeader().then((item)=> {
+						console.log(item);
+						io.emit('updateHighScore', item.minTime,item.name )
+					console.log(leaderScore);
+					})
+					// debug("Our top player is: ", winner)
+					// io.emit('updateHighScores',winner.minTime, winner.name )
 
 			} else {
 				newGameRound(game, round)
