@@ -8,12 +8,13 @@ export interface ServerToClientEvents {
 	updateLobbyGames: (gamesOngoing: Game[], gamesFinished: Game[]) => void
 	updateLobbyGamesOngoing: (gamesOngoing: Game[]) => void
 	updateGameInfo: (playerTwoName: string) => void
-	updateHighScore: (highscore:number,name:string) => void
 	newGameRound: (game: Game, round: number, rowStart : number, columnStart: number, timer: number) => void
 	roundResult: (game: Game, responseTime: number) => void
 	updateResponseTime: (gameOwner: boolean, responseTime: number) => void
 	updatePoints: (isPlayerOne: boolean, points: number) => void
 	endGame: (game: Game) => void
+	getScores: (score:Score[]) => void
+
 }
 
 export interface ClientToServerEvents {
@@ -22,6 +23,7 @@ export interface ClientToServerEvents {
 	startGame: (game: Game) => void
 	roundResult: (game: Game, responseTime: number) => void
 	callHighscore:() => void
+
 
 }
 
