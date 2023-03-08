@@ -3,7 +3,7 @@ import { Socket, Server } from 'socket.io'
 import { Game } from '@prisma/client'
 import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
-import { getScores } from '../services/score_service'
+import { averageTime, getScores } from '../services/score_service'
 import { createGame, deleteGame, endGame, getAvailableGame, getGamesFinished, getGamesOngoing, increasePoints, joinGame, updateGame } from '../services/game_service'
 
 const debug = Debug('hoff:socket_controller')
@@ -97,6 +97,15 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 				io.to(game.id).emit('endGame', finalGame)
 				socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
 				// store both players scores in Score
+				if(gameOwner){
+				const storeScore = await averageTime(game.playerOneName, responseTime)
+				debug('player one score is sent to server', storeScore)
+				}
+				else{
+					const storeScore = await averageTime (game.playerTwoName, responseTime)
+					debug('player two score is sent to server', storeScore)
+				}
+
 			} else {
 				newGameRound(game, round)
 			}
