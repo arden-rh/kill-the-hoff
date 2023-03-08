@@ -4,13 +4,15 @@ export const getScores = () => {
 	return prisma.score.findMany()
 }
 
-export const averageTime = (player:string,time:number) =>{
+export const createScore = (name:string,avgTime:number, fastestTime:number) =>{
 return prisma.score.create({
 	data:{
-	name:player,
-	avgTime:time,
+	name,
+	avgTime,
+	fastestTime,
 	timestamp:Date.now()
 	}
 
 })
 }
+

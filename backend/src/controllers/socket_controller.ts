@@ -3,11 +3,12 @@ import { Socket, Server } from 'socket.io'
 import { Game } from '@prisma/client'
 import { ClientToServerEvents, LobbyInfoData, ServerToClientEvents } from '../types/shared/SocketTypes'
 import { createUser, deleteUser, getUsers } from '../services/user_service'
-import { averageTime, getScores } from '../services/score_service'
-import { createGame, deleteGame, endGame, getAvailableGame, getGamesFinished, getGamesOngoing, getResponseTimes, increasePoints, joinGame, updateGame } from '../services/game_service'
+import { createScore, getScores} from '../services/score_service'
+import { createGame, deleteGame, endGame, getAvailableGame, getGamesFinished, getGamesOngoing, getResponseTimes, increasePoints, joinGame, updateGame, } from '../services/game_service'
 import { Result } from 'express-validator'
 
 const debug = Debug('hoff:socket_controller')
+
 
 const getRandomNumber = (max : number) => {
 	return Math.ceil( Math.random() * max );
@@ -98,51 +99,26 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 				io.to(game.id).emit('endGame', finalGame)
 				socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
 				// store both players scores in Score
-				const playersRoundsTime = await getResponseTimes(game.id)
 
-				const sum1 = playersRoundsTime?.playerOneResponseTimes.reduce((partialSum, a) => partialSum + a, 0);
+
+				// Get all players response time
+				const playersResponseTimes = await getResponseTimes(game.id)
+
+				//Get average time from  player 1
+				const sum1 = playersResponseTimes?.playerOneResponseTimes.reduce((partialSum, a) => partialSum + a, 0);
 				const average1 = sum1!/10
 
-				const sum2 = playersRoundsTime?.playerTwoResponseTimes.reduce((partialSum, a) => partialSum + a, 0);
-				const average2 = sum1!/10
+				//get average time from player 2
+				const sum2 = playersResponseTimes?.playerTwoResponseTimes.reduce((partialSum, a) => partialSum + a, 0);
+				const average2 = sum2!/10
 
-				let result:number
-				if(sum1!<sum2!){
-					result = average1
-					debug("player one average time", result)
-					const storeScore = await averageTime(game.playerOneName, result)
-				debug('player one score is sent to server', storeScore)
-				}
-				else{
-					result = average2
-					debug("player two average time:", result)
-					const storeScore = await averageTime (game.playerTwoName, result)
-					debug('player two score is sent to server', storeScore)
-				}
+				//get the fastest click from both player
+				const fastest1 = Math.min(...playersResponseTimes!.playerOneResponseTimes)
+				const fastest2 = Math.min(...playersResponseTimes!.playerTwoResponseTimes)
 
-				console.log(result);
-
-				// FUNCTION TO GET FASTEST TIME CLICKED
-				// const getBestTime = (playersRoundsTime:any) =>{
-				// 	const sort = playersRoundsTime.playerOneResponseTimes.sort((a:number,b:number) => {
-				// 		return a-b
-
-				// 	})[0]
-				// 	console.log(sort);
-
-				// }
-				// getBestTime(playersRoundsTime)
-
-
-				// OLD CODE
-				// if(gameOwner){
-				// const storeScore = await averageTime(game.playerOneName, result)
-				// debug('player one score is sent to server', storeScore)
-				// }
-				// else{
-				// 	const storeScore = await averageTime (game.playerTwoName, result)
-				// 	debug('player two score is sent to server', storeScore)
-				// }
+					// create document of players to database on table "Score"
+					await createScore(game.playerOneName, average1, fastest1)
+					await createScore(game.playerTwoName, average2, fastest2)
 
 			} else {
 				newGameRound(game, round)
