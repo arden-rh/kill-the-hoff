@@ -33,10 +33,21 @@ const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElem
 // Views in game
 const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
 const player2NameEl = document.querySelector('#player-2-name') as HTMLSpanElement
-const waitiPlaceholderEl = document.querySelector('#wait-placeholder') as HTMLSpanElement
+const waitPlaceholderEl = document.querySelector('#wait-placeholder') as HTMLSpanElement
 
 // User Detail
 export let username: string
+
+const formatedEndTime = new Intl.DateTimeFormat("sv", {
+	day: "2-digit",
+	month: "2-digit",
+	hour: "2-digit",
+	minute: "2-digit"
+})
+
+const formatedDate = new Intl.DateTimeFormat("sv", {
+})
+
 
 /**
  * Show element
@@ -140,13 +151,26 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 			availableNameEl.innerText = ''
 
 		}
+
+		element.innerHTML = games
+			.map(game => `<li>
+			<span class="player-names">
+				<span class="player-1-name">${game.playerOneName}</span> -
+				<span class="player-2-name">${(game.playerTwoId) ? game.playerTwoName : '<span class="fa-solid fa-terminal"></span>'}</span>
+			</span>
+			<span class="game-score">${game.playerOnePoints} - ${game.playerTwoPoints}</span>
+			</li>`)
+			.join('')
+
+		return
 	}
 
 	element.innerHTML = games
 		.map(game => `<li>
+		<span class="finish-time">${formatedEndTime.format(game.timeFinished)}</span>
 			<span class="player-names">
-				<span>${game.playerOneName}</span> -
-				<span>${(game.playerTwoId) ? game.playerTwoName : '<span class="fa-solid fa-terminal"></span>'}</span>
+				<span class="player-1-name">${game.playerOneName}</span> -
+				<span class="player-2-name">${(game.playerTwoId) ? game.playerTwoName : '<span class="fa-solid fa-terminal"></span>'}</span>
 			</span>
 			<span class="game-score">${game.playerOnePoints} - ${game.playerTwoPoints}</span>
 			</li>`)
@@ -222,12 +246,12 @@ playBtnEl.addEventListener('click', () => {
 		if (game.timeStarted === 0) {
 
 			noticeEl.innerText = 'Waiting for another player...'
-			showElement(waitiPlaceholderEl)
+			showElement(waitPlaceholderEl)
 
 
 		} else {
 
-			hideElement(waitiPlaceholderEl)
+			hideElement(waitPlaceholderEl)
 			player2NameEl.innerText = game.playerTwoName
 
 			// If player 2, start the game

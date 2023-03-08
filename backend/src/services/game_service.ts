@@ -26,7 +26,10 @@ export const getGamesFinished = () => {
 				gt: 0
 			}
 		},
-		take: -10,
+		take: 10,
+		orderBy: {
+			timeFinished: 'desc'
+		}
 	})
 }
 
