@@ -77,11 +77,13 @@ socket.on('connect', () => {
 	socket.on('getScores', scores => {
 
 		// Check if there's any highscore data, if so, update it, else, show default value (text in index.html)
-		if(scores.length>0){
-			scores.sort((a, b) => a.avgTime - b.avgTime)
+		if (scores.length > 0) {
+			scores.sort( (a, b) => a.avgTime - b.avgTime)
 				const highscore = formatedTime.format(scores[0].avgTime)
 				const highscoreEl = document.querySelector('#high-score-wrapper') as HTMLDivElement
-					highscoreEl.innerHTML = /* scores.map(highscore =>  */`<span id="high-score-time">${highscore}</span> <span id="high-score-name">${scores[0].name}</span>`
+					highscoreEl.innerHTML = `
+						<span id="high-score-time">${highscore}</span> <span id="high-score-name">${scores[0].name}</span>
+						`
 		}
 	})
 })
@@ -132,9 +134,13 @@ const updateOnlineUsers = (users: User[]) => {
 	usersOnlineEl.innerHTML = users
 		.map(user => {
 			if (socket.id === user.id) {
-				return `<li class='hide'>${user.name}</li>`
+				return `
+					<li class='hide'>${user.name}</li>
+					`
 			} else {
-				return `<li>${user.name}</li>`
+				return `
+					<li>${user.name}</li>
+				`
 			}
 		})
 		.join('')
@@ -317,8 +323,8 @@ socket.on('endGame', game => {
 
 	showElement(noticeEl)
 	noticeEl.innerHTML = `
-	<span>Game ended:</span> <span>${game.playerOneName} - ${game.playerTwoName}</span> <span>${game.playerOnePoints} - ${game.playerTwoPoints}</span>
-	`
+		<span>Game ended:</span> <span>${game.playerOneName} - ${game.playerTwoName}</span> <span>${game.playerOnePoints} - ${game.playerTwoPoints}</span>
+		`
 	showElement(noticeEl)
 	showElement(btnBackToLobbyEl)
 
