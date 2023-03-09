@@ -71,6 +71,7 @@ socket.on('connect', () => {
 
 	// Send request for highscore data to back end
 	socket.emit('callHighscore')
+	socket.emit('loadLobby')
 
 	// Get highscore data
 	socket.on('getScores', scores => {
