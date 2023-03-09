@@ -26,30 +26,13 @@
 		width: 80%;
 	}
 
-	#score {
-		border: $light-color dashed 2px;
-		height: 7rem;
-		width: 80%;
-		margin: 1rem 0;
+	#round-counter {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		align-items: center;
-		font-size: 2rem;
-
-		span {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-		#point-header {
-			font-size: 0.8rem;
-			width: 70%;
-			padding-top: 0.8rem;
-			display: flex;
-			justify-content: space-around;
-		}
+		width: 90%;
+		padding: 10px;
+		margin-bottom: 50px;
 	}
 
 	#players {
@@ -120,6 +103,7 @@
 	}
 }
 
+// Media queries
 @media screen and (min-width: $breakpoint-desktop) {
 
 	#scoreboard {
@@ -129,7 +113,11 @@
 			.timer {
 				width: 80%;
 			}
+		}
 
+		#round-counter {
+			width: 80%;
+			font-size: 1.5rem;
 		}
 	}
 
