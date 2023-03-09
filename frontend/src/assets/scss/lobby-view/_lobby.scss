@@ -39,8 +39,6 @@
 
 	button {
 		background: none;
-		border: $light-color 2px dashed;
-		border-radius: 8px;
 		color: $light-color;
 		text-transform: uppercase;
 		padding: 0.2rem 0.8rem;
@@ -48,9 +46,6 @@
 		font-size: 0.9rem;
 		margin-bottom: 0.2rem;
 		text-align: center;
-		box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-		-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-		-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
 		&:hover {
 			background-color: $tertiary-color;
@@ -97,6 +92,9 @@
 			width: inherit;
 			color: $secondary-color;
 			font-style: italic;
+			white-space: nowrap;
+			font-size: 0.8rem;
+
 
 			/* animation properties */
 			-moz-transform: translateX(100%);
@@ -145,13 +143,8 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0.5rem 0.7rem;
-			border: 2px dashed $light-color;
-			border-radius: 8px;
 			margin-bottom: 0.7rem;
 			width: 92%;
-			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
 			.game-score {
 				padding: 0 0 0 1rem;
@@ -164,7 +157,6 @@
 			}
 
 			.player-names {
-				// padding: 0.5rem 0.8rem 0.5rem 0.2rem;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
@@ -219,13 +211,8 @@
 			font-weight: 700;
 			list-style: none;
 			padding: 0.5rem 0.7rem;
-			border: 2px dashed $light-color;
-			border-radius: 8px;
 			margin-bottom: 0.7rem;
 			width: 92%;
-			box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-			-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-			-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
 			.finish-time {
 				padding: 0 0.5rem 0 0;
@@ -293,9 +280,7 @@
 		width: 80%;
 		height: fit-content;
 		text-align: center;
-		// border: 2px dashed $light-color;
 		border-top: 2px dashed $light-color;
-		// border-radius: 8px;
 		overflow-y: scroll;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
@@ -368,14 +353,11 @@
 	}
 }
 
-@media screen and (max-width: $breakpoint-desktop) {
+@media screen and (max-width: 1200px) {
 
 	#ten-games {
-
 		ul {
-
 			li {
-
 				.player-names {
 					border-left: none;
 					padding-left: 0.2rem;
@@ -384,9 +366,7 @@
 				.finish-time {
 					display: none;
 				}
-
 			}
-
 		}
 	}
 }
@@ -406,7 +386,18 @@
 			line-height: 2rem;
 			padding-bottom: 0.6rem;
 		}
+	}
 
+	#highscore {
+		#highscore-wrapper {
+			div:last-child {
+				font-size: 1rem;
+
+				-moz-animation: scroll-animation 13s linear infinite;
+				-webkit-animation: scroll-animation 13s linear infinite;
+				animation: scroll-animation 13s linear infinite;
+			}
+		}
 	}
 
 	#ongoing-games {
@@ -449,6 +440,4 @@
 			font-size: 1.1rem;
 		}
 	}
-
-
 }

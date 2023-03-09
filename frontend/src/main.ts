@@ -168,7 +168,7 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 		}
 
 		element.innerHTML = games
-			.map(game => `<li>
+			.map(game => `<li class="small-element">
 			<span class="player-names">
 				<span class="player-1-name">${game.playerOneName}</span> -
 				<span class="player-2-name">${(game.playerTwoId) ? game.playerTwoName : '<span class="fa-solid fa-terminal"></span>'}</span>
@@ -181,7 +181,7 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 	}
 
 	element.innerHTML = games
-		.map(game => `<li>
+		.map(game => `<li class="small-element">
 		<span class="finish-time">${formatedEndTime.format(game.timeFinished)}</span>
 			<span class="player-names">
 				<span class="player-1-name">${game.playerOneName}</span> -
