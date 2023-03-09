@@ -292,6 +292,7 @@
 				padding: 0 0 2px 0;
 				color: $light-color;
 				margin: 0.15rem;
+				overflow-wrap: anywhere;
 			}
 		}
 
@@ -438,6 +439,9 @@
 			#user {
 				margin-bottom: 0.4rem;
 				font-size: 1.1rem;
+				word-wrap: break-word;
+				width: 100%;
+				text-align: center;
 			}
 		}
 	}
