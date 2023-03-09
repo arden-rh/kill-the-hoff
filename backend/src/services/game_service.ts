@@ -176,3 +176,16 @@ export const endGame = (id: string) => {
 		}
 	})
 }
+
+export const getResponseTimes = (id:string) => {
+	return prisma.game.findUnique({
+		where:{
+			id
+		}
+		, select:{
+			playerOneResponseTimes:true,
+			playerTwoResponseTimes:true
+
+		}
+	})
+}

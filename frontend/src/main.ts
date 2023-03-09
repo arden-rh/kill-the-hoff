@@ -55,10 +55,28 @@ export const hideElement = (element: HTMLElement) => {
 }
 
 /**
- * Connection to server and get socket id
+ * Connection to server and get socket id, updatind
  */
 socket.on('connect', () => {
 	console.log('💥 Connected to the server, socket id:', socket.id)
+
+	//send request for highscore data to back end
+	socket.emit('callHighscore')
+	// get highscore data
+	socket.on('getScores', scores => {
+		console.log(scores);
+
+		//check if there's any highscore data, if so, update it, else, show default value (text in index.html)
+		if(scores.length>0){
+			console.log(scores);
+
+			scores.sort((a, b) => a.avgTime - b.avgTime)
+				const highscore = formatedTime.format(scores[0].avgTime)
+				const highscoreEl = document.querySelector('#high-score-wrapper') as HTMLDivElement
+					highscoreEl.innerHTML = /* scores.map(highscore =>  */`<span id="high-score-time">${highscore}</span> <span id="high-score-name">${scores[0].name}</span>`
+		}
+
+	})
 })
 
 /**
@@ -218,6 +236,7 @@ const showGameView = () => {
  */
 playBtnEl.addEventListener('click', () => {
 
+	//calling if there's a open room
 	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
 
