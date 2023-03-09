@@ -245,7 +245,6 @@ playBtnEl.addEventListener('click', () => {
 		}
 
 		player1NameEl.innerText = game.playerOneName
-		// player2NameEl.innerText = game.playerTwoName
 
 		showGameView()
 	})
