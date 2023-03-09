@@ -151,13 +151,13 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 				const sum2 = playersResponseTimes?.playerTwoResponseTimes.reduce((partialSum, a) => partialSum + a, 0);
 				const average2 = sum2!/10
 
-				// Get the fastest click from both player
-				// const fastest1 = Math.min(...playersResponseTimes!.playerOneResponseTimes)
-				// const fastest2 = Math.min(...playersResponseTimes!.playerTwoResponseTimes)
+				//get the fastest click from both player
+				const fastest1 = Math.min(...playersResponseTimes!.playerOneResponseTimes)
+				const fastest2 = Math.min(...playersResponseTimes!.playerTwoResponseTimes)
 
-				// Create document of players to database on table "Score"
-				await createScore(game.playerOneName,average1,0)
-				await createScore(game.playerTwoName, average2,0)
+				// 	// create document of players to database on table "Score"
+					await createScore(game.playerOneName,average1,fastest1)
+					await createScore(game.playerTwoName, average2,fastest2)
 
 				// Get all score tabels and send to front end
 				const score = await getScores()
