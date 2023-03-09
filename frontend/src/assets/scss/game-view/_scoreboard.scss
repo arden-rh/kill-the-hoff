@@ -89,15 +89,17 @@
 			font-size: 0.9rem;
 		}
 
+		.your-name {
+			color: $tertiary-color;
+		}
+
 		#player-1-name {
 			font-style: italic;
-			color: $tertiary-color;
 
 		}
 
 		#player-2-name {
 			font-style: italic;
-			color: $secondary-color;
 		}
 
 		#wait-placeholder {
