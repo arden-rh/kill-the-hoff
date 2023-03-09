@@ -14,7 +14,7 @@ const debug = Debug('hoff:socket_controller')
  * @returns
  */
 const getRandomNumber = (max: number) => {
-	return Math.ceil( Math.random() * max );
+	return Math.ceil( Math.random() * max )
 }
 
 /**
@@ -23,7 +23,7 @@ const getRandomNumber = (max: number) => {
  * @returns
  */
 const getRandomDelay = (max: number) => {
-	return Math.ceil( Math.random() * max * 1000 + 1000);
+	return Math.ceil( Math.random() * max * 1000 + 1000 )
 }
 
 /**
@@ -35,10 +35,9 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 	debug("✅ User connected:", socket.id)
 
 	// Listen for user to connect and update Highscore
-	socket.on('callHighscore', async () =>{
+	socket.on('callHighscore', async () => {
 		const score = await getScores()
-			io.emit('getScores',score )
-
+		io.emit('getScores', score )
 	})
 
 	socket.on('loadLobby', async () =>{

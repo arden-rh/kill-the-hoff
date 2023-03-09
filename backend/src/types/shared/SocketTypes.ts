@@ -1,5 +1,5 @@
 import { Game, Score, User } from "@prisma/client"
-export { Game, Score, User }
+export type { Game, Score, User }
 
 /**
  * Server to client

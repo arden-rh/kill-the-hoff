@@ -82,14 +82,10 @@ socket.on('connect', () => {
 			const avgTimes = [...scores].sort((a, b) => a.avgTime - b.avgTime)
 			const avgTime = formatedTime.format(avgTimes[0].avgTime)
 
-			console.log(avgTimes, avgTime)
-
 			const fastestTimes = [...scores].sort((a, b) => a.fastestTime - b.fastestTime)
 			const fastestTime = formatedTime.format(fastestTimes[0].fastestTime)
 
-			console.log(fastestTimes, fastestTime)
-
-			highscoresEl.innerHTML = /* scores.map(highscore =>  */`<span id="avg-time">Fastest average time: ${avgTime}</span> <span id="avg-time-name">${avgTimes[0].name}</span><span id="fastest-time">Fastest kill: ${fastestTime}</span><span id="fastest-time-name">${fastestTimes[0].name}</span>`
+			highscoresEl.innerHTML = `<span id="avg-time">Fastest average time: ${avgTime}</span> <span id="avg-time-name">${avgTimes[0].name}</span><span id="fastest-time">Fastest kill: ${fastestTime}</span><span id="fastest-time-name">${fastestTimes[0].name}</span>`
 
 		}
 	})
@@ -141,9 +137,13 @@ const updateOnlineUsers = (users: User[]) => {
 	usersOnlineEl.innerHTML = users
 		.map(user => {
 			if (socket.id === user.id) {
-				return `<li class='hide'>${user.name}</li>`
+				return `
+					<li class='hide'>${user.name}</li>
+					`
 			} else {
-				return `<li>${user.name}</li>`
+				return `
+					<li>${user.name}</li>
+				`
 			}
 		})
 		.join('')
@@ -326,8 +326,8 @@ socket.on('endGame', game => {
 
 	showElement(noticeEl)
 	noticeEl.innerHTML = `
-	<span>Game ended:</span> <span>${game.playerOneName} - ${game.playerTwoName}</span> <span>${game.playerOnePoints} - ${game.playerTwoPoints}</span>
-	`
+		<span>Game ended:</span> <span>${game.playerOneName} - ${game.playerTwoName}</span> <span>${game.playerOnePoints} - ${game.playerTwoPoints}</span>
+		`
 	showElement(noticeEl)
 	showElement(btnBackToLobbyEl)
 
