@@ -26,7 +26,10 @@ export const getGamesFinished = () => {
 				gt: 0
 			}
 		},
-		take: -10,
+		take: 10,
+		orderBy: {
+			timeFinished: 'desc'
+		}
 	})
 }
 
@@ -177,15 +180,19 @@ export const endGame = (id: string) => {
 	})
 }
 
+/**
+ * Get the responsetimes
+ * @param id
+ * @returns
+ */
 export const getResponseTimes = (id:string) => {
 	return prisma.game.findUnique({
-		where:{
+		where: {
 			id
-		}
-		, select:{
+		},
+		select: {
 			playerOneResponseTimes:true,
 			playerTwoResponseTimes:true
-
 		}
 	})
 }

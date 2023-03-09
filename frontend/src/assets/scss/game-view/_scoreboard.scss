@@ -89,12 +89,17 @@
 			font-size: 0.9rem;
 		}
 
-		#player-1 {
+		.your-name {
 			color: $tertiary-color;
+		}
 
-			#player-1-name {
-				font-style: italic;
-			}
+		#player-1-name {
+			font-style: italic;
+
+		}
+
+		#player-2-name {
+			font-style: italic;
 		}
 
 		#wait-placeholder {
@@ -117,6 +122,15 @@
 
 @media screen and (min-width: $breakpoint-desktop) {
 
+	#scoreboard {
+
+		#players {
+
+			.timer {
+				width: 80%;
+			}
+
+		}
+	}
+
 }
-
-
