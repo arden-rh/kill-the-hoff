@@ -1,20 +1,32 @@
 #scoreboard {
-	background-color: rgb(163, 153, 153);
+	background-color: $primary-color;
 	font-family: $primary-font;
 	color: $light-color;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	grid-area: 1 / 7 / 11 / 9;
 
 	button {
+		background-color: $primary-color;
+		color: $light-color;
+		letter-spacing: 0.2rem;
+		font-size: 0.9rem;
 		width: 80%;
 		padding: 4px 0;
 		margin: 3px 0;
+		text-align: center;
+
+		&:hover {
+			background-color: $tertiary-color;
+			color: $light-color;
+		}
 	}
 
 	h3 {
-		font-size: 1rem;
+		font-size: 1.5rem;
+		overflow-wrap: break-word;
 		letter-spacing: 0.15rem;
 		margin: 1rem 0 0 0;
 		padding: 0.8rem 1rem;
@@ -24,32 +36,13 @@
 		width: 80%;
 	}
 
-	#score {
-		border: $light-color dashed 2px;
-		height: 7rem;
-		width: 80%;
-		margin: 1rem 0;
+	#round-counter {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		align-items: center;
-		font-size: 2rem;
-
-		span {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-
-
-		#point-header {
-			font-size: 0.8rem;
-			width: 70%;
-			padding-top: 0.8rem;
-			display: flex;
-			justify-content: space-around;
-		}
+		width: 90%;
+		padding: 10px;
+		margin-bottom: 1rem;
 	}
 
 	#players {
@@ -57,6 +50,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		text-align: center;
 
 		div {
 			width: 100%;
@@ -72,6 +66,8 @@
 			align-items: center;
 			justify-content: center;
 			margin-top: 0.2rem;
+			width: 100%;
+			overflow-wrap: anywhere;
 		}
 
 		.points {
@@ -81,18 +77,59 @@
 
 		.timer {
 			background-color: $light-color;
+			border-radius: 8px;
 			height: 3rem;
 			width: 100%;
-			color: $light-color;
-			font-size: 0.8rem;
+			color: $dark-color;
+			font-size: 0.9rem;
 		}
 
-		#me {
-			color: rgb(51, 249, 249);
-			;
+		.your-name {
+			color: $tertiary-color;
+		}
+
+		#player-1-name {
+			font-style: italic;
+		}
+
+		#player-2-name {
+			font-style: italic;
+		}
+
+		#wait-placeholder {
+			font-size: 1rem;
+			color: $secondary-color;
+			animation: blink 1.2s infinite;
+		}
+	}
+}
+
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+// Media queries
+@media screen and (min-width: $breakpoint-desktop) {
+
+	#scoreboard {
+
+		#players {
+
+			.timer {
+				width: 80%;
+			}
+		}
+
+		#round-counter {
+			width: 80%;
+			font-size: 1.5rem;
 		}
 	}
 
 }
-
-

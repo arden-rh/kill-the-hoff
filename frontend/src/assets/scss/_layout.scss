@@ -8,3 +8,25 @@
 	align-items: center;
 	flex-direction: column;
 }
+
+.grid-container {
+	border-radius: 8px;
+	background-color: $primary-color;
+	padding: 0.5rem;
+}
+
+.small-element {
+	border: 2px dashed $light-color;
+	border-radius: 8px;
+	box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+	-webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+// Media-queries
+@media screen and (min-width: $breakpoint-desktop) {
+
+	.grid-container {
+		padding: 1rem;
+	}
+}

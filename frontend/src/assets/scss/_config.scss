@@ -1,7 +1,15 @@
 // Colors
+$primary-color: rgb(78, 75, 79);
+$secondary-color: rgb(72, 227, 235);
+$tertiary-color: rgb(243, 151, 46);
 $light-color: white;
 $dark-color: black;
-$border-color: white;
 
 // Fonts
 $primary-font: 'Press Start 2P', Helvetica, Arial, sans-serif;
+$logo-font: 'Bungee Shade', Arial, Helvetica, sans-serif;
+
+// Breakpoints for media-queries
+$breakpoint-phone: 576px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 992px;

@@ -1,5 +1,12 @@
 import prisma from "../prisma"
 
+/**
+ * Create a user
+ * Update if user reconnects
+ * @param id
+ * @param username
+ * @returns
+ */
 export const createUser = (id: string, username: string) => {
 	return prisma.user.upsert({
 		where: {
@@ -17,6 +24,11 @@ export const createUser = (id: string, username: string) => {
 	})
 }
 
+/**
+ * Delete users
+ * @param id
+ * @returns
+ */
 export const deleteUser = (id: string) => {
 	return prisma.user.deleteMany({
 		where: {
@@ -25,6 +37,10 @@ export const deleteUser = (id: string) => {
 	})
 }
 
+/**
+ * Get all users
+ * @returns
+ */
 export const getUsers = async () => {
 	return await prisma.user.findMany()
 }

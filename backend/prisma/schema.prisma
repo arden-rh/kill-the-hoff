@@ -14,11 +14,11 @@ model Game {
 	timeFinished			Int
 	playerOneId				String
 	playerOneName			String
-	playerOneScore			Int
+	playerOnePoints			Int
 	playerOneResponseTimes	Int[]
 	playerTwoId				String
 	playerTwoName			String
-	playerTwoScore			Int
+	playerTwoPoints			Int
 	playerTwoResponseTimes	Int[]
 }
 
@@ -26,6 +26,7 @@ model Score {
 	id			String @id @default(auto()) @map("_id") @db.ObjectId
 	name 		String
 	avgTime		Float
+	fastestTime	Float
 	timestamp	Int
 }
 
