@@ -33,6 +33,17 @@
 	}
 }
 
+#round-counter {
+	display: flex;
+	flex-direction: column;
+    align-items: center;
+    width: 100%;
+	border: 2px dashed $light-color;
+	border-radius: 8px;
+	padding: 10px;
+	margin-bottom: 50px;
+}
+
 .black {
 	background-color: $dark-color!important;
 }

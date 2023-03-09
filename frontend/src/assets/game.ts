@@ -25,6 +25,9 @@ export const noticeEl = document.querySelector('#notice') as HTMLDivElement
 export const playerOnePointsEl = document.querySelector('#player-1-points') as HTMLSpanElement
 export const playerTwoPointsEl = document.querySelector('#player-2-points') as HTMLSpanElement
 
+// Game's rounds
+const roundCounterEl = document.querySelector('#round') as HTMLSpanElement
+
 // Timer start
 let start: number
 
@@ -40,23 +43,18 @@ export const formatedTime = new Intl.DateTimeFormat("en", {
  * Player one's tick
  */
 const playerOneTick = () => {
-
 	const now = Date.now() - start
 	const currentTime = formatedTime.format(now)
 	playerOneTimerEl.innerText = currentTime
-
 }
 
 /**
  * Player two's tick
  */
 const playerTwoTick = () => {
-
 	const now = Date.now() - start
-
 	const currentTime = formatedTime.format(now)
 	playerTwoTimerEl.innerText = currentTime
-
 }
 
 /**
@@ -66,21 +64,23 @@ const playerTwoTick = () => {
  * @param columnStart
  * @param timer
  */
-export const startRound = (game: Game, rowStart: number, columnStart: number, timer: number) => {
-
+export const startRound = (game: Game, round: number, rowStart: number, columnStart: number, timer: number) => {
 	inGame = game
+	round++
+
+	setTimeout(() => {
+		console.log("Delayed for 1 second.");
+		roundCounterEl.innerText = round.toString()
+	  }, 1000)
 
 	hideElement(noticeEl)
 
 	setTimeout(() => {
-
 		targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
 		showElement(targetImgEl)
-
 		start = Date.now()
 		playerOneTimerId = setInterval(playerOneTick, 100)
 		playerTwoTimerId = setInterval(playerTwoTick, 100)
-
 	}, timer)
 
 	targetImgEl.addEventListener('click', targetImgEventListener)
@@ -90,7 +90,6 @@ export const startRound = (game: Game, rowStart: number, columnStart: number, ti
  * Listen to the click on the target
  */
 const targetImgEventListener = () => {
-
 	let end = Date.now()
 	let responseTime: number
 	responseTime = end - start
@@ -100,15 +99,11 @@ const targetImgEventListener = () => {
 	const time = formatedTime.format(responseTime)
 
 	if (socket.id === inGame.playerOneId) {
-
 		clearInterval(playerOneTimerId)
 		playerOneTimerEl.innerText = time
-
 	} else {
-
 		clearInterval(playerTwoTimerId)
 		playerTwoTimerEl.innerText = time
-
 	}
 
 	hideElement(targetImgEl)
