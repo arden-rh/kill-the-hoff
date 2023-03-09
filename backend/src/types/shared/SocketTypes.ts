@@ -28,6 +28,7 @@ export interface ClientToServerEvents {
 	startGame: (game: Game) => void
 	roundResult: (game: Game, responseTime: number) => void
 	callHighscore:() => void
+	loadLobby:() => void
 }
 
 /**

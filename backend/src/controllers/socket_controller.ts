@@ -41,6 +41,18 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 
 	})
 
+	socket.on('loadLobby', async () =>{
+		const data: LobbyInfoData = {
+			users: await getUsers(),
+			gamesOngoing: await getGamesOngoing(),
+			gamesFinished: await getGamesFinished(),
+			scores: await getScores(),
+		}
+		io.emit('updateLobby', data),
+		io.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
+
+	})
+
 	socket.on('userJoinLobby', async (username, callback) => {
 		const user = await createUser(socket.id, username)
 		debug("🙋 User added to database:", user)
