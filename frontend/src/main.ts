@@ -60,22 +60,20 @@ export const hideElement = (element: HTMLElement) => {
 socket.on('connect', () => {
 	console.log('💥 Connected to the server, socket id:', socket.id)
 
-	//send request for highscore data to back end
+	// Send request for highscore data to back end
 	socket.emit('callHighscore')
-	// get highscore data
+
+	// Get highscore data
 	socket.on('getScores', scores => {
 		console.log(scores);
 
-		//check if there's any highscore data, if so, update it, else, show default value (text in index.html)
+		// Check if there's any highscore data, if so, update it, else, show default value (text in index.html)
 		if(scores.length>0){
-			console.log(scores);
-
 			scores.sort((a, b) => a.avgTime - b.avgTime)
 				const highscore = formatedTime.format(scores[0].avgTime)
 				const highscoreEl = document.querySelector('#high-score-wrapper') as HTMLDivElement
 					highscoreEl.innerHTML = /* scores.map(highscore =>  */`<span id="high-score-time">${highscore}</span> <span id="high-score-name">${scores[0].name}</span>`
 		}
-
 	})
 })
 
@@ -83,7 +81,6 @@ socket.on('connect', () => {
  * Listen for reconnection and emit userJoinLobby again
  */
 socket.io.on('reconnect', () => {
-
 	console.log('✅ Reconnected to the server')
 
 	if (username) {
@@ -91,16 +88,13 @@ socket.io.on('reconnect', () => {
 			updateOnlineUsers(callbackData.users)
 		})
 	}
-
 })
 
 /**
  * Get username from form, add to online users list and get that list
  */
 usernameFormEl.addEventListener('submit', e => {
-
 	e.preventDefault()
-
 	username = (usernameFormEl.querySelector('#username') as HTMLInputElement).value.trim()
 
 	if (!username) {
@@ -114,14 +108,12 @@ usernameFormEl.addEventListener('submit', e => {
 	})
 
 	showLobbyView()
-
 })
 
 /**
  * Update online user list
  */
 const updateOnlineUsers = (users: User[]) => {
-
 	const user = users.find(name => name.id === socket.id)
 
 	if (user) {
@@ -137,26 +129,18 @@ const updateOnlineUsers = (users: User[]) => {
 			}
 		})
 		.join('')
-
 }
 
 /**
  * Update list of games, specify element 'ongoing' or 'finished' as first parameter
  */
 const updateGamesList = (element: HTMLElement, games: Game[]) => {
-
 	if (element === gamesOngoingEl) {
-
 		const availableGame = games.find(game => game.timeStarted === 0)
-
 		if (availableGame) {
-
 			availableNameEl.innerText = ` vs. ${availableGame.playerOneName}`
-
 		} else {
-
 			availableNameEl.innerText = ''
-
 		}
 	}
 
@@ -169,96 +153,76 @@ const updateGamesList = (element: HTMLElement, games: Game[]) => {
 			<span class="game-score">${game.playerOnePoints} - ${game.playerTwoPoints}</span>
 			</li>`)
 		.join('')
-
 }
 
 /**
  * Listen to updated lobby information
  */
 socket.on('updateLobby', (data) => {
-
 	updateOnlineUsers(data.users)
 	updateGamesList(gamesOngoingEl, data.gamesOngoing)
 	updateGamesList(gamesFinishedEl, data.gamesFinished)
-
 })
 
 /**
  * Listen to updated list of users in lobby
  */
 socket.on('updateLobbyUsers', (users) => {
-
 	updateOnlineUsers(users)
-
 })
 
 /**
  * Listen to updated list of all games
  */
 socket.on('updateLobbyGames', (gamesOngoing, gamesFinished) => {
-
 	updateGamesList(gamesOngoingEl, gamesOngoing)
 	updateGamesList(gamesFinishedEl, gamesFinished)
-
 })
 
 /**
  * Listen to ongoing games
  */
 socket.on('updateLobbyGamesOngoing', (gamesOngoing) => {
-
 	updateGamesList(gamesOngoingEl, gamesOngoing)
-
 })
 
 /**
  * Show lobby view
  */
 const showLobbyView = () => {
-
 	hideElement(welcomeViewEl)
-
 }
 
 /**
  * Show game view
  */
 const showGameView = () => {
-
 	hideElement(lobbyEl)
 	showElement(gameEl)
 	showElement(noticeEl)
-
 }
 
 /**
  * Listen to play-button
  */
 playBtnEl.addEventListener('click', () => {
-
-	//calling if there's a open room
+	// Calling if there's a open room
 	socket.emit('userPlayGame', username, (game) => {
 		if (game.timeStarted === 0) {
-
 			noticeEl.innerText = 'Waiting for another player...'
 			showElement(waitiPlaceholderEl)
-
-
 		} else {
-
 			hideElement(waitiPlaceholderEl)
 			player2NameEl.innerText = game.playerTwoName
 
 			// If player 2, start the game
 			socket.emit('startGame', game)
-
 		}
 
 		player1NameEl.innerText = game.playerOneName
 		// player2NameEl.innerText = game.playerTwoName
 
 		showGameView()
-
 	})
 })
 
@@ -266,9 +230,7 @@ playBtnEl.addEventListener('click', () => {
  * Update opponent's name when joining the game
  */
 socket.on('updateGameInfo', playerTwoName => {
-
 	player2NameEl.innerText = playerTwoName
-
 })
 
 /**
@@ -279,30 +241,22 @@ socket.on('newGameRound', (game, round, rowStart, columnStart, timer) => {
 	if (round === 0) {
 
 		let counter = 5;
-
 		const countdown = setInterval(() => {
-
-			noticeEl.innerHTML = `<span>You are playing against ${(socket.id === game.playerTwoId) ? game.playerOneName : game.playerTwoName} in ${counter}</span>`
-
+			noticeEl.innerHTML = `
+				<span>You are playing against ${(socket.id === game.playerTwoId) ? game.playerOneName : game.playerTwoName} in ${counter}</span>
+				`
 			if (counter === 0) {
-
 				clearInterval(countdown)
 				startRound(game, round, rowStart, columnStart, timer)
-
 			}
 
 			counter--
-
 		}, 1000);
 
 	} else if (round < 10) {
-
 		startRound(game, round, rowStart, columnStart, timer)
-
 	} else {
-
 		console.log("THIS SHOULD NEVER HAPPEN, since newGameRound won't be called from server if we've reached 10 rounds")
-
 	}
 })
 
@@ -310,21 +264,14 @@ socket.on('newGameRound', (game, round, rowStart, columnStart, timer) => {
  * Update responsetime in the game
  */
 socket.on('updateResponseTime', (gameOwner, responseTime) => {
-
 	const time = formatedTime.format(responseTime)
 
 	if (gameOwner) {
-
 		clearInterval(playerOneTimerId)
-
 		playerOneTimerEl.innerText = time
-
 	} else {
-
 		clearInterval(playerTwoTimerId)
-
 		playerTwoTimerEl.innerText = time
-
 	}
 })
 
@@ -332,28 +279,19 @@ socket.on('updateResponseTime', (gameOwner, responseTime) => {
  * Update points in the game
  */
 socket.on('updatePoints', (isPlayerOne, points) => {
-
 	if (isPlayerOne) {
-
 		playerOnePointsEl.innerText = points.toString()
-
 	} else {
-
 		playerTwoPointsEl.innerText = points.toString()
-
 	}
-
 })
 
 /**
  * Show notice when game is finished
  */
 socket.on('endGame', game => {
-
 	showElement(noticeEl)
-
 	noticeEl.innerHTML = `
 		<span>Game ended:</span> ${game.playerOneName}-${game.playerTwoName} ${game.playerOnePoints}-${game.playerTwoPoints}
 	`
-
 })

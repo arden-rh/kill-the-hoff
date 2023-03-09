@@ -43,23 +43,18 @@ export const formatedTime = new Intl.DateTimeFormat("en", {
  * Player one's tick
  */
 const playerOneTick = () => {
-
 	const now = Date.now() - start
 	const currentTime = formatedTime.format(now)
 	playerOneTimerEl.innerText = currentTime
-
 }
 
 /**
  * Player two's tick
  */
 const playerTwoTick = () => {
-
 	const now = Date.now() - start
-
 	const currentTime = formatedTime.format(now)
 	playerTwoTimerEl.innerText = currentTime
-
 }
 
 /**
@@ -70,9 +65,7 @@ const playerTwoTick = () => {
  * @param timer
  */
 export const startRound = (game: Game, round: number, rowStart: number, columnStart: number, timer: number) => {
-
 	inGame = game
-
 	round++
 
 	setTimeout(() => {
@@ -83,14 +76,11 @@ export const startRound = (game: Game, round: number, rowStart: number, columnSt
 	hideElement(noticeEl)
 
 	setTimeout(() => {
-
 		targetImgEl.style.gridArea = `${rowStart} / ${columnStart} / ${rowStart + 1} / ${columnStart + 1}`
 		showElement(targetImgEl)
-
 		start = Date.now()
 		playerOneTimerId = setInterval(playerOneTick, 100)
 		playerTwoTimerId = setInterval(playerTwoTick, 100)
-
 	}, timer)
 
 	targetImgEl.addEventListener('click', targetImgEventListener)
@@ -100,7 +90,6 @@ export const startRound = (game: Game, round: number, rowStart: number, columnSt
  * Listen to the click on the target
  */
 const targetImgEventListener = () => {
-
 	let end = Date.now()
 	let responseTime: number
 	responseTime = end - start
@@ -110,15 +99,11 @@ const targetImgEventListener = () => {
 	const time = formatedTime.format(responseTime)
 
 	if (socket.id === inGame.playerOneId) {
-
 		clearInterval(playerOneTimerId)
 		playerOneTimerEl.innerText = time
-
 	} else {
-
 		clearInterval(playerTwoTimerId)
 		playerTwoTimerEl.innerText = time
-
 	}
 
 	hideElement(targetImgEl)
