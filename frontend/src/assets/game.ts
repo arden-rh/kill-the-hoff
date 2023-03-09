@@ -26,7 +26,7 @@ export const playerOnePointsEl = document.querySelector('#player-1-points') as H
 export const playerTwoPointsEl = document.querySelector('#player-2-points') as HTMLSpanElement
 
 // Game's rounds
-const roundCounterEl = document.querySelector('#round') as HTMLSpanElement
+export const roundCounterEl = document.querySelector('#round') as HTMLSpanElement
 
 // Timer start
 let start: number
@@ -69,9 +69,8 @@ export const startRound = (game: Game, round: number, rowStart: number, columnSt
 	round++
 
 	setTimeout(() => {
-		console.log("Delayed for 1 second.");
 		roundCounterEl.innerText = round.toString()
-	  }, 1000)
+	}, 1000)
 
 	hideElement(noticeEl)
 
@@ -107,5 +106,4 @@ const targetImgEventListener = () => {
 	}
 
 	hideElement(targetImgEl)
-	// targetImgEl.removeEventListener('click', targetImgEventListener)
 }
