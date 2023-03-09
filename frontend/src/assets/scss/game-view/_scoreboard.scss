@@ -9,9 +9,19 @@
 	grid-area: 1 / 7 / 11 / 9;
 
 	button {
+		background-color: $primary-color;
+		color: $light-color;
+		letter-spacing: 0.2rem;
+		font-size: 0.9rem;
 		width: 80%;
 		padding: 4px 0;
 		margin: 3px 0;
+		text-align: center;
+
+		&:hover {
+			background-color: $tertiary-color;
+			color: $light-color;
+		}
 	}
 
 	h3 {
