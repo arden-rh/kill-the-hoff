@@ -16,6 +16,8 @@ export interface ServerToClientEvents {
 	updateResponseTime: (gameOwner: boolean, responseTime: number) => void
 	updatePoints: (isPlayerOne: boolean, points: number) => void
 	endGame: (game: Game) => void
+	getScores: (score:Score[]) => void
+
 }
 
 /**
@@ -26,7 +28,14 @@ export interface ClientToServerEvents {
 	userPlayGame: (name: string, callback: (game: Game) => void) => void
 	startGame: (game: Game) => void
 	roundResult: (game: Game, responseTime: number) => void
+	callHighscore:() => void
+
+
 }
+
+export interface InterServerEvents {
+}
+
 
 /**
  * All data in the lobby
@@ -35,5 +44,5 @@ export interface LobbyInfoData {
 	users: User[]
 	gamesOngoing: Game[]
 	gamesFinished: Game[]
-	scores: Score[]
+	scores:Score[]
 }
