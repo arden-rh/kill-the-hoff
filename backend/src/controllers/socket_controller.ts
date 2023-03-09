@@ -136,7 +136,7 @@ export const handleConnection = (socket: Socket<ClientToServerEvents, ServerToCl
 				debug("Reached 10 rounds", round)
 				const finalGame = await endGame(game.id)
 				io.to(game.id).emit('endGame', finalGame)
-				socket.broadcast.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
+				io.emit('updateLobbyGames', await getGamesOngoing(), await getGamesFinished())
 
 				// Store both players scores in Score
 
