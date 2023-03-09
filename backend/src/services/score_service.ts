@@ -11,16 +11,15 @@ export const getScores = () => {
  * @param fastestTime
  * @returns
  */
-export const createScore = (name:string,avgTime:number, fastestTime:number) =>{
-return prisma.score.create({
-	data:{
-	name,
-	avgTime,
-	fastestTime,
-	timestamp:Date.now()
-	}
-
-})
+export const createScore = (name: string, avgTime: number, fastestTime: number) =>{
+	return prisma.score.create({
+		data: {
+			name,
+			avgTime,
+			fastestTime,
+			timestamp:Date.now()
+		}
+	})
 }
 
 
