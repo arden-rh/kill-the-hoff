@@ -326,6 +326,8 @@ socket.on('endGame', game => {
 
 btnBackToLobbyEl.addEventListener('click', () => {
 
+	noticeEl.innerText = 'Loading...'
+
 	hideElement(gameEl)
 
 	roundCounterEl.innerText = '1'
