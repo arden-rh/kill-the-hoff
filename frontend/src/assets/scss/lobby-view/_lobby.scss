@@ -102,8 +102,17 @@
 				-moz-animation: scroll-animation 10s linear infinite;
 				-webkit-animation: scroll-animation 10s linear infinite;
 				animation: scroll-animation 10s linear infinite;
-			}
 
+				#avg-time-name {
+					margin-right: 15px;
+					padding-right: 15px;
+					border-right: 2px dashed $light-color;
+				}
+
+				#fastest-time {
+					margin-right: 10px;
+				}
+			}
 		}
 	}
 
@@ -223,13 +232,14 @@
 				}
 
 				.game-score {
-					padding: 0 0 0 1rem;
+					padding: 0 0 0 0.8rem;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;
 					max-width: 35px;
 					height: 100%;
+					text-align: center;
 				}
 
 				.player-names {

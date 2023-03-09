@@ -30,6 +30,7 @@ const userEl = document.querySelector('#user') as HTMLSpanElement
 const gamesFinishedEl = document.querySelector('#games-finished') as HTMLUListElement
 const gamesOngoingEl = document.querySelector('#games-ongoing') as HTMLUListElement
 const availableNameEl = document.querySelector('.available-name') as HTMLSpanElement
+const highscoresEl = document.querySelector('#high-score-wrapper') as HTMLDivElement
 
 // Views in game
 const player1NameEl = document.querySelector('#player-1-name') as HTMLSpanElement
@@ -77,11 +78,19 @@ socket.on('connect', () => {
 	socket.on('getScores', scores => {
 
 		// Check if there's any highscore data, if so, update it, else, show default value (text in index.html)
-		if(scores.length>0){
-			scores.sort((a, b) => a.avgTime - b.avgTime)
-				const highscore = formatedTime.format(scores[0].avgTime)
-				const highscoreEl = document.querySelector('#high-score-wrapper') as HTMLDivElement
-					highscoreEl.innerHTML = /* scores.map(highscore =>  */`<span id="high-score-time">${highscore}</span> <span id="high-score-name">${scores[0].name}</span>`
+		if (scores.length > 0) {
+			const avgTimes = [...scores].sort((a, b) => a.avgTime - b.avgTime)
+			const avgTime = formatedTime.format(avgTimes[0].avgTime)
+
+			console.log(avgTimes, avgTime)
+
+			const fastestTimes = [...scores].sort((a, b) => a.fastestTime - b.fastestTime)
+			const fastestTime = formatedTime.format(fastestTimes[0].fastestTime)
+
+			console.log(fastestTimes, fastestTime)
+
+			highscoresEl.innerHTML = /* scores.map(highscore =>  */`<span id="avg-time">Fastest average time: ${avgTime}</span> <span id="avg-time-name">${avgTimes[0].name}</span><span id="fastest-time">Fastest kill: ${fastestTime}</span><span id="fastest-time-name">${fastestTimes[0].name}</span>`
+
 		}
 	})
 })
