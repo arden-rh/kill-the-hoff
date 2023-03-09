@@ -1,3 +1,23 @@
+#connect-btn {
+	font-family: $primary-font;
+	border: $light-color 2px dashed;
+	text-transform: uppercase;
+	padding: 0.2rem 0.8rem;
+	letter-spacing: 0.2rem;
+	background-color: $dark-color;
+	margin-bottom: 1rem;
+
+	&:hover {
+		background-color: $light-color;
+		color: $dark-color;
+		box-shadow: 5px 5px 3px 0px rgba(0,0,0,0.6);
+	}
+}
+
+#login {
+	height: 40vh;
+}
+
 #welcome-view-wrapper {
 	position: absolute;
     display: flex;
@@ -29,7 +49,6 @@
 	font-family: $primary-font;
     width: 50vw;
 	max-width: 680px;
-    height: 30vh;
     flex-wrap: wrap;
     align-items: center;
 
@@ -41,33 +60,17 @@
 
 	h2 {
 		padding-bottom: 1.2rem;
-		margin: 0;
-		font-family: 'Bungee Shade', Arial, Helvetica, sans-serif;
+		margin: 1rem 0 0 0;
+		font-family: $logo-font;
 		color: $light-color;
 		font-size: 2.5rem;
+		text-align: center;
 	}
 }
 
-.username-input {
+#username {
 	padding: 0.8rem;
-	// box-shadow: 5px 5px 3px 0px rgba(0,0,0,0.6);
 	font-size: .8rem;
-	// max-width: 100%;
 	text-align: center;
 	letter-spacing: 0.08rem;
-}
-
-#connect-btn {
-	font-family: $primary-font;
-	border: $light-color 2px dashed;
-	text-transform: uppercase;
-	padding: 0.2rem 0.8rem;
-	letter-spacing: 0.2rem;
-	background-color: $dark-color;
-
-	&:hover {
-		background-color: $light-color;
-		color: $dark-color;
-		box-shadow: 5px 5px 3px 0px rgba(0,0,0,0.6);
-	}
 }

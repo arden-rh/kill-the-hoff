@@ -6,17 +6,26 @@
 	grid-area: 1 / 1 / 11 / 7;
 
 	#notice {
-		grid-area: 5 / 4 / 7 / 8;
+		grid-area: 5 / 3 / 7 / 9;
+		display: flex;
+		flex-direction: column;
 		border: $light-color dashed 2px;
 		background-color: $dark-color;
 		border-radius: 8px;
-		color: rgb(255, 255, 255);
+		color: $light-color;
 		display: flex;
 		margin: 0;
 		justify-content: center;
 		align-items: center;
 		font-family: $primary-font;
-		font-size: .7rem;
+		font-size: .8rem;
+		text-align: center;
+		padding: 0 1rem;
+		box-shadow: 7px 8px 5px 0px rgba(0,0,0,0.6);
+
+		span {
+			padding-bottom: 0.2rem;
+		}
 	}
 
 	#target-img {
